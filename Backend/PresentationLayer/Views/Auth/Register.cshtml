@@ -1,0 +1,27 @@
+﻿@model BusinessLogicLayer.ViewModels.RegisterViewModel
+<form asp-controller="Auth" asp-action="Register" method="post">
+    <input type="hidden" asp-for="ReturnUrl"/>
+    <h3>Register</h3>
+    @Html.ValidationSummary(true, "")
+    <div>
+        <input asp-for="Email" name="Email" placeholder="Email"/>
+        <span asp-validation-for="Email"></span>
+    </div>
+
+    <div>
+        <input asp-for="Username" name="Username" placeholder="Username"/>
+        <span asp-validation-for="Username"></span>
+    </div>
+
+    <div>
+        <input id="passwordInput" asp-for="Password" name="Password" placeholder="Password" type="password" />
+        <span asp-validation-for="Password"></span>
+    </div>
+
+    <div>
+        <input asp-for="ConfirmPassword" name="ConfirmPassword" placeholder="ConfirmPassword" type="password"/>
+        <span asp-validation-for="ConfirmPassword"></span>
+    </div>
+    <button type="submit">Register</button>
+    <a href="@Url.Action("Login", "Auth", new { returnUrl = Model.ReturnUrl })">Already have an account?</a>
+</form>
