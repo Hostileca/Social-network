@@ -2,7 +2,7 @@
 using BusinessLogicLayer.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
-namespace IdentityService.Controllers;
+namespace PresentationLayer.Controllers;
 
 public class AccountController(
     IAuthService authService)

@@ -1,7 +1,7 @@
 ﻿using DataAccessLayer;
 using DataAccessLayer.Data;
 
-namespace IdentityService;
+namespace PresentationLayer;
 
 public static class PresentationLayerInjection
 {
