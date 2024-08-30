@@ -1,5 +1,5 @@
 ﻿@model BusinessLogicLayer.ViewModels.RegisterViewModel
-<form asp-controller="Auth" asp-action="Register" method="post">
+<form asp-controller="Account" asp-action="Register" method="post">
     <input type="hidden" asp-for="ReturnUrl"/>
     <h3>Register</h3>
     @Html.ValidationSummary(true, "")
@@ -23,5 +23,5 @@
         <span asp-validation-for="ConfirmPassword"></span>
     </div>
     <button type="submit">Register</button>
-    <a href="@Url.Action("Login", "Auth", new { returnUrl = Model.ReturnUrl })">Already have an account?</a>
+    <a href="@Url.Action("Login", "Account", new { returnUrl = Model.ReturnUrl })">Already have an account?</a>
 </form>

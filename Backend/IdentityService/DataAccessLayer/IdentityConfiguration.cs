@@ -11,6 +11,7 @@ public static class IdentityConfiguration
         {
             new ApiScope("GatewayAccess"),
             new ApiScope(IdentityServerConstants.StandardScopes.OpenId),
+            new ApiScope(IdentityServerConstants.StandardScopes.OfflineAccess),
         };
 
     public static IEnumerable<IdentityResource> IdentityResources =>
@@ -30,11 +31,12 @@ public static class IdentityConfiguration
             ClientSecrets = { new Secret("testSecret".ToSha256()) },
             AllowedGrantTypes = GrantTypes.Code,
             RequirePkce = false,
-            RedirectUris = { "https://localhost:5000/auth/login"},
-            PostLogoutRedirectUris = { "https://localhost:44323/Home/Home"},
+            RedirectUris = { "https://test/"},
+            PostLogoutRedirectUris = { "https://test/"},
             AllowedScopes = 
             { 
-                IdentityServerConstants.StandardScopes.OpenId
+                IdentityServerConstants.StandardScopes.OpenId,
+                IdentityServerConstants.StandardScopes.OfflineAccess,
             },
             RequireConsent = false,
             AlwaysIncludeUserClaimsInIdToken = true,

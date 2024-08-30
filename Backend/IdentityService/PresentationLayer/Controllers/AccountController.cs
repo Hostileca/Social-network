@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace IdentityService.Controllers;
 
-public class AuthController(
+public class AccountController(
     IAuthService authService)
     : Controller
 {
