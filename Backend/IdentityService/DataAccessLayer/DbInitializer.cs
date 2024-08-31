@@ -1,8 +1,9 @@
 ﻿using DataAccessLayer.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace DataAccessLayer;
 
-public class DbInitializer
+public static class DbInitializer
 {
     public static void Initialize(AppDbContext context)
     {

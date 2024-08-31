@@ -14,28 +14,41 @@ public static class DataAccessLayerInjection
     {
         services.DbConfigure(configuration);
         services.IdentityConfigure();
-        services.IdentityServerConfigure();
+        services.IdentityServerConfigure(configuration);
         return services;
     }
     
     private static IServiceCollection DbConfigure(this IServiceCollection services, IConfiguration configuration)
     {
-        var sqlConnectionBuilder = new SqlConnectionStringBuilder();
-        sqlConnectionBuilder.ConnectionString = configuration.GetConnectionString("SQLDbConnection");
+        var sqlConnectionBuilder = new SqlConnectionStringBuilder
+        {
+            ConnectionString = configuration.GetConnectionString("SQLDbConnection")
+        };
         services.AddDbContext<AppDbContext>(options => 
             options.UseSqlServer(sqlConnectionBuilder.ConnectionString));
          
         return services;
     }
     
-    private static IServiceCollection IdentityServerConfigure(this IServiceCollection services)
+    private static IServiceCollection IdentityServerConfigure(this IServiceCollection services, IConfiguration configuration)
     {
+        var sqlConnectionBuilder = new SqlConnectionStringBuilder
+        {
+            ConnectionString = configuration.GetConnectionString("SQLDbConnection")
+        };
         services.AddIdentityServer()
             .AddDeveloperSigningCredential()
             .AddAspNetIdentity<User>()
             .AddInMemoryClients(IdentityConfiguration.Clients)
             .AddInMemoryApiScopes(IdentityConfiguration.ApiScopes)
-            .AddDeveloperSigningCredential();
+            .AddOperationalStore(option =>
+                {
+                    option.ConfigureDbContext = builder =>
+                        builder.UseSqlServer(sqlConnectionBuilder.ConnectionString, 
+                            sqlOptions => sqlOptions.MigrationsAssembly(typeof(DataAccessLayerInjection).Assembly.FullName));
+                    option.EnableTokenCleanup = true;
+                    option.TokenCleanupInterval = 3600;
+                });
 
         return services;
     }

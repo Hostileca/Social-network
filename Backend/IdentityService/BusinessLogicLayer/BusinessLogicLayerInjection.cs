@@ -29,7 +29,7 @@ public static class BusinessLogicLayerInjection
      
      private static IServiceCollection AddServices(this IServiceCollection services)
      {
-         services.AddScoped<IAuthService, AuthService>();
+         services.AddScoped<IAccountService, AccountService>();
          
          return services;
      }

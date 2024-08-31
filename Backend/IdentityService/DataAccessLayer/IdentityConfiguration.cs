@@ -29,7 +29,7 @@ public static class IdentityConfiguration
         {
             ClientId = "test",
             ClientSecrets = { new Secret("testSecret".ToSha256()) },
-            AllowedGrantTypes = GrantTypes.Code,
+            AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
             RequirePkce = false,
             RedirectUris = { "https://test/"},
             PostLogoutRedirectUris = { "https://test/"},

@@ -1,49 +1,20 @@
-﻿using BusinessLogicLayer.Services.Interfaces;
-using BusinessLogicLayer.ViewModels;
+﻿using BusinessLogicLayer.Dtos.User;
+using BusinessLogicLayer.Services.Interfaces;
+using DataAccessLayer.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace PresentationLayer.Controllers;
 
+[ApiController]
+[Route("[controller]")]  
 public class AccountController(
-    IAuthService authService)
-    : Controller
+    IAccountService accountService) 
+    : ControllerBase
 {
-    
-    [HttpGet]
-    public IActionResult Login(string returnUrl)
+    [HttpPost("register")]
+    public async Task<IActionResult> Register(UserRegisterDto userRegisterDto)
     {
-        return View(new LoginViewModel { ReturnUrl = returnUrl });
+        var user = await accountService.RegisterAsync(userRegisterDto);
+        return Ok(user);
     }
-    
-    [HttpPost]
-    public async Task<IActionResult> Login(LoginViewModel loginViewModel)
-    {
-        if (!ModelState.IsValid) return View(loginViewModel);
-
-        var result = await authService.LoginAsync(loginViewModel);
-        if (result.IsSuccess) return Redirect(loginViewModel.ReturnUrl);
-        
-        ModelState.AddModelError(string.Empty, result.Error.Description);
-        return View(loginViewModel);
-    }
-    
-    [HttpGet]
-    public IActionResult Register(string returnUrl)
-    {
-        returnUrl = returnUrl ?? Url.Content("https://github.com");
-        return View(new RegisterViewModel { ReturnUrl = returnUrl });
-    }
-
-    [HttpPost]
-    public async Task<IActionResult> Register(RegisterViewModel registerViewModel)
-    {
-        if (!ModelState.IsValid) return View(registerViewModel);
-
-        var result = await authService.RegisterAsync(registerViewModel);
-        if (result.IsSuccess) return Redirect(registerViewModel.ReturnUrl);
-        
-        ModelState.AddModelError(string.Empty, result.Error.Description);
-        return View(registerViewModel);
-    }
-    
 }

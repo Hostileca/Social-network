@@ -1,10 +1,9 @@
-﻿namespace BusinessLogicLayer.ViewModels;
+﻿namespace BusinessLogicLayer.Dtos.User;
 
-public class RegisterViewModel
+public class UserRegisterDto
 {
     public string Email { get; set; }
     public string Username { get; set; }
     public string Password { get; set; }
     public string ConfirmPassword { get; set; }
-    public string ReturnUrl { get; set; }
 }

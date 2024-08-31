@@ -1,11 +1,11 @@
-﻿using BusinessLogicLayer.ViewModels;
+﻿using BusinessLogicLayer.Dtos.User;
 using FluentValidation;
 
 namespace BusinessLogicLayer.Validators;
 
-public class RegisterViewModelValidator : AbstractValidator<RegisterViewModel>
+public class UserRegisterDtoValidator : AbstractValidator<UserRegisterDto>
 {
-    public RegisterViewModelValidator()
+    public UserRegisterDtoValidator()
     {
         RuleFor(x => x.Email)
             .NotEmpty().WithMessage("Please, enter the email")
