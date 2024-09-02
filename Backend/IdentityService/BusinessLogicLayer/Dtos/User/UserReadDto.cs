@@ -2,5 +2,5 @@
 
 public class UserReadDto
 {
-    
+    public string Username { get; set; }
 }

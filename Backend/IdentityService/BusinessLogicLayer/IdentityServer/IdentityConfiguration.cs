@@ -2,7 +2,7 @@
 using IdentityServer4;
 using IdentityServer4.Models;
 
-namespace DataAccessLayer;
+namespace BusinessLogicLayer.IdentityServer;
 
 public static class IdentityConfiguration
 {
@@ -29,7 +29,7 @@ public static class IdentityConfiguration
         {
             ClientId = "test",
             ClientSecrets = { new Secret("testSecret".ToSha256()) },
-            AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
+            AllowedGrantTypes = GrantTypes.EmailPassword,
             RequirePkce = false,
             RedirectUris = { "https://test/"},
             PostLogoutRedirectUris = { "https://test/"},

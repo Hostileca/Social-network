@@ -1,4 +1,4 @@
-﻿using DataAccessLayer.Models;
+﻿using BusinessLogicLayer.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

@@ -1,5 +1,6 @@
 ﻿using DataAccessLayer;
 using DataAccessLayer.Data;
+using IdentityServer4.EntityFramework.DbContexts;
 
 namespace PresentationLayer;
 
@@ -40,8 +41,9 @@ public static class PresentationLayerInjection
         using var scope = webApplication.Services.CreateScope();
         try
         {
-            var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-            DbInitializer.Initialize(context);
+            var appDbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+            var persistedGrantDbContext = scope.ServiceProvider.GetRequiredService<PersistedGrantDbContext>();
+            DbInitializer.Initialize(appDbContext, persistedGrantDbContext);
         }
         catch (Exception ex)
         {

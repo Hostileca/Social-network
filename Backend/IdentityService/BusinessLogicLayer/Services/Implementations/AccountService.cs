@@ -1,32 +1,35 @@
 ﻿using BusinessLogicLayer.Dtos.User;
+using BusinessLogicLayer.Entities;
 using BusinessLogicLayer.Exceptions;
-using DataAccessLayer.Models;
 using BusinessLogicLayer.Services.Interfaces;
+using Mapster;
 using Microsoft.AspNetCore.Identity;
+using MapsterMapper;
 
 namespace BusinessLogicLayer.Services.Implementations;
 
 public class AccountService(
-    SignInManager<User> signInManager,
     UserManager<User> userManager) 
     : IAccountService
 {
     public async Task<UserReadDto> RegisterAsync(UserRegisterDto userRegisterDto)
     {
         var user = await userManager.FindByEmailAsync(userRegisterDto.Email);
+        
         if (user is not null)
         {
-            throw new DuplicateException(typeof(User).ToString());
+            throw new AlreadyExistsException(typeof(User).ToString());
         }
         
-        var newUser = new User { UserName = userRegisterDto.Username, Email = userRegisterDto.Email };
+        var newUser = userRegisterDto.Adapt<User>();
+        
         var result = await userManager.CreateAsync(newUser, userRegisterDto.Password);
         
         if (!result.Succeeded)
         {
-            throw new AuthorizationException("User creation failed");
+            throw new CreationException(typeof(User).ToString());
         }
 
-        return new UserReadDto();
+        return newUser.Adapt<UserReadDto>();
     }
 }

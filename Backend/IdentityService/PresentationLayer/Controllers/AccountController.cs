@@ -1,6 +1,5 @@
 ﻿using BusinessLogicLayer.Dtos.User;
 using BusinessLogicLayer.Services.Interfaces;
-using DataAccessLayer.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace PresentationLayer.Controllers;

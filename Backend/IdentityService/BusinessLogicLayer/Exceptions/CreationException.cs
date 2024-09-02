@@ -1,6 +1,6 @@
 ﻿namespace BusinessLogicLayer.Exceptions;
 
-public class AuthorizationException(
+public class CreationException(
     string message)
     : Exception(message)
 {

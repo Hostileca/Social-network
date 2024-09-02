@@ -1,7 +1,7 @@
 ﻿namespace BusinessLogicLayer.Exceptions;
 
-public class NotFoundException(
-    string message) 
+public class AlreadyExistsException(
+    string message)
     : Exception(message)
 {
     
