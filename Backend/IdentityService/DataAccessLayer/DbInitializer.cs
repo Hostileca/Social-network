@@ -1,15 +1,45 @@
-﻿using DataAccessLayer.Data;
-using DataAccessLayer.Data.Contexts;
-using IdentityServer4.EntityFramework.DbContexts;
+﻿using DataAccessLayer.Data.Contexts;
+using DataAccessLayer.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataAccessLayer;
 
 public static class DbInitializer
 {
-    public static void Initialize(AppDbContext appDbcontext, PersistedGrantDbContext persistedGrantDbContext)
+    public static void Initialize(AppDbContext appDbcontext)
     {
-        persistedGrantDbContext.Database.Migrate();
         appDbcontext.Database.Migrate();
+    }
+    
+    public static void Seed(UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
+    {
+        var adminRole = roleManager.FindByNameAsync(Roles.Admin).Result;
+        if (adminRole is null)
+        {
+            adminRole = new IdentityRole()
+            {
+                Name = Roles.Admin
+            };
+            roleManager.CreateAsync(adminRole).Wait();
+            
+            var userRole = new IdentityRole()
+            {
+                Name = Roles.User
+            };
+            roleManager.CreateAsync(userRole).Wait();
+            
+            var admin = new User
+            {
+                Email = "admin",
+                UserName = "admin",
+                EmailConfirmed = true
+            };
+            var result = userManager.CreateAsync(admin, "admin").Result;
+            if (result.Succeeded)
+            {
+                userManager.AddToRoleAsync(admin, Roles.Admin).Wait();
+            }
+        }
     }
 }

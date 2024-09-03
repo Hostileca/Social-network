@@ -1,4 +1,6 @@
 ﻿using DataAccessLayer.Data.Contexts;
+using DataAccessLayer.Data.Repositories.Implementations;
+using DataAccessLayer.Data.Repositories.Interfaces;
 using DataAccessLayer.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Data.SqlClient;
@@ -14,6 +16,7 @@ public static class DataAccessLayerInjection
     {
         services.IdentityConfigure();
         services.DbConfigure(configuration);
+        services.RepositoriesConfigure();
 
         return services;
     }
@@ -24,9 +27,17 @@ public static class DataAccessLayerInjection
         {
             ConnectionString = configuration.GetConnectionString("SQLDbConnection")
         };
-        services.AddDbContext<AppDbContext>(options => 
-            options.UseSqlServer(sqlConnectionBuilder.ConnectionString));
+        services.AddDbContext<AppDbContext>(options => options
+            .UseLazyLoadingProxies()
+            .UseSqlServer(sqlConnectionBuilder.ConnectionString));
          
+        return services;
+    }
+
+    private static IServiceCollection RepositoriesConfigure(this IServiceCollection services)
+    {
+        services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+        
         return services;
     }
     
