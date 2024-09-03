@@ -1,6 +1,5 @@
-﻿using BusinessLogicLayer.Entities;
-using BusinessLogicLayer.IdentityServer;
-using DataAccessLayer.Data;
+﻿using DataAccessLayer.Data.Contexts;
+using DataAccessLayer.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -14,7 +13,6 @@ public static class DataAccessLayerInjection
     public static IServiceCollection AddDataAccessLayer(this IServiceCollection services, IConfiguration configuration)
     {
         services.IdentityConfigure();
-        services.IdentityServerConfigure(configuration);
         services.DbConfigure(configuration);
 
         return services;
@@ -45,30 +43,6 @@ public static class DataAccessLayerInjection
             .AddEntityFrameworkStores<AppDbContext>()
             .AddDefaultTokenProviders();
          
-        return services;
-    }
-    
-    private static IServiceCollection IdentityServerConfigure(this IServiceCollection services, IConfiguration configuration)
-    {
-        var sqlConnectionBuilder = new SqlConnectionStringBuilder
-        {
-            ConnectionString = configuration.GetConnectionString("SQLDbConnection")
-        };
-        services.AddIdentityServer()
-            .AddDeveloperSigningCredential()
-            .AddAspNetIdentity<User>()
-            .AddExtensionGrantValidator<EmailPasswordGrant>()
-            .AddInMemoryClients(IdentityConfiguration.Clients)
-            .AddInMemoryApiScopes(IdentityConfiguration.ApiScopes)
-            .AddOperationalStore(option =>
-            {
-                option.ConfigureDbContext = builder =>
-                    builder.UseSqlServer(sqlConnectionBuilder.ConnectionString, 
-                        sqlOptions => sqlOptions.MigrationsAssembly(typeof(DataAccessLayerInjection).Assembly));
-                option.EnableTokenCleanup = true;
-                option.TokenCleanupInterval = 3600;
-            });
-
         return services;
     }
 }

@@ -1,4 +1,4 @@
-﻿using BusinessLogicLayer.Entities;
+﻿using DataAccessLayer.Entities;
 using IdentityServer4.Models;
 using IdentityServer4.Validation;
 using Microsoft.AspNetCore.Identity;
@@ -20,9 +20,11 @@ public class EmailPasswordGrant(UserManager<User> userManager, SignInManager<Use
         }
 
         var user = await userManager.FindByEmailAsync(email);
+        
         if (user != null)
         {
             var result = await signInManager.CheckPasswordSignInAsync(user, password, false);
+            
             if (result.Succeeded)
             {
                 context.Result = new GrantValidationResult(

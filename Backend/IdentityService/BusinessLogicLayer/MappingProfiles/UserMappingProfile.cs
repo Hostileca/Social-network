@@ -1,5 +1,5 @@
 ﻿using BusinessLogicLayer.Dtos.User;
-using BusinessLogicLayer.Entities;
+using DataAccessLayer.Entities;
 using Mapster;
 
 namespace BusinessLogicLayer.MappingProfiles;

@@ -1,8 +1,8 @@
-﻿using BusinessLogicLayer.Entities;
+﻿using DataAccessLayer.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace DataAccessLayer.Data;
+namespace DataAccessLayer.Data.Contexts;
 
 public class AppDbContext : IdentityDbContext<User>
 {

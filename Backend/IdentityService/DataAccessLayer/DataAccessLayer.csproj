@@ -21,8 +21,4 @@
       <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.0-preview.7.24405.3" />
     </ItemGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\BusinessLogicLayer\BusinessLogicLayer.csproj" />
-    </ItemGroup>
-
 </Project>

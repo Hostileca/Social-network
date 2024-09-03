@@ -1,10 +1,9 @@
 ﻿using BusinessLogicLayer.Dtos.User;
-using BusinessLogicLayer.Entities;
 using BusinessLogicLayer.Exceptions;
 using BusinessLogicLayer.Services.Interfaces;
+using DataAccessLayer.Entities;
 using Mapster;
 using Microsoft.AspNetCore.Identity;
-using MapsterMapper;
 
 namespace BusinessLogicLayer.Services.Implementations;
 

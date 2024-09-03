@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace BusinessLogicLayer.Entities;
+namespace DataAccessLayer.Entities;
 
 public class User : IdentityUser
 {
