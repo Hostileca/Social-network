@@ -9,6 +9,9 @@ public class Blog : EntityBase
     public string Username { get; set; }
     public string? BIO { get; set; }
     public string? MainImagePath { get; set; }
-    public virtual List<Subscriber> Subscribers { get; set; }
-    public virtual List<Subscriber> Subscribtions { get; set; }
+    public virtual IEnumerable<Subscriber> Subscribers { get; set; }
+    public virtual IEnumerable<Subscriber> Subscribtions { get; set; }
+    public virtual IEnumerable<Post> Posts { get; set; }
+    public virtual IEnumerable<Comment> SendedComments { get; set; }
+    public virtual IEnumerable<Like> SendedLikes { get; set; }
 }

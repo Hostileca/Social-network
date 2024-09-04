@@ -30,7 +30,12 @@ public static class InfrastructureInjection
     
     private static IServiceCollection RepositoriesConfigure(this IServiceCollection services)
     {
+        services.AddScoped<IAttachmentRepository, AttachmentRepository>();
         services.AddScoped<IBlogRepository, BlogRepository>();
+        services.AddScoped<ICommentRepository, CommentRepository>();
+        services.AddScoped<ILikeRepository, LikeRepository>();
+        services.AddScoped<IPostRepository, PostRepository>();
+        services.AddScoped<ISubscriberRepository, SubscriberRepository>();
         
         return services;
     }

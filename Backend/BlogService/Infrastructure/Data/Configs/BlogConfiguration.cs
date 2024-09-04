@@ -8,24 +8,46 @@ public class BlogConfiguration : IEntityTypeConfiguration<Blog>
 {
     public void Configure(EntityTypeBuilder<Blog> builder)
     {
-        builder.HasKey(x => x.Id);
+        builder
+            .HasKey(x => x.Id);
 
-        builder.Property(x => x.Username)
+        builder
+            .Property(x => x.UserId)
             .IsRequired();
 
-        builder.Property(x => x.BIO);
-
-        builder.Property(x => x.UserId)
+        builder
+            .Property(x => x.Username)
             .IsRequired();
 
-        builder.Property(x => x.MainImagePath);
+        builder
+            .Property(x => x.BIO);
+
+        builder
+            .Property(x => x.MainImagePath);
         
-        builder.HasMany(x => x.Subscribers)
+        builder
+            .HasMany(x => x.Subscribers)
             .WithOne(x => x.SubscribedAt)
             .HasForeignKey(x => x.SubscribedAtId);
         
-        builder.HasMany(x => x.Subscribtions)
+        builder
+            .HasMany(x => x.Subscribtions)
             .WithOne(x => x.Blog)
             .HasForeignKey(x => x.BlogId);
+        
+        builder
+            .HasMany(x => x.Posts)
+            .WithOne(x => x.Owner)
+            .HasForeignKey(x => x.OwnerId);
+        
+        builder
+            .HasMany(x => x.SendedComments)
+            .WithOne(x => x.Sender)
+            .HasForeignKey(x => x.SenderId);
+        
+        builder
+            .HasMany(x => x.SendedLikes)
+            .WithOne(x => x.Sender)
+            .HasForeignKey(x => x.SenderId);
     }
 }

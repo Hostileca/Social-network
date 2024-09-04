@@ -3,9 +3,9 @@ using Domain.Repositories;
 using Mapster;
 using MediatR;
 
-namespace Application.UseCases.GetAllBlogsCase;
+namespace Application.UseCases.BlogCases.Queries.GetAllBlogsCase;
 
-public class GetAllBlogsQueryHandler(
+public class GetAllBlogsHandler(
     IBlogRepository blogRepository) 
     : IRequestHandler<GetAllBlogsQuery, IEnumerable<BlogReadDto>>
 {

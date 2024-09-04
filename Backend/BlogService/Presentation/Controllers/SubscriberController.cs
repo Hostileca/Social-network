@@ -1,4 +1,4 @@
-﻿using Application.UseCases.SubscribeToBlogCase;
+﻿using Application.UseCases.SubscriptionCases.SubscribeToBlogCase;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,7 +15,19 @@ public class SubscriberController(
     {
         var subscribtions = await mediator.Send(new SubscribeToBlogCommand
         {
-            UserBlogId = "66d851d71643143a6d587b8a",
+            UserBlogId = UserId,
+            BlogId = blogId
+        });
+        
+        return Ok(subscribtions);
+    }
+
+    [HttpDelete]
+    public async Task<IActionResult> UnsubscribeFromBlog(string blogId)
+    {
+        var subscribtions = await mediator.Send(new SubscribeToBlogCommand
+        {
+            UserBlogId = UserId,
             BlogId = blogId
         });
         

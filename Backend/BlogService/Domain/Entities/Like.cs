@@ -4,5 +4,8 @@ namespace Domain.Entities;
 
 public class Like : EntityBase
 {
-    //public ObjectId Sender { get; set; }
+    public virtual Blog Sender { get; set; }
+    public string SenderId { get; set; }
+    public virtual Post Post { get; set; }
+    public string PostId { get; set; }
 }

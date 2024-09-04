@@ -7,6 +7,8 @@ namespace Infrastructure.Data;
 public class MongoDbContext : DbContext
 {
     public DbSet<Blog> Blogs => Set<Blog>();
+    public DbSet<Subscriber> Subscribers => Set<Subscriber>();
+    
     public MongoDbContext(DbContextOptions<MongoDbContext> options)
         : base(options)
     {

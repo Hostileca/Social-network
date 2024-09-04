@@ -25,9 +25,9 @@ public class RepositoryBase<TEntity>
         return await _dbSet.ToListAsync(cancellationToken);
     }
 
-    public async Task<TEntity> GetByIdAsync(string id, CancellationToken cancellationToken = default)
+    public async Task<TEntity?> GetByIdAsync(string id, CancellationToken cancellationToken = default)
     {
-        return await _dbSet.FirstOrDefaultAsync(x => x.Id.ToString() == id, cancellationToken);
+        return await _dbSet.FindAsync(id, cancellationToken);
     }
 
     public async Task<IEnumerable<TEntity>> Find(ISpecification<TEntity> specification, CancellationToken cancellationToken = default)
