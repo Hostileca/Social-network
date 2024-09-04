@@ -1,7 +1,7 @@
 ﻿using Domain.Specifications;
 using MongoDB.Bson;
 
-namespace Domain.Repositories;
+namespace Application.Repositories;
 
 public interface IRepository<TEntity> where TEntity : class
 {

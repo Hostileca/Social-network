@@ -1,5 +1,5 @@
 ﻿using Application.Dtos;
-using Domain.Repositories;
+using Application.Repositories;
 using MediatR;
 
 namespace Application.UseCases.SubscriptionCases.UnsubscribeFromBlogCase;

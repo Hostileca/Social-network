@@ -1,8 +1,7 @@
-﻿using Domain.Entities;
-using Domain.Repositories;
+﻿using Application.Repositories;
+using Domain.Entities;
 using Domain.Specifications;
 using Microsoft.EntityFrameworkCore;
-using MongoDB.Bson;
 
 namespace Infrastructure.Data.Repositories;
 
