@@ -3,14 +3,10 @@ using FluentValidation;
 
 namespace BusinessLogicLayer.Validators;
 
-public class UserRegisterDtoValidator : AbstractValidator<UserRegisterDto>
+public class UserUpdateDtoValidator : AbstractValidator<UserUpdateDto>
 {
-    public UserRegisterDtoValidator()
+    public UserUpdateDtoValidator()
     {
-        RuleFor(x => x.Email)
-            .NotEmpty().WithMessage("Please, enter the email")
-            .EmailAddress().WithMessage("Invalid email address");
-        
         RuleFor(x => x.Username)
             .NotEmpty().WithMessage("Please, enter the username");
 
