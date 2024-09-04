@@ -16,4 +16,9 @@
       <ProjectReference Include="..\Domain\Domain.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="UseCases\BlogCases\Commands\" />
+      <Folder Include="UseCases\BlogCases\Queries\" />
+    </ItemGroup>
+
 </Project>

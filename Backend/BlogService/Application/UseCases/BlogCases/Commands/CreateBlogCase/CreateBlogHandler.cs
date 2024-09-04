@@ -4,7 +4,7 @@ using Domain.Repositories;
 using Mapster;
 using MediatR;
 
-namespace Application.UseCases.CreateBlogCase;
+namespace Application.UseCases.BlogCases.Commands.CreateBlogCase;
 
 public class CreateBlogHandler(IBlogRepository repository) 
     : IRequestHandler<CreateBlogCommand, BlogReadDto>

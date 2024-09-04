@@ -4,5 +4,5 @@ namespace Domain.Entities;
 
 public class EntityBase
 {
-    public ObjectId Id;
+    public string Id { get; set; }
 }

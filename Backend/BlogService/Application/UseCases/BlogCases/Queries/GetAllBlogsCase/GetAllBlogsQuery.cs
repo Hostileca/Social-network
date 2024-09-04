@@ -1,8 +1,7 @@
 ﻿using Application.Dtos;
-using Domain.Entities;
 using MediatR;
 
-namespace Application.UseCases.GetAllBlogsCase;
+namespace Application.UseCases.BlogCases.Queries.GetAllBlogsCase;
 
 public class GetAllBlogsQuery : IRequest<IEnumerable<BlogReadDto>>
 {
