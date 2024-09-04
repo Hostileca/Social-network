@@ -1,6 +1,6 @@
 ﻿using Domain.Entities;
 
-namespace Domain.Repositories.Interfaces;
+namespace Domain.Repositories;
 
 public interface IBlogRepository : IRepository<Blog>
 {

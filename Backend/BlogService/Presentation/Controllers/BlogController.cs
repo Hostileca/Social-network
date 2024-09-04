@@ -1,10 +1,13 @@
 ﻿using Application.Dtos;
+using Application.UseCases;
+using Application.UseCases.CreateBlogCase;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Application.Queries;
 
 namespace Presentation.Controllers;
 
+[ApiController]
+[Route("blogs")]  
 public class BlogController(
     IMediator mediator) 
     : ControllerBase
@@ -15,5 +18,13 @@ public class BlogController(
         var query = new GetByIdQuery<BlogReadDto>{ Id = id };
         var userDto = await mediator.Send(query);
         return Ok(userDto);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> CreateBlog(CreateBlogCommand createBlogCommand)
+    {
+        createBlogCommand.UserId = Guid.NewGuid();
+        var blog = await mediator.Send(createBlogCommand);
+        return Ok(blog);
     }
 }

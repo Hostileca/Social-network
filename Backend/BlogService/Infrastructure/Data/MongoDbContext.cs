@@ -1,16 +1,13 @@
 ﻿using Domain.Entities;
-using Microsoft.Extensions.Configuration;
-using MongoDB.Driver;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data;
 
-public class MongoDbContext
+public class MongoDbContext : DbContext
 {
-    public IMongoCollection<Blog> Blogs { get; set; }
-
-    public MongoDbContext(MongoDbClient mongoDbClient, IConfiguration configuration)
+    public DbSet<Blog> Blogs => Set<Blog>();
+    public MongoDbContext(DbContextOptions<MongoDbContext> options)
+        : base(options)
     {
-        var database = mongoDbClient.GetDatabase(configuration.GetConnectionString("DbConnection"));
-        Blogs = database.GetCollection<Blog>("Blogs");
     }
 }

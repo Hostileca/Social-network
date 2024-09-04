@@ -1,7 +1,7 @@
 ﻿using Application.Dtos;
 using MediatR;
 
-namespace Application.Queries;
+namespace Application.UseCases;
 
 public class GetByIdQuery<TEntityReadDto> : IRequest<TEntityReadDto>
 {
