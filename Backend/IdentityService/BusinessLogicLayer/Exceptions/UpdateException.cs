@@ -2,7 +2,7 @@
 
 public class UpdateException(
     string message)
-    : Exception(message)
+    : OperationFailedException(message)
 {
     
 }

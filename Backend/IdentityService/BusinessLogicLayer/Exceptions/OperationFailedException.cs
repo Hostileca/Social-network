@@ -1,8 +1,8 @@
 ﻿namespace BusinessLogicLayer.Exceptions;
 
-public class ExpireException(
+public class OperationFailedException(
     string message) 
-    : UnauthorizedException(message)
+    : Exception(message)
 {
     
 }

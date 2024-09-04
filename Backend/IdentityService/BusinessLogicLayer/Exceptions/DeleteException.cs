@@ -2,7 +2,7 @@
 
 public class DeleteException(
     string message) 
-    : Exception(message)
+    : OperationFailedException(message)
 {
     
 }

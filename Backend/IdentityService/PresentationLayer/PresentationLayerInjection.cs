@@ -6,6 +6,7 @@ using IdentityServer4.EntityFramework.DbContexts;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
+using PresentationLayer.Middlewares;
 using PresentationLayer.Policies;
 
 namespace PresentationLayer;
@@ -18,6 +19,7 @@ public static class PresentationLayerInjection
         services.AddControllers();
         services.AuthConfigure(configuration);
         services.AddSwaggerGen();
+        services.AddScoped<ExceptionHandlingMiddleware>();
         
         return services;
     }
@@ -30,6 +32,7 @@ public static class PresentationLayerInjection
         webApplication.MapControllers();
         webApplication.SwaggerStart();
         webApplication.SeedData();
+        webApplication.UseMiddleware<ExceptionHandlingMiddleware>();
         webApplication.Run();
          
         return webApplication;

@@ -2,7 +2,7 @@
 
 public class AlreadyExistsException(
     string message)
-    : Exception(message)
+    : OperationFailedException(message)
 {
     
 }
