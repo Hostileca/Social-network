@@ -1,4 +1,4 @@
-﻿namespace Domain.Specifications.Interfaces;
+﻿namespace Domain.Specifications;
 
 public interface ISpecification<TEntity>
 {

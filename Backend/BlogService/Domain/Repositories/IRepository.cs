@@ -1,7 +1,6 @@
-﻿using System.Linq.Expressions;
-using Domain.Specifications.Interfaces;
+﻿using Domain.Specifications;
 
-namespace Domain.Repositories.Interfaces;
+namespace Domain.Repositories;
 
 public interface IRepository<TEntity> where TEntity : class
 {
