@@ -19,10 +19,12 @@ public static class InfrastructureInjection
     
     private static IServiceCollection DbConfigure(this IServiceCollection services, IConfiguration configuration)
     {
+        
         var connectionString = configuration.GetConnectionString("MongoDbConnection");
         
         services.AddDbContext<MongoDbContext>(options => options
-            .UseMongoDB(connectionString, "BlogServiceDb"));
+            .UseMongoDB(connectionString, "BlogServiceDb")
+            .UseLazyLoadingProxies());
         return services;
     }
     

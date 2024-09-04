@@ -5,13 +5,10 @@ namespace Domain.Entities;
 
 public class Blog : EntityBase
 {
-    public Guid UserId { get; set; }
-    [BsonRepresentation(BsonType.String)]
+    public string UserId { get; set; }
     public string Username { get; set; }
-    [BsonRepresentation(BsonType.String)]
-    public string BIO { get; set; }
-    [BsonRepresentation(BsonType.String)]
-    public string MainImagePath { get; set; }
-    public IEnumerable<Post> Posts { get; set; }
-    public IEnumerable<Subscriber> Subscribers { get; set; }
+    public string? BIO { get; set; }
+    public string? MainImagePath { get; set; }
+    public virtual List<Subscriber> Subscribers { get; set; }
+    public virtual List<Subscriber> Subscribtions { get; set; }
 }

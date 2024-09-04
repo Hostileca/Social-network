@@ -1,7 +1,9 @@
 ﻿using Application.Dtos;
 using Application.UseCases;
 using Application.UseCases.CreateBlogCase;
+using Application.UseCases.GetAllBlogsCase;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.Controllers;
@@ -12,12 +14,11 @@ public class BlogController(
     IMediator mediator) 
     : ControllerBase
 {
-    [HttpGet("{id}")]
-    public async Task<IActionResult> GetById(Guid id)
+    [HttpGet]
+    public async Task<IActionResult> GetAllBlogs([FromQuery]GetAllBlogsQuery getAllBlogsQuery)
     {
-        var query = new GetByIdQuery<BlogReadDto>{ Id = id };
-        var userDto = await mediator.Send(query);
-        return Ok(userDto);
+        var blogs = await mediator.Send(getAllBlogsQuery);
+        return Ok(blogs);
     }
 
     [HttpPost]

@@ -1,6 +1,8 @@
-﻿namespace Domain.Entities;
+﻿using MongoDB.Bson;
+
+namespace Domain.Entities;
 
 public class Like : EntityBase
 {
-    public Guid Sender { get; set; }
+    //public ObjectId Sender { get; set; }
 }
