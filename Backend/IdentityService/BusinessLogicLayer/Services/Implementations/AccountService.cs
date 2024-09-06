@@ -23,6 +23,7 @@ namespace BusinessLogicLayer.Services.Implementations;
 
 public class AccountService(
     UserManager<User> userManager,
+    RoleManager<IdentityRole> roleManager,
     IRefreshTokenRepository refreshTokenRepository,
     TokensGenerator tokensGenerator) 
     : IAccountService
@@ -38,13 +39,20 @@ public class AccountService(
         
         var newUser = userRegisterDto.Adapt<User>();
         
-        var result = await userManager.CreateAsync(newUser, userRegisterDto.Password);
+        var createUserResult = await userManager.CreateAsync(newUser, userRegisterDto.Password);
+        var addToRoleResult = await userManager.AddToRoleAsync(newUser, Roles.User);
+
         
-        if (!result.Succeeded)
+        if (!createUserResult.Succeeded)
         {
-            throw new CreationException(typeof(User).ToString());
+            throw new CreationException(createUserResult.Errors.ToString());
         }
 
+        if (!addToRoleResult.Succeeded)
+        {
+            throw new CreationException(addToRoleResult.Errors.ToString());
+        }
+        
         return newUser.Adapt<UserReadDto>();
     }
 
