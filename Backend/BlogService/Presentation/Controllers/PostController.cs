@@ -11,7 +11,8 @@ public class PostController(
     IMediator mediator) : ControllerBase
 {
     [HttpPost]
-    public async Task<IActionResult> CreatePost(string blogId, [FromForm]CreatePostCommand createPostCommand)
+    public async Task<IActionResult> CreatePost(string blogId, [FromForm]CreatePostCommand createPostCommand,
+        CancellationToken cancellationToken)
     {
         createPostCommand.UserId = UserId;
         createPostCommand.BlogId = blogId;
@@ -21,12 +22,12 @@ public class PostController(
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetPosts(string blogId)
+    public async Task<IActionResult> GetPosts(string blogId, CancellationToken cancellationToken)
     {
         var posts = await mediator.Send(new GetBlogPostsQuery()
         {
             BlogId = blogId
-        });
+        }, cancellationToken);
         
         return Ok(posts);
     }

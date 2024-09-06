@@ -18,8 +18,7 @@
 
     <ItemGroup>
       <Folder Include="UseCases\BlogCases\Commands\" />
-      <Folder Include="UseCases\CommentCases\Queries\" />
-      <Folder Include="UseCases\LikeCases\" />
+      <Folder Include="UseCases\LikeCases\Queries\" />
       <Folder Include="UseCases\SubscriptionCases\Commands\" />
       <Folder Include="UseCases\SubscriptionCases\Queries\" />
     </ItemGroup>

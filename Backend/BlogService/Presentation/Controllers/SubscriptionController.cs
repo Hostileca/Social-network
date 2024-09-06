@@ -14,7 +14,8 @@ public class SubscriptionController(
     : ControllerBase
 {
     [HttpPost("subscribers")]
-    public async Task<IActionResult> SubscribeToBlog(string blogId, SubscribeToBlogCommand subscribeToBlogCommand)
+    public async Task<IActionResult> SubscribeToBlog(string blogId, SubscribeToBlogCommand subscribeToBlogCommand,
+        CancellationToken cancellationToken)
     {
         subscribeToBlogCommand.SubscribeAtId = blogId;
         subscribeToBlogCommand.UserId = UserId;
@@ -25,31 +26,32 @@ public class SubscriptionController(
     }
 
     [HttpDelete("subscribers")]
-    public async Task<IActionResult> UnsubscribeFromBlog(string blogId, UnsubscribeFromBlogCommand unsubscribeFromBlogCommand)
+    public async Task<IActionResult> UnsubscribeFromBlog(string blogId, UnsubscribeFromBlogCommand unsubscribeFromBlogCommand,
+        CancellationToken cancellationToken)
     {
         unsubscribeFromBlogCommand.SubscripeAtId = blogId;
         unsubscribeFromBlogCommand.UserId = UserId;
         
-        var subscribtions = await mediator.Send(unsubscribeFromBlogCommand);
+        var subscribtions = await mediator.Send(unsubscribeFromBlogCommand, cancellationToken);
         
         return Ok(subscribtions);
     }
     
     [HttpGet("subscriptions")]
-    public async Task<IActionResult> GetBlogSubscriptions(string blogId)
+    public async Task<IActionResult> GetBlogSubscriptions(string blogId, CancellationToken cancellationToken)
     {
         var getBlogSubscriptions = new GetBlogSubscriptionsQuery
         {
             BlogId = blogId
         };
         
-        var subscribtions = await mediator.Send(getBlogSubscriptions);
+        var subscribtions = await mediator.Send(getBlogSubscriptions, cancellationToken);
         
         return Ok(subscribtions);
     }
     
     [HttpGet("subscribers")]
-    public async Task<IActionResult> GetBlogSubscribers(string blogId)
+    public async Task<IActionResult> GetBlogSubscribers(string blogId, CancellationToken cancellationToken)
     {
         var getBlogSubscribers = new GetBlogSubscribersQuery()
         {

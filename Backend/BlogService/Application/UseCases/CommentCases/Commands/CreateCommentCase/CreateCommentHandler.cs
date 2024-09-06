@@ -38,6 +38,8 @@ public class CreateCommentHandler(
         
         await commentRepository.AddAsync(comment, cancellationToken);
 
+        await commentRepository.SaveChangesAsync(cancellationToken);
+
         return comment.Adapt<CommentReadDto>();
     }
 }
