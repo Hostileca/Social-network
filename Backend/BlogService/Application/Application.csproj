@@ -18,7 +18,16 @@
 
     <ItemGroup>
       <Folder Include="UseCases\BlogCases\Commands\" />
-      <Folder Include="UseCases\BlogCases\Queries\" />
+      <Folder Include="UseCases\CommentCases\Queries\" />
+      <Folder Include="UseCases\LikeCases\" />
+      <Folder Include="UseCases\SubscriptionCases\Commands\" />
+      <Folder Include="UseCases\SubscriptionCases\Queries\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="Microsoft.AspNetCore.Http.Features">
+        <HintPath>..\..\..\..\..\..\..\Program Files\dotnet\shared\Microsoft.AspNetCore.App\8.0.1\Microsoft.AspNetCore.Http.Features.dll</HintPath>
+      </Reference>
     </ItemGroup>
 
 </Project>

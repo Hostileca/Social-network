@@ -5,4 +5,4 @@ namespace Infrastructure.Data.Repositories;
 
 public class SubscriberRepository(
     MongoDbContext context) 
-    : RepositoryBase<Subscriber>(context), ISubscriberRepository;
+    : RepositoryBase<Subscription>(context), ISubscriberRepository;

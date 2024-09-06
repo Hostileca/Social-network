@@ -18,7 +18,8 @@ public class PostConfiguration : IEntityTypeConfiguration<Post>
         builder
             .HasOne(x => x.Owner)
             .WithMany(x => x.Posts)
-            .HasForeignKey(x => x.OwnerId);
+            .HasForeignKey(x => x.OwnerId)
+            .IsRequired();
         
         builder
             .HasMany(x => x.Comments)
