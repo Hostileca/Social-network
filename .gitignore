@@ -401,10 +401,3 @@ FodyWeavers.xsd
 .idea
 bin
 obj
-
-.yml
-Properties
-.json
-appsettings.json
-appsettings.development.json
-appsettings.production.json
