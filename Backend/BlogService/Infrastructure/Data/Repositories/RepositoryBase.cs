@@ -1,7 +1,8 @@
 ﻿using Application.Repositories;
+using Application.Specifications.Interfaces;
 using Domain.Entities;
-using Domain.Specifications;
 using Microsoft.EntityFrameworkCore;
+using MongoDB.Driver.Linq;
 
 namespace Infrastructure.Data.Repositories;
 
@@ -29,9 +30,9 @@ public class RepositoryBase<TEntity>
         return await _dbSet.FindAsync(id, cancellationToken);
     }
 
-    public async Task<IEnumerable<TEntity>> Find(ISpecification<TEntity> specification, CancellationToken cancellationToken = default)
+    public IEnumerable<TEntity> Find(ISpecification<TEntity> specification)
     {
-        return await _dbSet.Where(e => specification.IsSatisfiedBy(e)).ToListAsync(cancellationToken);
+        return _dbSet.Where(specification.ToFunction());
     }
 
     public async Task AddAsync(TEntity item, CancellationToken cancellationToken = default)

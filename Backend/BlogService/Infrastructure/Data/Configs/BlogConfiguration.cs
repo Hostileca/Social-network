@@ -32,8 +32,8 @@ public class BlogConfiguration : IEntityTypeConfiguration<Blog>
         
         builder
             .HasMany(x => x.Subscribtions)
-            .WithOne(x => x.Blog)
-            .HasForeignKey(x => x.BlogId);
+            .WithOne(x => x.SubscribedBy)
+            .HasForeignKey(x => x.SubscribedById);
         
         builder
             .HasMany(x => x.Posts)

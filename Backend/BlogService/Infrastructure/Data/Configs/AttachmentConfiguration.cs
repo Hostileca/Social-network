@@ -19,5 +19,8 @@ public class AttachmentConfiguration : IEntityTypeConfiguration<Attachment>
             .HasOne(x => x.Post)
             .WithMany(x => x.Attachments)
             .HasForeignKey(x => x.PostId);
+
+        builder
+            .Ignore(x => x.File);
     }
 }

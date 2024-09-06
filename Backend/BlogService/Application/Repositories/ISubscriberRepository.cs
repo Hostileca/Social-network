@@ -2,7 +2,7 @@
 
 namespace Application.Repositories;
 
-public interface ISubscriberRepository : IRepository<Subscriber>
+public interface ISubscriberRepository : IRepository<Subscription>
 {
     
 }

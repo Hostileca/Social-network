@@ -17,10 +17,12 @@ public class CommentConfiguration : IEntityTypeConfiguration<Comment>
 
         builder
             .HasOne(x => x.Sender)
-            .WithMany(x => x.SendedComments);
+            .WithMany(x => x.SendedComments)
+            .IsRequired();
         
         builder
             .HasOne(x => x.Post)
-            .WithMany(x => x.Comments);
+            .WithMany(x => x.Comments)
+            .IsRequired();
     }
 }

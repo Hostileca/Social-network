@@ -1,4 +1,4 @@
-﻿using Application.UseCases.SubscriptionCases.SubscribeToBlogCase;
+﻿using Application.UseCases.SubscriptionCases.Commands.SubscribeToBlogCase;
 using Domain.Entities;
 using Mapster;
 
@@ -8,8 +8,9 @@ public class SubscriptionMappingConfigurations : IRegister
 {
     public void Register(TypeAdapterConfig config)
     {
-        config.NewConfig<SubscribeToBlogCommand, Subscriber>()
-            .Map(dest => dest.BlogId, src => src.UserBlogId)
-            .Map(dest => dest.SubscribedAtId, src => src.BlogId);
+        config.NewConfig<SubscribeToBlogCommand, Subscription>()
+            .Map(dest => dest.SubscribedById, src => src.UserBlogId)
+            .Map(dest => dest.SubscribedAtId, src => src.SubscribeAtId)
+            .Map(dest => dest.Id, src => Guid.NewGuid().ToString());
     }
 }
