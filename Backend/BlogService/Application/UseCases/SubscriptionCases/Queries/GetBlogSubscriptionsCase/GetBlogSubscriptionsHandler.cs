@@ -1,6 +1,7 @@
 ﻿using Application.Dtos;
+using Application.Exceptions;
 using Application.Repositories;
-using Application.Specifications.Common;
+using Domain.Entities;
 using Mapster;
 using MediatR;
 
@@ -13,8 +14,13 @@ public class GetBlogSubscriptionsHandler(
     public async Task<IEnumerable<BlogReadDto>> Handle(GetBlogSubscriptionsQuery request,
         CancellationToken cancellationToken)
     {
-        var specification = new BlogSubscriptionsSpecification(request.BlogId);
-        var blogs = blogRepository.Find(specification);
-        return blogs.Adapt<IEnumerable<BlogReadDto>>();
+        var blog = await blogRepository.GetByIdAsync(request.BlogId, cancellationToken);
+
+        if (blog is null)
+        {
+            throw new NotFoundException(typeof(Blog).ToString());
+        }
+        
+        return blog.Subscribtions.Adapt<IEnumerable<BlogReadDto>>();
     }
 }

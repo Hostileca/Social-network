@@ -1,8 +1,7 @@
 ﻿using Application.Repositories;
-using Application.Specifications.Interfaces;
+using Application.Specifications;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using MongoDB.Driver.Linq;
 
 namespace Infrastructure.Data.Repositories;
 

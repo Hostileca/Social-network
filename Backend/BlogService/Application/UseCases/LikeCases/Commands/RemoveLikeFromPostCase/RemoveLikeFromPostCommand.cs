@@ -1,9 +1,10 @@
 ﻿using System.Text.Json.Serialization;
+using Application.Dtos;
 using MediatR;
 
 namespace Application.UseCases.LikeCases.Commands.RemoveLikeFromPostCase;
 
-public class RemoveLikeFromPostCommand : IRequest<int>
+public class RemoveLikeFromPostCommand : IRequest<PostLikesReadDto>
 {
     [JsonIgnore]
     public string? PostId { get; set; }

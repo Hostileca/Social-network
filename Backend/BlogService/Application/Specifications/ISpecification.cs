@@ -1,4 +1,4 @@
-﻿namespace Application.Specifications.Interfaces;
+﻿namespace Application.Specifications;
 
 public interface ISpecification<TEntity>
 {

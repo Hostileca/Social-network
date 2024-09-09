@@ -16,8 +16,6 @@ public class CreatePostHandler(
     public async Task<PostReadDto> Handle(CreatePostCommand request, CancellationToken cancellationToken)
     {
         var blog = await blogRepository.GetByIdAsync(request.BlogId, cancellationToken);
-        
-        var post = request.Adapt<Post>();
 
         if (blog is null)
         {
@@ -28,6 +26,8 @@ public class CreatePostHandler(
         {
             throw new UnauthorizedException("It is not your blog");
         }
+        
+        var post = request.Adapt<Post>();
         
         await postRepository.AddAsync(post, cancellationToken);
         

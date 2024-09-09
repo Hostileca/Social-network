@@ -11,9 +11,9 @@ namespace Application.UseCases.SubscriptionCases.Commands.SubscribeToBlogCase;
 public class SubscribeToBlogHandler(
     IBlogRepository blogRepository,
     ISubscriberRepository subscriberRepository) 
-    : IRequestHandler<SubscribeToBlogCommand, IEnumerable<BlogReadDto>>
+    : IRequestHandler<SubscribeToBlogCommand, BlogSubscriptionsReadDto>
 {
-    public async Task<IEnumerable<BlogReadDto>> Handle(SubscribeToBlogCommand request, CancellationToken cancellationToken)
+    public async Task<BlogSubscriptionsReadDto> Handle(SubscribeToBlogCommand request, CancellationToken cancellationToken)
     {
         var currentBlog = await blogRepository.GetByIdAsync(request.UserBlogId, cancellationToken);
 
@@ -26,7 +26,7 @@ public class SubscribeToBlogHandler(
         {
             throw new UnauthorizedException("It is not your blog");
         }
-
+        
         if (currentBlog.Subscribtions
             .Any(x => x.SubscribedAtId == request.SubscribeAtId))
         {
@@ -39,6 +39,6 @@ public class SubscribeToBlogHandler(
 
         await subscriberRepository.SaveChangesAsync(cancellationToken);
         
-        return newSubscriber.SubscribedBy.Subscribtions.Adapt<IEnumerable<BlogReadDto>>();
+        return currentBlog.Adapt<BlogSubscriptionsReadDto>();
     }
 }

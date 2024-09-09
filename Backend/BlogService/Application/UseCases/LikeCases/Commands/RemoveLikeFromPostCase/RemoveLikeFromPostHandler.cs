@@ -1,6 +1,8 @@
-﻿using Application.Exceptions;
+﻿using Application.Dtos;
+using Application.Exceptions;
 using Application.Repositories;
 using Domain.Entities;
+using Mapster;
 using MediatR;
 
 namespace Application.UseCases.LikeCases.Commands.RemoveLikeFromPostCase;
@@ -8,9 +10,9 @@ namespace Application.UseCases.LikeCases.Commands.RemoveLikeFromPostCase;
 public class RemoveLikeFromPostHandler(
     IPostRepository postRepository,
     IBlogRepository blogRepository,
-    ILikeRepository likeRepository) : IRequestHandler<RemoveLikeFromPostCommand, int>
+    ILikeRepository likeRepository) : IRequestHandler<RemoveLikeFromPostCommand, PostLikesReadDto>
 {
-    public async Task<int> Handle(RemoveLikeFromPostCommand request, CancellationToken cancellationToken)
+    public async Task<PostLikesReadDto> Handle(RemoveLikeFromPostCommand request, CancellationToken cancellationToken)
     {
         var blog = await blogRepository.GetByIdAsync(request.BlogId, cancellationToken);
         
@@ -42,6 +44,6 @@ public class RemoveLikeFromPostHandler(
         
         await likeRepository.SaveChangesAsync(cancellationToken);
         
-        return post.Likes.Count();
+        return post.Adapt<PostLikesReadDto>();
     }
 }

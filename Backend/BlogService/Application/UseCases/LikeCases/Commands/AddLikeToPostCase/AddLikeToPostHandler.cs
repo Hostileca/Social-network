@@ -1,4 +1,5 @@
-﻿using Application.Exceptions;
+﻿using Application.Dtos;
+using Application.Exceptions;
 using Application.Repositories;
 using Domain.Entities;
 using Mapster;
@@ -10,9 +11,9 @@ public class AddLikeToPostHandler(
     IPostRepository postRepository,
     ILikeRepository likeRepository,
     IBlogRepository blogRepository) 
-    : IRequestHandler<AddLikeToPostCommand, int>
+    : IRequestHandler<AddLikeToPostCommand, PostLikesReadDto>
 {
-    public async Task<int> Handle(AddLikeToPostCommand request, CancellationToken cancellationToken)
+    public async Task<PostLikesReadDto> Handle(AddLikeToPostCommand request, CancellationToken cancellationToken)
     {
         var blog = await blogRepository.GetByIdAsync(request.BlogId, cancellationToken);
 
@@ -44,6 +45,6 @@ public class AddLikeToPostHandler(
         
         await likeRepository.SaveChangesAsync(cancellationToken);
         
-        return like.Post.Likes.Count();
+        return post.Adapt<PostLikesReadDto>();
     }
 }

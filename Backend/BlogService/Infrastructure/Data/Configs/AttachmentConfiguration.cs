@@ -16,6 +16,10 @@ public class AttachmentConfiguration : IEntityTypeConfiguration<Attachment>
             .IsRequired();
         
         builder
+            .Property(x => x.ContentType)
+            .IsRequired();
+        
+        builder
             .HasOne(x => x.Post)
             .WithMany(x => x.Attachments)
             .HasForeignKey(x => x.PostId);

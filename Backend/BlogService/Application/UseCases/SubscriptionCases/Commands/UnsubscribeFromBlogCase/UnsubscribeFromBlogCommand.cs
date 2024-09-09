@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Application.UseCases.SubscriptionCases.Commands.UnsubscribeFromBlogCase;
 
-public class UnsubscribeFromBlogCommand : IRequest<IEnumerable<BlogReadDto>>
+public class UnsubscribeFromBlogCommand : IRequest<BlogSubscriptionsReadDto>
 {
     public string UserBlogId { get; set; }
     [JsonIgnore]
