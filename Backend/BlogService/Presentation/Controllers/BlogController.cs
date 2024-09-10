@@ -3,6 +3,7 @@ using Application.UseCases.BlogCases.Commands.DeleteBlogCase;
 using Application.UseCases.BlogCases.Commands.UpdateBlogCase;
 using Application.UseCases.BlogCases.Queries.GetAllBlogsCase;
 using Application.UseCases.BlogCases.Queries.GetBlogByIdCase;
+using Application.UseCases.BlogCases.Queries.GetUserBlogsCase;
 using Application.UseCases.LikeCases.Queries.GetBlogLikesCase;
 using Application.UseCases.PostCases.Commands.CreatePostCase;
 using Application.UseCases.PostCases.Queries.GetBlogPostsCase;
@@ -21,6 +22,14 @@ public class BlogController(
     public async Task<IActionResult> GetAllBlogs(CancellationToken cancellationToken)
     {
         var blogs = await mediator.Send(new GetAllBlogsQuery(), cancellationToken);
+        
+        return Ok(blogs);
+    }
+    
+    [HttpGet("me")]
+    public async Task<IActionResult> GetUserBlogs(CancellationToken cancellationToken)
+    {
+        var blogs = await mediator.Send(new GetUserBlogsQuery{UserId = UserId}, cancellationToken);
         
         return Ok(blogs);
     }

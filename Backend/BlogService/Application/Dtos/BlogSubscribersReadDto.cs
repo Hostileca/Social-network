@@ -2,5 +2,5 @@
 
 public class BlogSubscribersReadDto
 {
-    public int SubscribersCount { get; set; }
+    public List<BlogReadDto> Subscribers { get; set; }
 }

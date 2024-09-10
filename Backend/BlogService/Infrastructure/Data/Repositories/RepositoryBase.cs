@@ -1,5 +1,5 @@
 ﻿using Application.Repositories;
-using Application.Specifications;
+using Application.Specifications.Interfaces;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -29,9 +29,9 @@ public class RepositoryBase<TEntity>
         return await _dbSet.FindAsync(id, cancellationToken);
     }
 
-    public IEnumerable<TEntity> Find(ISpecification<TEntity> specification)
+    public async Task<IEnumerable<TEntity>> FindAsync(ISpecification<TEntity> specification)
     {
-        return _dbSet.Where(specification.ToFunction());
+        return await _dbSet.Where(specification.ToFunction()).AsQueryable().ToListAsync();
     }
 
     public async Task AddAsync(TEntity item, CancellationToken cancellationToken = default)

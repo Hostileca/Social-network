@@ -31,7 +31,7 @@ public class BlogConfiguration : IEntityTypeConfiguration<Blog>
             .HasForeignKey(x => x.SubscribedAtId);
         
         builder
-            .HasMany(x => x.Subscribtions)
+            .HasMany(x => x.Subscriptions)
             .WithOne(x => x.SubscribedBy)
             .HasForeignKey(x => x.SubscribedById);
         

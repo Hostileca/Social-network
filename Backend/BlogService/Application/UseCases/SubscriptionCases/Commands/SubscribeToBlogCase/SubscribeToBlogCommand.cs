@@ -6,9 +6,9 @@ namespace Application.UseCases.SubscriptionCases.Commands.SubscribeToBlogCase;
     
 public class SubscribeToBlogCommand : IRequest<BlogSubscriptionsReadDto>
 {
-    public string UserBlogId { get; set; }
+    [JsonIgnore]
+    public string? UserBlogId { get; set; }
     [JsonIgnore]
     public string? UserId { get; set; } 
-    [JsonIgnore]
-    public string? SubscribeAtId { get; set; }
+    public string SubscribeAtId { get; set; }
 }

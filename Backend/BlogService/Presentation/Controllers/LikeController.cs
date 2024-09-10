@@ -1,5 +1,6 @@
 ﻿using Application.UseCases.LikeCases.Commands.AddLikeToPostCase;
 using Application.UseCases.LikeCases.Commands.RemoveLikeFromPostCase;
+using Application.UseCases.LikeCases.Queries.GetPostLikesByIdCase;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -31,6 +32,18 @@ public class LikeController(
         removeLikeFromPostCommand.UserId = UserId;
         
         var comment = await mediator.Send(removeLikeFromPostCommand, cancellationToken);
+        
+        return Ok(comment);
+    }
+    
+    [HttpGet]
+    public async Task<IActionResult> GetLikes(string postId,
+        CancellationToken cancellationToken)
+    {
+        var comment = await mediator.Send(new GetPostLikesByIdQuery
+        {
+            Id = postId
+        }, cancellationToken);
         
         return Ok(comment);
     }

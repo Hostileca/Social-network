@@ -27,8 +27,8 @@ public class UnsubscribeFromBlogHandler(
             throw new UnauthorizedException("It is not your blog");
         }
         
-        var subscribtion = currentBlog.Subscribtions
-            .FirstOrDefault(x => x.SubscribedById == request.SubscripeAtId);
+        var subscribtion = currentBlog.Subscriptions
+            .FirstOrDefault(x => x.SubscribedById == request.UnSubscribeFromId);
 
         if (subscribtion is null)
         {

@@ -14,6 +14,6 @@ public class SubscriberConfiguration : IEntityTypeConfiguration<Subscription>
             .WithMany(x => x.Subscribers);
 
         builder.HasOne(x => x.SubscribedBy)
-            .WithMany(x => x.Subscribtions);
+            .WithMany(x => x.Subscriptions);
     }
 }

@@ -27,7 +27,14 @@ public class SubscribeToBlogHandler(
             throw new UnauthorizedException("It is not your blog");
         }
         
-        if (currentBlog.Subscribtions
+        var blogToSubscribe = await blogRepository.GetByIdAsync(request.SubscribeAtId, cancellationToken);
+
+        if (blogToSubscribe is null)
+        {
+            throw new NotFoundException(typeof(Blog).ToString());
+        }
+        
+        if (currentBlog.Subscriptions
             .Any(x => x.SubscribedAtId == request.SubscribeAtId))
         {
             throw new AlreadyExistException(typeof(Subscription).ToString());

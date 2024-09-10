@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Application.UseCases.SubscriptionCases.Queries.GetBlogSubscribersCase;
 
-public class GetBlogSubscribersQuery : IRequest<IEnumerable<BlogReadDto>>
+public class GetBlogSubscribersQuery : IRequest<BlogSubscribersReadDto>
 {
     [JsonIgnore]
     public string? BlogId { get; set; }

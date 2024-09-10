@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Application.UseCases.SubscriptionCases.Queries.GetBlogSubscriptionsCase;
 
-public class GetBlogSubscriptionsQuery : IRequest<IEnumerable<BlogReadDto>>
+public class GetBlogSubscriptionsQuery : IRequest<BlogSubscriptionsReadDto>
 {
     public string? BlogId { get; set; }
 }

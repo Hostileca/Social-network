@@ -13,28 +13,28 @@ public class SubscriptionController(
     IMediator mediator) 
     : ControllerBase
 {
-    [HttpPost("subscribers")]
-    public async Task<IActionResult> SubscribeToBlog(string blogId, SubscribeToBlogCommand subscribeToBlogCommand,
+    [HttpPost("subscriptions")]
+    public async Task<IActionResult> AddSubscription(string blogId, SubscribeToBlogCommand subscribeToBlogCommand,
         CancellationToken cancellationToken)
     {
-        subscribeToBlogCommand.SubscribeAtId = blogId;
+        subscribeToBlogCommand.UserBlogId = blogId;
         subscribeToBlogCommand.UserId = UserId;
         
-        var subscribtions = await mediator.Send(subscribeToBlogCommand);
+        var subscriptions = await mediator.Send(subscribeToBlogCommand, cancellationToken);
         
-        return Ok(subscribtions);
+        return Ok(subscriptions);
     }
 
-    [HttpDelete("subscribers")]
-    public async Task<IActionResult> UnsubscribeFromBlog(string blogId, UnsubscribeFromBlogCommand unsubscribeFromBlogCommand,
+    [HttpDelete("subscriptions")]
+    public async Task<IActionResult> RemoveSubscription(string blogId, UnsubscribeFromBlogCommand unsubscribeFromBlogCommand,
         CancellationToken cancellationToken)
     {
-        unsubscribeFromBlogCommand.SubscripeAtId = blogId;
+        unsubscribeFromBlogCommand.UserBlogId = blogId;
         unsubscribeFromBlogCommand.UserId = UserId;
         
-        var subscribtions = await mediator.Send(unsubscribeFromBlogCommand, cancellationToken);
+        var subscriptions = await mediator.Send(unsubscribeFromBlogCommand, cancellationToken);
         
-        return Ok(subscribtions);
+        return Ok(subscriptions);
     }
     
     [HttpGet("subscriptions")]

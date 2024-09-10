@@ -1,4 +1,6 @@
 ﻿using System.Reflection;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Mapster;
 using MapsterMapper;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,7 +11,7 @@ public static class ApplicationInjection
 {
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
-        services.MediatRConfigure();
+        services.MediatorConfigure();
         services.MapperConfigure();
         
         return services;
@@ -25,11 +27,19 @@ public static class ApplicationInjection
         return services;
     }
 
-    private static IServiceCollection MediatRConfigure(this IServiceCollection services)
+    private static IServiceCollection MediatorConfigure(this IServiceCollection services)
     {
         services
             .AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
+        return services;
+    }
+
+    private static IServiceCollection ValidationConfigure(this IServiceCollection services)
+    {
+        services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+        services.AddFluentValidationAutoValidation();
+        
         return services;
     }
 }
