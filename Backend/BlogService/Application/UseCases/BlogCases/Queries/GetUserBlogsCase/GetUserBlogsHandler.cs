@@ -1,6 +1,6 @@
 ﻿using Application.Dtos;
-using Application.Repositories;
-using Application.Specifications.Implementations;
+using Domain.Repositories;
+using Infrastructure.Specifications;
 using Mapster;
 using MediatR;
 

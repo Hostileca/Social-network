@@ -1,6 +1,6 @@
-﻿using Application.Specifications.Interfaces;
+﻿using Domain.Specifications;
 
-namespace Application.Repositories;
+namespace Domain.Repositories;
 
 public interface IRepository<TEntity> where TEntity : class
 {

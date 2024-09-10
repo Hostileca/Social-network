@@ -1,6 +1,6 @@
 ﻿namespace Application.Exceptions;
 
-public class UnauthorizedException(
+public class NoPermissionException(
     string message) 
     : Exception(message)
 {

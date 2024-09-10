@@ -1,9 +1,10 @@
 ﻿using Application.Dtos;
 using Application.Exceptions;
-using Application.Repositories;
 using Domain.Entities;
+using Domain.Repositories;
 using Mapster;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 
 namespace Application.UseCases.PostCases.Commands.CreatePostCase;
 
@@ -24,7 +25,7 @@ public class CreatePostHandler(
 
         if (blog.UserId != request.UserId)
         {
-            throw new UnauthorizedException("It is not your blog");
+            throw new NoPermissionException("It is not your blog");
         }
         
         var post = request.Adapt<Post>();
@@ -36,7 +37,13 @@ public class CreatePostHandler(
             foreach (var file in request.Attachments)
             {
                 await attachmentRepository.AddAsync(
-                    new Attachment{Id = Guid.NewGuid().ToString(), File = file, Post = post}, 
+                    new Attachment
+                    {
+                        Id = Guid.NewGuid().ToString(), 
+                        Data = await ConvertToBase64Async(file, cancellationToken),
+                        Post = post,
+                        ContentType = MimeTypes.GetMimeType(file.FileName)
+                    }, 
                     cancellationToken);
             }
         }
@@ -44,5 +51,19 @@ public class CreatePostHandler(
         await postRepository.SaveChangesAsync(cancellationToken);
         
         return post.Adapt<PostReadDto>();
+    }
+    
+    private static async Task<string> ConvertToBase64Async(IFormFile formFile, CancellationToken cancellationToken)
+    {
+        if (formFile == null || formFile.Length == 0)
+        {
+            return string.Empty;
+        }
+
+        using var memoryStream = new MemoryStream();
+        await formFile.CopyToAsync(memoryStream, cancellationToken);
+        var fileBytes = memoryStream.ToArray();
+
+        return Convert.ToBase64String(fileBytes);
     }
 }

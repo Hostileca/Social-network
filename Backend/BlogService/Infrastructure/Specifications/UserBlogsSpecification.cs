@@ -1,6 +1,7 @@
 ﻿using Domain.Entities;
+using Domain.Specifications;
 
-namespace Application.Specifications.Implementations;
+namespace Infrastructure.Specifications;
 
 public class UserBlogsSpecification(
     string userId) : Specification<Blog>

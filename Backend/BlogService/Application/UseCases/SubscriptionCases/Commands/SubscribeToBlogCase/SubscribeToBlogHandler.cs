@@ -1,8 +1,8 @@
 ﻿using Application.Dtos;
 using Application.Exceptions;
 using Application.MappingConfigurations;
-using Application.Repositories;
 using Domain.Entities;
+using Domain.Repositories;
 using Mapster;
 using MediatR;
 
@@ -24,7 +24,7 @@ public class SubscribeToBlogHandler(
 
         if (currentBlog.UserId != request.UserId)
         {
-            throw new UnauthorizedException("It is not your blog");
+            throw new NoPermissionException("It is not your blog");
         }
         
         var blogToSubscribe = await blogRepository.GetByIdAsync(request.SubscribeAtId, cancellationToken);
@@ -37,7 +37,7 @@ public class SubscribeToBlogHandler(
         if (currentBlog.Subscriptions
             .Any(x => x.SubscribedAtId == request.SubscribeAtId))
         {
-            throw new AlreadyExistException(typeof(Subscription).ToString());
+            throw new AlreadyExistsException(typeof(Subscription).ToString());
         }
         
         var newSubscriber = request.Adapt<Subscription>();

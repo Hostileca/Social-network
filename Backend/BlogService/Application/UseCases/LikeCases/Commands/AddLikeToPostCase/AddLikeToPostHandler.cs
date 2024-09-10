@@ -1,7 +1,7 @@
 ﻿using Application.Dtos;
 using Application.Exceptions;
-using Application.Repositories;
 using Domain.Entities;
+using Domain.Repositories;
 using Mapster;
 using MediatR;
 
@@ -24,7 +24,7 @@ public class AddLikeToPostHandler(
 
         if (blog.UserId != request.UserId)
         {
-            throw new UnauthorizedException("It is not your blog");
+            throw new NoPermissionException("It is not your blog");
         }
         
         var post = await postRepository.GetByIdAsync(request.PostId, cancellationToken);
@@ -36,7 +36,7 @@ public class AddLikeToPostHandler(
 
         if (post.Likes.Any(x => x.SenderId == request.BlogId))
         {
-            throw new AlreadyExistException(typeof(Like).ToString());
+            throw new AlreadyExistsException(typeof(Like).ToString());
         }
 
         var like = request.Adapt<Like>();

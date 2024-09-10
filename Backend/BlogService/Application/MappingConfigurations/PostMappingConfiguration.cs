@@ -2,6 +2,7 @@
 using Application.UseCases.PostCases.Commands.CreatePostCase;
 using Domain.Entities;
 using Mapster;
+using Microsoft.AspNetCore.Http;
 
 namespace Application.MappingConfigurations;
 

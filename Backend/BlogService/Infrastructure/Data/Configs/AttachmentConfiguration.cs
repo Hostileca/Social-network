@@ -10,10 +10,6 @@ public class AttachmentConfiguration : IEntityTypeConfiguration<Attachment>
     {
         builder
             .HasKey(x => x.Id);
-
-        builder
-            .Property(x => x.FilePath)
-            .IsRequired();
         
         builder
             .Property(x => x.ContentType)
@@ -25,6 +21,7 @@ public class AttachmentConfiguration : IEntityTypeConfiguration<Attachment>
             .HasForeignKey(x => x.PostId);
 
         builder
-            .Ignore(x => x.File);
+            .Property(x => x.Data)
+            .IsRequired();
     }
 }

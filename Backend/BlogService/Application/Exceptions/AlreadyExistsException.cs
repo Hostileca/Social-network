@@ -1,6 +1,6 @@
 ﻿namespace Application.Exceptions;
 
-public class AlreadyExistException(
+public class AlreadyExistsException(
     string message) 
     : Exception(message)
 {

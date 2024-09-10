@@ -1,6 +1,4 @@
-﻿using Application.Specifications.Interfaces;
-
-namespace Application.Specifications.Implementations;
+﻿namespace Domain.Specifications;
 
 public abstract class Specification<TEntity> : ISpecification<TEntity>
 {

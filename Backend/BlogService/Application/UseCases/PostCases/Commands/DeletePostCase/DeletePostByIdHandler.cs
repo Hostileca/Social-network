@@ -1,7 +1,7 @@
 ﻿using Application.Dtos;
 using Application.Exceptions;
-using Application.Repositories;
 using Domain.Entities;
+using Domain.Repositories;
 using Mapster;
 using MediatR;
 
@@ -28,7 +28,7 @@ public class DeletePostByIdHandler(
         
         if (post.Owner.UserId != request.UserId)
         {
-            throw new UnauthorizedException("It is not your post");
+            throw new NoPermissionException("It is not your post");
         }
         
         postRepository.Delete(post);

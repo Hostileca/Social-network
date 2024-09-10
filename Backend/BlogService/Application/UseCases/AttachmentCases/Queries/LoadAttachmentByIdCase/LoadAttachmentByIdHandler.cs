@@ -1,7 +1,8 @@
 ﻿using Application.Dtos;
 using Application.Exceptions;
-using Application.Repositories;
 using Domain.Entities;
+using Domain.Repositories;
+using Mapster;
 using MediatR;
 
 namespace Application.UseCases.AttachmentCases.Queries.LoadAttachmentByIdCase;
@@ -18,13 +19,7 @@ public class LoadAttachmentByIdHandler(
         {
             throw new NotFoundException(typeof(Attachment).ToString());
         }
-        
-        var file = await attachmentRepository.LoadAsync(attachment.FilePath, cancellationToken);
-        
-        return new AttachmentReadDto
-        {
-            File = file,
-            ContentType = attachment.ContentType
-        };
+
+        return attachment.Adapt<AttachmentReadDto>();
     }
 }

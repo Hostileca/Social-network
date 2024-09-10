@@ -1,8 +1,8 @@
 ﻿using Application.Dtos;
 using Application.Exceptions;
 using Application.MappingConfigurations;
-using Application.Repositories;
 using Domain.Entities;
+using Domain.Repositories;
 using Mapster;
 using MediatR;
 
@@ -24,7 +24,7 @@ public class UnsubscribeFromBlogHandler(
 
         if (currentBlog.UserId != request.UserId)
         {
-            throw new UnauthorizedException("It is not your blog");
+            throw new NoPermissionException("It is not your blog");
         }
         
         var subscribtion = currentBlog.Subscriptions
