@@ -3,6 +3,7 @@
 public class Blog : EntityBase
 {
     public string Username { get; set; }
+    public string UserId { get; set; }
     
     public virtual IEnumerable<ChatMember> ChatsMember { get; set; }
     
