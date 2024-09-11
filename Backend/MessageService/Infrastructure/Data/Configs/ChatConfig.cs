@@ -12,16 +12,15 @@ public class ChatConfig : IEntityTypeConfiguration<Chat>
             .HasKey(x => x.Id);
         
         builder
-            .Property(x => x.Name);
+            .Property(x => x.Name)
+            .IsRequired();
 
         builder
             .HasMany(x => x.Members)
-            .WithOne(x => x.Chat)
-            .HasForeignKey(x => x.ChatId);
-        
+            .WithOne(x => x.Chat);
+
         builder
             .HasMany(x => x.Messages)
-            .WithOne(x => x.Chat)
-            .HasForeignKey(x => x.ChatId);
+            .WithOne(x => x.Chat);
     }
 }

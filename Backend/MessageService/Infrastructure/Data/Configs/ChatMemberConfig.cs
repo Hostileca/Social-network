@@ -13,11 +13,13 @@ public class ChatMemberConfig : IEntityTypeConfiguration<ChatMember>
 
         builder
             .HasOne(x => x.Blog)
-            .WithMany(x => x.ChatsMember);
+            .WithMany(x => x.ChatsMember)
+            .HasForeignKey(x => x.BlogId);
 
         builder
             .HasOne(x => x.Chat)
-            .WithMany(x => x.Members);
+            .WithMany(x => x.Members)
+            .HasForeignKey(x => x.ChatId);
 
         builder
             .Property(x => x.JoinDate)

@@ -14,15 +14,19 @@ public class BlogConfig : IEntityTypeConfiguration<Blog>
         builder
             .Property(x => x.Username)
             .IsRequired();
-        
+
         builder
             .HasMany(x => x.ChatsMember)
-            .WithOne(x => x.Blog)
-            .HasForeignKey(x => x.BlogId);
-        
+            .WithOne(x => x.Blog);
+
         builder
             .HasMany(x => x.SendedMessages)
-            .WithOne(x => x.SenderBlog)
-            .HasForeignKey(x => x.SenderBlogId);
+            .WithOne(x => x.Sender)
+            .OnDelete(DeleteBehavior.SetNull);
+
+        builder
+            .HasMany(x => x.SendedReactions)
+            .WithOne(x => x.Sender)
+            .OnDelete(DeleteBehavior.SetNull);
     }
 }

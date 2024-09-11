@@ -12,19 +12,18 @@ public class MessageConfig : IEntityTypeConfiguration<Message>
             .HasKey(x => x.Id);
 
         builder
-            .Property(x => x.Text);
-        
+            .Property(x => x.Text)
+            .IsRequired();
+
         builder
             .HasOne(x => x.Chat)
             .WithMany(x => x.Messages)
-            .HasForeignKey(x => x.ChatId)
-            .IsRequired();
-        
+            .HasForeignKey(x => x.ChatId);
+
         builder
-            .HasOne(x => x.SenderBlog)
+            .HasOne(x => x.Sender)
             .WithMany(x => x.SendedMessages)
-            .HasForeignKey(x => x.SenderBlogId)
-            .IsRequired();
+            .HasForeignKey(x => x.SenderId);
 
         builder
             .HasMany(x => x.Attachments)

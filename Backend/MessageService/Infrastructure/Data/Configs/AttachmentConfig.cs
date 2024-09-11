@@ -14,10 +14,11 @@ public class AttachmentConfig : IEntityTypeConfiguration<Attachment>
         builder
             .HasOne(x => x.Message)
             .WithMany(x => x.Attachments)
+            .HasForeignKey(x => x.MessageId)
             .IsRequired();
 
         builder
-            .Property(x => x.Path)
+            .Property(x => x.Data)
             .IsRequired();
     }
 }

@@ -8,7 +8,7 @@ public class Reaction : EntityBase
     
     public Guid MessageId { get; set; }
     
-    public virtual Blog BlogSender { get; set; }
+    public virtual Blog? Sender { get; set; }
     
-    public Guid BlogSenderId { get; set; }
+    public Guid? SenderId { get; set; }
 }
