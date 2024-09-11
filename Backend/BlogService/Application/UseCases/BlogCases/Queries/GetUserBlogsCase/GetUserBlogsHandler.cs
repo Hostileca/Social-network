@@ -13,7 +13,7 @@ public class GetUserBlogsHandler(
     public async Task<UserBlogsDto> Handle(GetUserBlogsQuery request, CancellationToken cancellationToken)
     {
         var specification = new UserBlogsSpecification(request.UserId);
-        var blogs = await blogRepository.FindAsync(specification);
+        var blogs = await blogRepository.FindAsync(specification, cancellationToken);
 
         var response = new UserBlogsDto
         {
