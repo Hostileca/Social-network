@@ -24,14 +24,15 @@ public class RepositoryBase<TEntity>
         return await _dbSet.ToListAsync(cancellationToken);
     }
 
-    public async Task<TEntity?> GetByIdAsync(string id, CancellationToken cancellationToken = default)
+    public async Task<TEntity> GetByIdAsync(string id, CancellationToken cancellationToken = default)
     {
         return await _dbSet.FindAsync(id, cancellationToken);
     }
 
-    public async Task<IEnumerable<TEntity>> FindAsync(ISpecification<TEntity> specification)
+    public async Task<IEnumerable<TEntity>> FindAsync(ISpecification<TEntity> specification,
+        CancellationToken cancellationToken)
     {
-        return await _dbSet.Where(specification.ToFunction()).AsQueryable().ToListAsync();
+        return await _dbSet.Where(specification.ToFunction()).AsQueryable().ToListAsync(cancellationToken);
     }
 
     public async Task AddAsync(TEntity item, CancellationToken cancellationToken = default)
