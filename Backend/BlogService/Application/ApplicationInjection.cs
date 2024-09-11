@@ -13,6 +13,7 @@ public static class ApplicationInjection
     {
         services.MediatorConfigure();
         services.MapperConfigure();
+        services.ValidationConfigure();
         
         return services;
     }
