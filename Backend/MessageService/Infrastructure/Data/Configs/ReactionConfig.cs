@@ -12,18 +12,17 @@ public class ReactionConfig : IEntityTypeConfiguration<Reaction>
             .HasKey(x => x.Id);
         
         builder
-            .Property(x => x.Emoji);
-        
+            .Property(x => x.Emoji)
+            .IsRequired();
+
         builder
             .HasOne(x => x.Message)
             .WithMany(x => x.Reactions)
-            .HasForeignKey(x => x.MessageId)
-            .IsRequired();
-        
+            .HasForeignKey(x => x.MessageId);
+
         builder
-            .HasOne(x => x.BlogSender)
+            .HasOne(x => x.Sender)
             .WithMany(x => x.SendedReactions)
-            .HasForeignKey(x => x.BlogSenderId)
-            .IsRequired();
+            .HasForeignKey(x => x.SenderId);
     }
 }
