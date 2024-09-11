@@ -20,6 +20,10 @@ public class ChatMemberConfig : IEntityTypeConfiguration<ChatMember>
             .HasOne(x => x.Chat)
             .WithMany(x => x.Members)
             .HasForeignKey(x => x.ChatId);
+        
+        builder
+            .HasIndex(x => new { x.BlogId, x.ChatId })
+            .IsUnique();
 
         builder
             .Property(x => x.JoinDate)
