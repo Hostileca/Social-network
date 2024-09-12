@@ -1,4 +1,5 @@
 ﻿using Application.Dtos;
+using Application.Exceptions;
 using Domain.Entities;
 using Domain.Repositories;
 using Mapster;
@@ -11,12 +12,17 @@ public class DeleteBlogHandler(IBlogRepository repository)
 {
     public async Task<BlogReadDto> Handle(DeleteBlogCommand request, CancellationToken cancellationToken)
     {
-        var newBlog = request.Adapt<Blog>();
+        var existingBlog = await repository.GetByIdAndUserIdAsync(request.BlogId, request.UserId, cancellationToken);
         
-        await repository.AddAsync(newBlog, cancellationToken);
+        if (existingBlog is null)
+        {
+            throw new NotFoundException(typeof(Blog).ToString());
+        }
+        
+        repository.Delete(existingBlog);
 
         await repository.SaveChangesAsync(cancellationToken);
         
-        return newBlog.Adapt<BlogReadDto>();
+        return existingBlog.Adapt<BlogReadDto>();
     }
 }

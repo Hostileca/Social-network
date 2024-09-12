@@ -15,16 +15,12 @@ public class SubscribeToBlogHandler(
 {
     public async Task<BlogSubscriptionsReadDto> Handle(SubscribeToBlogCommand request, CancellationToken cancellationToken)
     {
-        var currentBlog = await blogRepository.GetByIdAsync(request.UserBlogId, cancellationToken);
+        var currentBlog = await blogRepository.GetByIdAndUserIdAsync(request.UserBlogId, 
+            request.UserId, cancellationToken);
 
         if (currentBlog is null)
         {
             throw new NotFoundException(typeof(Blog).ToString());
-        }
-
-        if (currentBlog.UserId != request.UserId)
-        {
-            throw new NoPermissionException("It is not your blog");
         }
         
         var blogToSubscribe = await blogRepository.GetByIdAsync(request.SubscribeAtId, cancellationToken);

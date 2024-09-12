@@ -8,4 +8,7 @@ public class DeleteBlogCommand : IRequest<BlogReadDto>
 {
     [JsonIgnore]
     public string? BlogId { get; set; }    
+    
+    [JsonIgnore]
+    public string? UserId { get; set; }
 }

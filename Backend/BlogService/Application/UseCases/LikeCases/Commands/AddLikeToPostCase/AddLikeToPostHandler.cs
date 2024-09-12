@@ -15,16 +15,11 @@ public class AddLikeToPostHandler(
 {
     public async Task<PostLikesReadDto> Handle(AddLikeToPostCommand request, CancellationToken cancellationToken)
     {
-        var blog = await blogRepository.GetByIdAsync(request.BlogId, cancellationToken);
+        var blog = await blogRepository.GetByIdAndUserIdAsync(request.BlogId, request.UserId, cancellationToken);
 
         if (blog is null)
         {
             throw new NotFoundException(typeof(Blog).ToString());
-        }
-
-        if (blog.UserId != request.UserId)
-        {
-            throw new NoPermissionException("It is not your blog");
         }
         
         var post = await postRepository.GetByIdAsync(request.PostId, cancellationToken);

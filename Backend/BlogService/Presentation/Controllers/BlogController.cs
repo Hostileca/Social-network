@@ -67,7 +67,11 @@ public class BlogController(
     public async Task<IActionResult> DeleteBlog(string blogId, 
         CancellationToken cancellationToken)
     {
-        var blog = await mediator.Send(new DeleteBlogCommand{BlogId = blogId}, cancellationToken);
+        var blog = await mediator.Send(new DeleteBlogCommand
+        {
+            BlogId = blogId,
+            UserId = UserId
+        }, cancellationToken);
         
         return Ok(blog);
     }

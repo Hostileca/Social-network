@@ -13,7 +13,7 @@ public class UpdateBlogHandler(
 {
     public async Task<BlogReadDto> Handle(UpdateBlogCommand request, CancellationToken cancellationToken)
     {
-        var existingBlog = await blogRepository.GetByIdAsync(request.Id, cancellationToken);
+        var existingBlog = await blogRepository.GetByIdAndUserIdAsync(request.Id, request.UserId ,cancellationToken);
         
         if (existingBlog is null)
         {
