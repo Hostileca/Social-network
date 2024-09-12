@@ -18,7 +18,7 @@ public class DeleteChatHandler(
 
         if (userBlog is null)
         {
-            throw new NotFoundException(typeof(Blog).ToString());
+            throw new NotFoundException(typeof(Blog).ToString(), request.BlogId.ToString());
         }
 
         if (userBlog.UserId != request.UserId)
@@ -30,10 +30,10 @@ public class DeleteChatHandler(
         
         if (chat is null)
         {
-            throw new NotFoundException(typeof(Chat).ToString());
+            throw new NotFoundException(typeof(Chat).ToString(), request.ChatId.ToString());
         }
 
-        if (!chat.Members.Any(m => m.BlogId == request.BlogId && m.ChatRole == ChatRoles.Admin))
+        if (!chat.Members.Any(m => m.BlogId == request.BlogId && m.Role == ChatRoles.Admin))
         {
             throw new NoPermissionException("You are not an owner of this chat");
         }

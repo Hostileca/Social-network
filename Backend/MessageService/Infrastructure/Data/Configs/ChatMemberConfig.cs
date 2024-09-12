@@ -30,7 +30,7 @@ public class ChatMemberConfig : IEntityTypeConfiguration<ChatMember>
             .IsRequired();
 
         builder
-            .Property(x => x.ChatRole)
+            .Property(x => x.Role)
             .IsRequired();
     }
 }

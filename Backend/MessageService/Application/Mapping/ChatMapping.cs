@@ -11,18 +11,15 @@ public class ChatMapping : IRegister
     {
         config.NewConfig<CreateChatCommand, Chat>()
             .Map(dest => dest.Id, src => Guid.NewGuid())
+            .Map(dest => dest.Name, src => src.Name);
+        
+        config.NewConfig<Chat, ChatReadDto>()
+            .Map(dest => dest.Id, src => src.Id)
             .Map(dest => dest.Name, src => src.Name)
-            .Map(dest => dest.Members, 
-                src => src.OtherMembers.Select(id => new ChatMember
-            {
-                Id = id,
-                ChatId = Guid.Empty, 
-                JoinDate = DateTime.UtcNow,
-                ChatRole = ChatRoles.Member 
-            }));
+            .Map(dest => dest.Members, src => src.Members.Select(member => member.Adapt<ChatMemberReadDto>()));
         
         config.NewConfig<Blog, BlogChatsReadDto>()
             .Map(dest => dest.Chats, 
-                src => src.ChatsMember.Select(chat => chat));
+                src => src.ChatsMember.Select(cm => cm.Chat.Adapt<ChatReadDto>()).ToList());
     }
 }
