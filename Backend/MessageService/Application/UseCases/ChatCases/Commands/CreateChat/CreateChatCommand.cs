@@ -10,7 +10,7 @@ public class CreateChatCommand : IRequest<ChatReadDto>
     public Guid BlogId { get; set; }
     
     [JsonIgnore]
-    public string UserId { get; set; }
+    public string? UserId { get; set; }
     
     public string Name { get; set; }
     

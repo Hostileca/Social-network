@@ -1,3 +1,5 @@
-﻿public class NotFoundException(
-    string message) 
-    : Exception(message);
+﻿namespace Application.Exceptions;
+
+public class NotFoundException(
+    string type, string identifier) 
+    : Exception($"Item type of {type} with identifier {identifier} not found") { };

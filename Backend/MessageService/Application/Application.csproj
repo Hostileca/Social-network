@@ -9,10 +9,15 @@
     <ItemGroup>
       <PackageReference Include="Mapster" Version="7.4.1-pre01" />
       <PackageReference Include="MediatR" Version="12.4.1" />
+      <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.1.0" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\Domain\Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="UseCases\ChatRolesCases\Commands\" />
     </ItemGroup>
 
 </Project>

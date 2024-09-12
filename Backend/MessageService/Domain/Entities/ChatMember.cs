@@ -12,5 +12,5 @@ public class ChatMember : EntityBase
     
     public DateTime JoinDate { get; set; }
     
-    public ChatRoles ChatRole { get; set; }
+    public ChatRoles Role { get; set; }
 }

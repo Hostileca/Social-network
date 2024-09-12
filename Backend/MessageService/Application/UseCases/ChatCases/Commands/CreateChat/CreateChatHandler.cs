@@ -18,7 +18,7 @@ public class CreateChatHandler(
 
         if (userBlog is null)
         {
-            throw new NotFoundException(typeof(Blog).ToString());
+            throw new NotFoundException(typeof(Blog).ToString(), request.BlogId.ToString());
         }
 
         if (userBlog.UserId != request.UserId)
@@ -28,15 +28,37 @@ public class CreateChatHandler(
 
         var chat = request.Adapt<Chat>();
 
-        var members = chat.Members.ToList();
-        members.Add(new ChatMember
+        var members = new List<ChatMember>
         {
-            Id = Guid.NewGuid(),
-            BlogId = request.BlogId,
-            ChatId = chat.Id,
-            ChatRole = ChatRoles.Admin,
-            JoinDate = DateTime.UtcNow
-        });
+            new ChatMember
+            {
+                Id = Guid.NewGuid(),
+                Blog = userBlog,
+                ChatId = chat.Id,
+                Role = ChatRoles.Admin,
+                JoinDate = DateTime.UtcNow
+            }
+        };
+        
+        foreach (var memberId in request.OtherMembers)
+        {
+            var memberBlog = await blogRepository.GetByIdAsync(memberId, cancellationToken);
+
+            if (memberBlog is null)
+            {
+                throw new NotFoundException(typeof(Blog).ToString(), memberId.ToString());
+            }
+            
+            members.Add(new ChatMember
+            {
+                Id = Guid.NewGuid(),
+                Blog = memberBlog,
+                ChatId = chat.Id,
+                Role = ChatRoles.Member,
+                JoinDate = DateTime.UtcNow
+            });
+        }
+        
         chat.Members = members;
         
         await chatRepository.AddAsync(chat, cancellationToken);
