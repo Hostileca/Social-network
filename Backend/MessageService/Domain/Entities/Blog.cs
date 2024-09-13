@@ -10,4 +10,6 @@ public class Blog : EntityBase
     public virtual IEnumerable<Message> SendedMessages { get; set; }
     
     public virtual IEnumerable<Reaction> SendedReactions { get; set; }
+    
+    public virtual IEnumerable<BlogConnection> Connections { get; set; }
 }

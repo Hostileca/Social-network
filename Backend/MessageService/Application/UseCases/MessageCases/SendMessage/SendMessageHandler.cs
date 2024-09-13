@@ -15,9 +15,9 @@ public class SendMessageHandler(
 {
     public async Task<MessageReadDto> Handle(SendMessageCommand request, CancellationToken cancellationToken)
     {
-        var userBlog = await blogRepository.GetByIdAsync(request.UserBlogId, cancellationToken);
+        var userBlog = await blogRepository.GetBlogByIdAndUserId(request.UserBlogId, request.UserId, cancellationToken);
 
-        if (userBlog is null || userBlog.UserId != request.UserId)
+        if (userBlog is null)
         {
             throw new NotFoundException(typeof(Blog).ToString(), request.UserBlogId.ToString());
         }
@@ -27,6 +27,11 @@ public class SendMessageHandler(
         if (chat is null)
         {
             throw new NotFoundException(typeof(Chat).ToString(), request.ChatId.ToString());
+        }
+
+        if (chat.Members.All(m => m.BlogId != userBlog.Id))
+        {
+            throw new NoPermissionException("You are not a member of this chat");
         }
 
         var message = request.Adapt<Message>();

@@ -14,16 +14,11 @@ public class DeleteChatHandler(
 {
     public async Task<ChatReadDto> Handle(DeleteChatCommand request, CancellationToken cancellationToken)
     {
-        var userBlog = await blogRepository.GetByIdAsync(request.BlogId, cancellationToken);
+        var userBlog = await blogRepository.GetBlogByIdAndUserId(request.BlogId, request.UserId, cancellationToken);
 
         if (userBlog is null)
         {
             throw new NotFoundException(typeof(Blog).ToString(), request.BlogId.ToString());
-        }
-
-        if (userBlog.UserId != request.UserId)
-        {
-            throw new NoPermissionException("It is not your blog");
         }
         
         var chat = await chatRepository.GetByIdAsync(request.ChatId, cancellationToken);
