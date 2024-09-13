@@ -12,7 +12,8 @@ public class PostMappingConfiguration : IRegister
     {
         config.NewConfig<Post, PostReadDto>()
             .Map(dest => dest.Id, src => src.Id)
-            .Map(dest => dest.AttachmentsId, src => src.Attachments.Select(x => x.Id));
+            .Map(dest => dest.AttachmentsId, 
+                src => src.Attachments != null ? src.Attachments.Select(x => x.Id) : new List<string>());
 
         config.NewConfig<CreatePostCommand, Post>()
             .Map(dest => dest.Id, src => Guid.NewGuid().ToString())
