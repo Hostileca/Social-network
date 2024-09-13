@@ -1,4 +1,5 @@
-﻿using Application.UseCases.ChatCases.Queries.GetBlogChats;
+﻿using Application.UseCases.BlogConnectionCases.Commands.AddBlogConnection;
+using Application.UseCases.ChatCases.Queries.GetBlogChats;
 using MediatR;
 using Microsoft.AspNetCore.SignalR;
 
@@ -12,26 +13,11 @@ public class HubBase(
     
     public override async Task OnConnectedAsync()
     {
-        var blogId = Context.GetHttpContext().Request.Query["blogId"];
-        
-        if (string.IsNullOrEmpty(blogId))
-        {
-            throw new HubException("Blog ID is required");
-        }
-
-        var blogChatsReadDto = await mediator.Send(new GetBlogChatsQuery
-        {
-            UserId = UserId,
-            BlogId = new Guid(blogId)
-        });
-        
+        var blogId = GetBlogIdFromQuery();
         Context.Items[ConnectionPayloads.BlogId] = blogId;
-        
-        foreach (var chat in blogChatsReadDto.Chats)
-        {
-            await Groups.AddToGroupAsync(Context.ConnectionId, $"chat_{chat.Id}");
-        }
-        
+
+        await SaveConnection();
+        await AddToGroups();
         await base.OnConnectedAsync();
     }
     
@@ -40,5 +26,41 @@ public class HubBase(
         await base.OnDisconnectedAsync(exception);
     }
 
-    private Dictionary<Guid, string> _connections = new Dictionary<Guid, string>();
+    private string GetBlogIdFromQuery()
+    {
+        var blogId = Context.GetHttpContext().Request.Query["blogId"];
+        
+        if (string.IsNullOrEmpty(blogId))
+        {
+            throw new HubException("Blog ID is required");
+        }
+
+        return blogId;
+    } 
+
+    private async Task AddToGroups()
+    {
+        var blogChatsReadDto = await mediator.Send(new GetBlogChatsQuery
+        {
+            UserId = UserId,
+            BlogId = BlogId
+        });
+        
+        foreach (var chat in blogChatsReadDto.Chats)
+        {
+            await Groups.AddToGroupAsync(Context.ConnectionId, $"chat_{chat.Id}");
+        }
+    }
+
+    private async Task SaveConnection()
+    {
+        var addConnectionCommand = new AddBlogConnectionCommand
+        {
+            BlogId = BlogId,
+            UserId = UserId,
+            ConnectionId = Context.ConnectionId
+        };
+
+        await mediator.Send(addConnectionCommand);
+    }
 }

@@ -28,5 +28,9 @@ public class BlogConfig : IEntityTypeConfiguration<Blog>
             .HasMany(x => x.SendedReactions)
             .WithOne(x => x.Sender)
             .OnDelete(DeleteBehavior.SetNull);
+
+        builder
+            .HasMany(x => x.Connections)
+            .WithOne(x => x.Blog);
     }
 }
