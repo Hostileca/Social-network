@@ -16,8 +16,8 @@ builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
 app.MapHub<ChatHub>("/chatHub");
-app.MapHub<ChatHub>("/messageHub");
-app.MapHub<ChatHub>("/chatMemberHub");
+//app.MapHub<ChatHub>("/messageHub");
+//app.MapHub<ChatHub>("/chatMemberHub");
 
 if (app.Environment.IsDevelopment())
 {
