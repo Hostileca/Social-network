@@ -1,5 +1,6 @@
 ﻿using Application.Dtos;
 using Application.Exceptions;
+using Application.SignalR.Services;
 using Domain.Entities;
 using Domain.Repositories;
 using Mapster;
@@ -10,12 +11,13 @@ namespace Application.UseCases.MessageCases.SendMessage;
 public class SendMessageHandler(
     IBlogRepository blogRepository,
     IChatRepository chatRepository,
-    IMessageRepository messageRepository)
+    IMessageRepository messageRepository,
+    IMessageNotificationService messageNotificationService)
     : IRequestHandler<SendMessageCommand, MessageReadDto>
 {
     public async Task<MessageReadDto> Handle(SendMessageCommand request, CancellationToken cancellationToken)
     {
-        var userBlog = await blogRepository.GetBlogByIdAndUserId(request.UserBlogId, request.UserId, cancellationToken);
+        var userBlog = await blogRepository.GetBlogByIdAndUserIdAsync(request.UserBlogId, request.UserId, cancellationToken);
 
         if (userBlog is null)
         {
@@ -39,7 +41,11 @@ public class SendMessageHandler(
         await messageRepository.AddAsync(message, cancellationToken);
         
         await messageRepository.SaveChangesAsync(cancellationToken);
+
+        var messageReadDto = message.Adapt<MessageReadDto>();
         
-        return message.Adapt<MessageReadDto>();
+        await messageNotificationService.SendMessageAsync(messageReadDto, chat.Id, cancellationToken);
+        
+        return messageReadDto;
     }
 }

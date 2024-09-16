@@ -1,5 +1,6 @@
 ﻿using Application.Dtos;
 using Application.Exceptions;
+using Application.SignalR.Services;
 using Domain.Entities;
 using Domain.Repositories;
 using Mapster;
@@ -9,12 +10,13 @@ namespace Application.UseCases.ChatCases.Commands.CreateChat;
 
 public class CreateChatHandler(
     IBlogRepository blogRepository,
-    IChatRepository chatRepository)
+    IChatRepository chatRepository,
+    IChatNotificationService chatNotificationService)
     : IRequestHandler<CreateChatCommand, ChatReadDto>
 {
     public async Task<ChatReadDto> Handle(CreateChatCommand request, CancellationToken cancellationToken)
     {
-        var userBlog = await blogRepository.GetBlogByIdAndUserId(request.BlogId, request.UserId, cancellationToken);
+        var userBlog = await blogRepository.GetBlogByIdAndUserIdAsync(request.BlogId, request.UserId, cancellationToken);
         
         if (userBlog is null)
         {
@@ -59,7 +61,11 @@ public class CreateChatHandler(
         await chatRepository.AddAsync(chat, cancellationToken);
 
         await chatRepository.SaveChangesAsync(cancellationToken);
+
+        var chatReadDto = chat.Adapt<ChatReadDto>();
+
+        await chatNotificationService.CreateChatAsync(chatReadDto, cancellationToken);
         
-        return chat.Adapt<ChatReadDto>();
+        return chatReadDto;
     }
 }

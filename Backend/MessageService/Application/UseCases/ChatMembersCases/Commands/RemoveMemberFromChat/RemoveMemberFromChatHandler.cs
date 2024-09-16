@@ -1,5 +1,6 @@
 ﻿using Application.Dtos;
 using Application.Exceptions;
+using Application.SignalR.Services;
 using Domain.Entities;
 using Domain.Repositories;
 using Mapster;
@@ -8,7 +9,8 @@ using MediatR;
 namespace Application.UseCases.ChatMembersCases.Commands.RemoveMemberFromChat;
 
 public class RemoveMemberFromChatHandler(
-    IChatMemberRepository chatMemberRepository)
+    IChatMemberRepository chatMemberRepository,
+    IChatMemberNotificationService chatMemberNotificationService)
     : IRequestHandler<RemoveMemberFromChatCommand, ChatMemberReadDto>
 {
     public async Task<ChatMemberReadDto> Handle(RemoveMemberFromChatCommand request, CancellationToken cancellationToken)
@@ -51,6 +53,10 @@ public class RemoveMemberFromChatHandler(
         
         await chatMemberRepository.SaveChangesAsync(cancellationToken);
         
-        return chatMemberToDelete.Adapt<ChatMemberReadDto>();
+        var chatMemberReadDto = chatMemberToDelete.Adapt<ChatMemberReadDto>();
+        
+        await chatMemberNotificationService.RemoveMemberFromChatAsync(chatMemberReadDto, request.ChatId, cancellationToken);
+        
+        return chatMemberReadDto;
     }
 }

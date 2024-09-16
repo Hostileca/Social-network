@@ -2,9 +2,9 @@
 using Application.Dtos;
 using MediatR;
 
-namespace Application.UseCases.ReactionCases.SendReaction;
+namespace Application.UseCases.ReactionCases.RemoveReaction;
 
-public class SendReactionCommand : IRequest<ReactionReadDto>
+public class RemoveReactionCommand : IRequest<ReactionReadDto>
 {
     [JsonIgnore]
     public string? UserId { get; set; }
@@ -14,5 +14,5 @@ public class SendReactionCommand : IRequest<ReactionReadDto>
     
     public Guid UserBlogId { get; set; }
     
-    public string Emoji { get; set; }
+    public Guid ReactionId { get; set; }
 }

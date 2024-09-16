@@ -1,5 +1,6 @@
 ﻿using Application.Dtos;
 using Application.Exceptions;
+using Application.SignalR.Services;
 using Domain.Entities;
 using Domain.Repositories;
 using Mapster;
@@ -9,7 +10,8 @@ namespace Application.UseCases.ChatMembersCases.Commands.AddMemberToChat;
 
 public class AddMemberToChatHandler(
     IChatRepository chatRepository,
-    IChatMemberRepository chatMemberRepository)
+    IChatMemberRepository chatMemberRepository,
+    IChatMemberNotificationService chatMemberNotificationService)
     : IRequestHandler<AddMemberToChatCommand, ChatMemberReadDto>
 {
     public async Task<ChatMemberReadDto> Handle(AddMemberToChatCommand request, CancellationToken cancellationToken)
@@ -35,6 +37,10 @@ public class AddMemberToChatHandler(
         
         await chatMemberRepository.SaveChangesAsync(cancellationToken);
         
-        return chatMember.Adapt<ChatMemberReadDto>();
+        var chatMemberReadDto = chatMember.Adapt<ChatMemberReadDto>();
+        
+        await chatMemberNotificationService.AddMemberToChatAsync(chatMemberReadDto, request.ChatId, cancellationToken);
+        
+        return chatMemberReadDto;
     }
 }

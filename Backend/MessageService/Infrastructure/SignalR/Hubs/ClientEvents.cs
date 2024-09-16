@@ -1,4 +1,4 @@
-﻿namespace Presentation.Hubs;
+﻿namespace Infrastructure.SignalR.Hubs;
 
 public static class ClientEvents
 {
@@ -10,7 +10,11 @@ public static class ClientEvents
     
     public const string ChatMemberRemoved = "ChatMemberRemoved";
     
+    public const string ChatMemberUpdated = "ChatMemberRemoved";
+    
     public const string MessageSent = "MessageSent";
     
     public const string ReactionSent = "ReactionSent";
+    
+    public const string ReactionRemoved = "ReactionSent";
 }
