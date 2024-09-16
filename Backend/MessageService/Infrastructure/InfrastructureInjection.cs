@@ -41,6 +41,7 @@ public static class InfrastructureInjection
         services.AddScoped<IChatRepository, ChatRepository>();
         services.AddScoped<IMessageRepository, MessageRepository>();
         services.AddScoped<IReactionRepository, ReactionRepository>();
+        services.AddScoped<IBlogConnectionRepository, BlogConnectionRepository>();
         
         return services;
     }

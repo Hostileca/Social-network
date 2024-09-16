@@ -8,7 +8,7 @@ public class SendMessageCommand : IRequest<MessageReadDto>
 {
     [JsonIgnore]
     public string? UserId { get; set; }
-    
+    [JsonIgnore]
     public Guid UserBlogId { get; set; }
     
     public Guid ChatId { get; set; }

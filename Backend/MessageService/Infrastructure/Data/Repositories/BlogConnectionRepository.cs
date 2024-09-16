@@ -8,8 +8,8 @@ public class BlogConnectionRepository(
     AppDbContext context)
     : RepositoryBase<BlogConnection>(context), IBlogConnectionRepository
 {
-    public async Task<IEnumerable<BlogConnection>> GetConnectionsByBlogId(Guid blogId)
+    public async Task<IEnumerable<BlogConnection>> GetConnectionsByBlogId(Guid blogId, CancellationToken cancellationToken)
     {
-        return await _dbSet.Where(x => x.BlogId == blogId).ToListAsync();
+        return await _dbSet.Where(x => x.BlogId == blogId).ToListAsync(cancellationToken);
     }
 }

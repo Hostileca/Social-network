@@ -1,4 +1,5 @@
 ﻿using Application.UseCases.BlogConnectionCases.Commands.AddBlogConnection;
+using Application.UseCases.BlogConnectionCases.Commands.DeleteBlogConnection;
 using Application.UseCases.ChatCases.Queries.GetBlogChats;
 using MediatR;
 using Microsoft.AspNetCore.SignalR;
@@ -16,13 +17,17 @@ public class HubBase(
         var blogId = GetBlogIdFromQuery();
         Context.Items[ConnectionPayloads.BlogId] = blogId;
 
-        await SaveConnection();
-        await AddToGroups();
+        await SaveConnectionAsync();
+        
+        await JoinGroupsAsync();
+        
         await base.OnConnectedAsync();
     }
     
     public override async Task OnDisconnectedAsync(Exception? exception)
     {
+        await DeleteConnectionAsync();
+        
         await base.OnDisconnectedAsync(exception);
     }
 
@@ -38,7 +43,7 @@ public class HubBase(
         return blogId;
     } 
 
-    private async Task AddToGroups()
+    private async Task JoinGroupsAsync()
     {
         var blogChatsReadDto = await mediator.Send(new GetBlogChatsQuery
         {
@@ -52,7 +57,7 @@ public class HubBase(
         }
     }
 
-    private async Task SaveConnection()
+    private async Task SaveConnectionAsync()
     {
         var addConnectionCommand = new AddBlogConnectionCommand
         {
@@ -62,5 +67,16 @@ public class HubBase(
         };
 
         await mediator.Send(addConnectionCommand);
+    }
+
+    private async Task DeleteConnectionAsync()
+    {
+        var deleteBlogConnectionCommand = new DeleteBlogConnectionCommand
+        {
+            BlogId = BlogId,
+            ConnectionId = Context.ConnectionId
+        };
+
+        await mediator.Send(deleteBlogConnectionCommand);
     }
 }
