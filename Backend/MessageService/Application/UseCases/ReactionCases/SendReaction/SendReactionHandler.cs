@@ -8,20 +8,27 @@ using MediatR;
 namespace Application.UseCases.ReactionCases.SendReaction;
 
 public class SendReactionHandler(
-    IChatRepository chatRepository,
+    IBlogRepository blogRepository,
     IReactionRepository reactionRepository)
     : IRequestHandler<SendReactionCommand, ReactionReadDto>
 {
     public async Task<ReactionReadDto> Handle(SendReactionCommand request, CancellationToken cancellationToken)
     {
-        var chat = await chatRepository.GetByIdAsync(request.ChatId, cancellationToken);
+        var blog = await blogRepository.GetBlogByIdAndUserId(request.UserBlogId, request.UserId, cancellationToken);
+        
+        if (blog is null)
+        {
+            throw new NotFoundException(typeof(Blog).ToString(), request.UserBlogId.ToString());
+        }
+        
+        var chatMember = blog.ChatsMember.FirstOrDefault(cm => cm.ChatId == request.ChatId);
 
-        if (chat is null)
+        if (chatMember is null)
         {
             throw new NotFoundException(typeof(Chat).ToString(), request.ChatId.ToString());
         }
 
-        var message = chat.Messages.FirstOrDefault(m => m.Id == request.MessageId);
+        var message = chatMember.Chat.Messages.FirstOrDefault(m => m.Id == request.MessageId);
         
         if (message is null)
         {
@@ -31,6 +38,8 @@ public class SendReactionHandler(
         var reaction = request.Adapt<Reaction>();
         
         await reactionRepository.AddAsync(reaction, cancellationToken);
+        
+        await reactionRepository.SaveChangesAsync(cancellationToken);
         
         return reaction.Adapt<ReactionReadDto>();
     }
