@@ -1,9 +1,11 @@
 ﻿using Application.Dtos;
 using Application.UseCases.BlogConnectionCases.Queries.GetBlogConnectionsByBlogId;
 using Application.UseCases.ChatCases.Commands.CreateChat;
+using Application.UseCases.ChatCases.Commands.DeleteChat;
 using Application.UseCases.ChatMembersCases.Commands.AddMemberToChat;
 using Application.UseCases.ChatMembersCases.Commands.RemoveMemberFromChat;
 using Application.UseCases.MessageCases.SendMessage;
+using Application.UseCases.ReactionCases.SendReaction;
 using MediatR;
 using Microsoft.AspNetCore.SignalR;
 
@@ -23,6 +25,16 @@ public class ChatHub(
         await ConnectMembersToChatAsync(chat);
         
         await Clients.Group($"chat_{chat.Id}").SendAsync(ClientEvents.ChatCreated, chat);
+    }
+    
+    public async Task DeleteChat(DeleteChatCommand deleteChatCommand)
+    {
+        deleteChatCommand.BlogId = BlogId;
+        deleteChatCommand.UserId = UserId;
+        
+        var chat = await mediator.Send(deleteChatCommand);
+        
+        await Clients.Group($"chat_{chat.Id}").SendAsync(ClientEvents.ChatDeleted, chat);
     }
 
     public async Task AddMemberToChat(AddMemberToChatCommand addMemberToChatCommand)
@@ -57,6 +69,16 @@ public class ChatHub(
         await mediator.Send(sendMessageCommand);
         
         await Clients.Group($"chat_{sendMessageCommand.ChatId}").SendAsync(ClientEvents.MessageSent, sendMessageCommand);
+    }
+    
+    public async Task SendReaction(SendReactionCommand sendReactionCommand)
+    {
+        sendReactionCommand.UserBlogId = BlogId;
+        sendReactionCommand.UserId = UserId;
+        
+        await mediator.Send(sendReactionCommand);
+        
+        await Clients.Group($"chat_{sendReactionCommand.ChatId}").SendAsync(ClientEvents.ReactionSent, sendReactionCommand);
     }
     
     private async Task ConnectMembersToChatAsync(ChatReadDto chat)
