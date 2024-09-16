@@ -1,6 +1,8 @@
-﻿using Domain.Repositories;
+﻿using Application.SignalR.Services;
+using Domain.Repositories;
 using Infrastructure.Data;
 using Infrastructure.Data.Repositories;
+using Infrastructure.SignalR.Services;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -15,6 +17,7 @@ public static class InfrastructureInjection
     {
         services.DbConfigure(configuration);
         services.RepositoriesConfigure();
+        services.SignalRConfigure();
         
         return services;
     }
@@ -42,6 +45,17 @@ public static class InfrastructureInjection
         services.AddScoped<IMessageRepository, MessageRepository>();
         services.AddScoped<IReactionRepository, ReactionRepository>();
         services.AddScoped<IBlogConnectionRepository, BlogConnectionRepository>();
+        
+        return services;
+    }
+
+    private static IServiceCollection SignalRConfigure(this IServiceCollection services)
+    {
+        services.AddSignalR();
+        
+        services.AddScoped<IChatNotificationService, ChatNotificationService>();
+        services.AddScoped<IChatMemberNotificationService, ChatMemberNotificationService>();
+        services.AddScoped<IMessageNotificationService, MessageNotificationService>();
         
         return services;
     }

@@ -1,5 +1,6 @@
 ﻿using Application.Dtos;
 using Application.Exceptions;
+using Application.SignalR.Services;
 using Domain.Entities;
 using Domain.Repositories;
 using Mapster;
@@ -9,12 +10,13 @@ namespace Application.UseCases.ChatCases.Commands.DeleteChat;
 
 public class DeleteChatHandler(
     IBlogRepository blogRepository,
-    IChatRepository chatRepository) 
+    IChatRepository chatRepository,
+    IChatNotificationService chatNotificationService) 
     : IRequestHandler<DeleteChatCommand, ChatReadDto>
 {
     public async Task<ChatReadDto> Handle(DeleteChatCommand request, CancellationToken cancellationToken)
     {
-        var userBlog = await blogRepository.GetBlogByIdAndUserId(request.BlogId, request.UserId, cancellationToken);
+        var userBlog = await blogRepository.GetBlogByIdAndUserIdAsync(request.BlogId, request.UserId, cancellationToken);
 
         if (userBlog is null)
         {
@@ -36,7 +38,11 @@ public class DeleteChatHandler(
         chatRepository.Delete(chat);
         
         await chatRepository.SaveChangesAsync(cancellationToken);
+
+        var chatReadDto = chat.Adapt<ChatReadDto>();
+
+        await chatNotificationService.DeleteChatAsync(chatReadDto, cancellationToken);
         
-        return chat.Adapt<ChatReadDto>();
+        return chatReadDto;
     }
 }

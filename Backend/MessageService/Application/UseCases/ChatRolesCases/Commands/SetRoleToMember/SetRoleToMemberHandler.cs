@@ -1,5 +1,6 @@
 ﻿using Application.Dtos;
 using Application.Exceptions;
+using Application.SignalR.Services;
 using Domain.Entities;
 using Domain.Repositories;
 using Mapster;
@@ -8,7 +9,8 @@ using MediatR;
 namespace Application.UseCases.ChatRolesCases.Commands.SetRoleToMember;
 
 public class SetRoleToMemberHandler(
-    IChatMemberRepository chatMemberRepository)
+    IChatMemberRepository chatMemberRepository,
+    IChatMemberNotificationService chatMemberNotificationService)
     : IRequestHandler<SetRoleToMemberCommand, ChatMemberReadDto>
 {
     public async Task<ChatMemberReadDto> Handle(SetRoleToMemberCommand request, CancellationToken cancellationToken)
@@ -55,6 +57,10 @@ public class SetRoleToMemberHandler(
         
         await chatMemberRepository.SaveChangesAsync(cancellationToken);
 
-        return chatMember.Adapt<ChatMemberReadDto>();
+        var chatMemberReadDto = chatMember.Adapt<ChatMemberReadDto>();
+        
+        await chatMemberNotificationService.ChatMemberUpdateAsync(chatMemberReadDto, chatMember.ChatId, cancellationToken);
+        
+        return chatMemberReadDto;
     }
 }

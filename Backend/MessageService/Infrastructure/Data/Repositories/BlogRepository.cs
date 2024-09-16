@@ -8,7 +8,7 @@ public class BlogRepository(
     AppDbContext context) 
     : RepositoryBase<Blog>(context), IBlogRepository
 {
-    public async Task<Blog> GetBlogByIdAndUserId(Guid blogId, string userId, CancellationToken cancellationToken)
+    public async Task<Blog> GetBlogByIdAndUserIdAsync(Guid blogId, string userId, CancellationToken cancellationToken)
     {
         return await _dbSet.Where(x => x.Id == blogId && x.UserId == userId).FirstOrDefaultAsync(cancellationToken);  
     }
