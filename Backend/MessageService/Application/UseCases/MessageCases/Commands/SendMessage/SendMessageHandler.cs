@@ -6,7 +6,7 @@ using Domain.Repositories;
 using Mapster;
 using MediatR;
 
-namespace Application.UseCases.MessageCases.SendMessage;
+namespace Application.UseCases.MessageCases.Commands.SendMessage;
 
 public class SendMessageHandler(
     IBlogRepository blogRepository,

@@ -9,4 +9,6 @@ public class MessageReadDto
     public DateTime Date { get; set; }
     
     public string Text { get; set; }
+    
+    public IEnumerable<ReactionReadDto> Reactions { get; set; }
 }

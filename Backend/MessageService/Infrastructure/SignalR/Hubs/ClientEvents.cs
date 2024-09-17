@@ -12,6 +12,8 @@ public static class ClientEvents
     
     public const string ChatMemberUpdated = "ChatMemberRemoved";
     
+    public const string ChatMemberLeft = "ChatMemberLeft";
+    
     public const string MessageSent = "MessageSent";
     
     public const string ReactionSent = "ReactionSent";

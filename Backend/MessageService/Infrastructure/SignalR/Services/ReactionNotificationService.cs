@@ -19,6 +19,6 @@ public class ReactionNotificationService(
     public async Task RemoveReaction(ReactionReadDto reactionReadDto, Guid chatId, CancellationToken cancellationToken)
     {
         await chatHub.Clients.Group($"chat_{chatId}").SendAsync(
-            ClientEvents.ChatMemberRemoved, reactionReadDto, cancellationToken);
+            ClientEvents.ReactionRemoved, reactionReadDto, cancellationToken);
     }
 }

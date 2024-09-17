@@ -16,11 +16,11 @@ public class DeleteChatHandler(
 {
     public async Task<ChatReadDto> Handle(DeleteChatCommand request, CancellationToken cancellationToken)
     {
-        var userBlog = await blogRepository.GetBlogByIdAndUserIdAsync(request.BlogId, request.UserId, cancellationToken);
+        var userBlog = await blogRepository.GetBlogByIdAndUserIdAsync(request.UserBlogId, request.UserId, cancellationToken);
 
         if (userBlog is null)
         {
-            throw new NotFoundException(typeof(Blog).ToString(), request.BlogId.ToString());
+            throw new NotFoundException(typeof(Blog).ToString(), request.UserBlogId.ToString());
         }
         
         var chat = await chatRepository.GetByIdAsync(request.ChatId, cancellationToken);
@@ -30,7 +30,7 @@ public class DeleteChatHandler(
             throw new NotFoundException(typeof(Chat).ToString(), request.ChatId.ToString());
         }
 
-        if (!chat.Members.Any(m => m.BlogId == request.BlogId && m.Role == ChatRoles.Admin))
+        if (!chat.Members.Any(m => m.BlogId == request.UserBlogId && m.Role == ChatRoles.Admin))
         {
             throw new NoPermissionException("You are not an owner of this chat");
         }

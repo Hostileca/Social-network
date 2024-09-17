@@ -13,17 +13,7 @@ public class GetBlogChatsHandler(
 {
     public async Task<BlogChatsReadDto> Handle(GetBlogChatsQuery request, CancellationToken cancellationToken)
     {
-        var blog = await blogRepository.GetByIdAsync(request.BlogId, cancellationToken);
-
-        if (blog is null)
-        {
-            throw new NotFoundException(typeof(Blog).ToString(), request.BlogId.ToString());
-        }
-        
-        if (blog.UserId != request.UserId)
-        {
-            throw new NoPermissionException("It is not your blog");
-        }
+        var blog = await blogRepository.GetBlogByIdAndUserIdAsync(request.UserBlogId, request.UserId, cancellationToken);
 
         return blog.Adapt<BlogChatsReadDto>();
     }

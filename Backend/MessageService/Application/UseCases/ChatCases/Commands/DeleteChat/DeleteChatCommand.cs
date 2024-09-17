@@ -12,5 +12,5 @@ public class DeleteChatCommand : IRequest<ChatReadDto>
     [JsonIgnore]
     public Guid ChatId { get; set; }
     
-    public Guid BlogId { get; set; }
+    public Guid UserBlogId { get; set; }
 }

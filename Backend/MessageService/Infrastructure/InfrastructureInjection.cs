@@ -56,6 +56,7 @@ public static class InfrastructureInjection
         services.AddScoped<IChatNotificationService, ChatNotificationService>();
         services.AddScoped<IChatMemberNotificationService, ChatMemberNotificationService>();
         services.AddScoped<IMessageNotificationService, MessageNotificationService>();
+        services.AddScoped<IReactionNotificationService, ReactionNotificationService>();
         
         return services;
     }
