@@ -9,4 +9,6 @@ public interface IChatMemberNotificationService
     Task RemoveMemberFromChatAsync(ChatMemberReadDto chatMemberReadDto, Guid chatId, CancellationToken cancellationToken);
     
     Task ChatMemberUpdateAsync(ChatMemberReadDto chatMemberReadDto, Guid chatId, CancellationToken cancellationToken);
+    
+    Task ChatMemberLeaveAsync(ChatMemberReadDto chatMemberReadDto, Guid chatId, CancellationToken cancellationToken);
 }

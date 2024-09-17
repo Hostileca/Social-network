@@ -16,11 +16,11 @@ public class CreateChatHandler(
 {
     public async Task<ChatReadDto> Handle(CreateChatCommand request, CancellationToken cancellationToken)
     {
-        var userBlog = await blogRepository.GetBlogByIdAndUserIdAsync(request.BlogId, request.UserId, cancellationToken);
+        var userBlog = await blogRepository.GetBlogByIdAndUserIdAsync(request.UserBlogId, request.UserId, cancellationToken);
         
         if (userBlog is null)
         {
-            throw new NotFoundException(typeof(Blog).ToString(), request.BlogId.ToString());
+            throw new NotFoundException(typeof(Blog).ToString(), request.UserBlogId.ToString());
         }
 
         var chat = request.Adapt<Chat>();

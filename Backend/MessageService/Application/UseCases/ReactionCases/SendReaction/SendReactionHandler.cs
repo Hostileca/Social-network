@@ -36,6 +36,13 @@ public class SendReactionHandler(
             throw new NoPermissionException("User is not a member of the chat");
         }
 
+        var existingReaction = message.Reactions.FirstOrDefault(r => r.SenderId == request.UserBlogId);
+
+        if (existingReaction is not null)
+        {
+            reactionRepository.Delete(existingReaction);
+        }
+
         var reaction = request.Adapt<Reaction>();
         
         await reactionRepository.AddAsync(reaction, cancellationToken);

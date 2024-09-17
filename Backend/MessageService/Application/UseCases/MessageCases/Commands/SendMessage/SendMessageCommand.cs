@@ -2,7 +2,7 @@
 using Application.Dtos;
 using MediatR;
 
-namespace Application.UseCases.MessageCases.SendMessage;
+namespace Application.UseCases.MessageCases.Commands.SendMessage;
 
 public class SendMessageCommand : IRequest<MessageReadDto>
 {

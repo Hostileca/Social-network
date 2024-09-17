@@ -11,10 +11,9 @@ public class SetRoleToMemberCommand : IRequest<ChatMemberReadDto>
     public string? UserId { get; set; }
     
     [JsonIgnore]
-    public Guid UserBlogId { get; set; }
-    
-    [JsonIgnore]
     public Guid ChatMemberId { get; set; }
+    
+    public Guid UserBlogId { get; set; }
     
     public ChatRoles Role { get; set; }
 }

@@ -47,4 +47,10 @@ public class ChatMemberNotificationService(
         await chatHub.Clients.Group($"chat_{chatId}").SendAsync(
             ClientEvents.ChatMemberUpdated, chatMemberReadDto, cancellationToken);
     }
+
+    public async Task ChatMemberLeaveAsync(ChatMemberReadDto chatMemberReadDto, Guid chatId, CancellationToken cancellationToken)
+    {
+        await chatHub.Clients.Group($"chat_{chatId}").SendAsync(
+            ClientEvents.ChatMemberLeft, chatMemberReadDto, cancellationToken);
+    }
 }
