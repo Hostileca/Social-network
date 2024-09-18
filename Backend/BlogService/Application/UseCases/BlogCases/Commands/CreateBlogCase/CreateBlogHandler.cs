@@ -22,7 +22,7 @@ public class CreateBlogHandler(
         await repository.SaveChangesAsync(cancellationToken);
 
         var blogReadDto = newBlog.Adapt<BlogReadDto>();
-        var blogCreatedEvent = blogReadDto.Adapt<BlogCreatedEvent>();
+        var blogCreatedEvent = newBlog.Adapt<BlogCreatedEvent>();
         
         await publishEndpoint.Publish(blogCreatedEvent, cancellationToken);
         

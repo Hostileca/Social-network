@@ -15,8 +15,7 @@ public class BlogMappingConfigurations : IRegister
             .Map(dest => dest.Id, src => Guid.NewGuid().ToString());
 
         config.NewConfig<Blog, BlogReadDto>();
-        config.NewConfig<BlogReadDto, BlogCreatedEvent>();
-        config.NewConfig<BlogReadDto, BlogDeletedEvent>()
-            .Map(dest => dest.Id, src => src.Id);
+        
+        config.NewConfig<Blog, BlogCreatedEvent>();
     }
 }

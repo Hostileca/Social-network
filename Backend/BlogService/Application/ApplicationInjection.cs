@@ -11,12 +11,11 @@ namespace Application;
 
 public static class ApplicationInjection
 {
-    public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddApplication(this IServiceCollection services)
     {
         services.MediatorConfigure();
         services.MapperConfigure();
         services.ValidationConfigure();
-        services.MessageBrokerConfigure(configuration);
         
         return services;
     }
@@ -43,18 +42,6 @@ public static class ApplicationInjection
     {
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
         services.AddFluentValidationAutoValidation();
-        
-        return services;
-    }
-
-    private static IServiceCollection MessageBrokerConfigure(this IServiceCollection services, IConfiguration configuration)
-    {
-        var connectionString = configuration.GetConnectionString("RabbitMqConnection");
-        
-        services.AddMassTransit(x =>
-        {
-            x.UsingRabbitMq((context, cfg) => cfg.Host(connectionString));
-        });
         
         return services;
     }

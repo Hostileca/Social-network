@@ -2,11 +2,14 @@
 using Domain.Repositories;
 using Infrastructure.Data;
 using Infrastructure.Data.Repositories;
+using Infrastructure.MesssageBroker.Consumers;
 using Infrastructure.SignalR.Services;
+using MassTransit;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SharedResources.MessageBroker.Events;
 
 namespace Infrastructure;
 
@@ -18,6 +21,7 @@ public static class InfrastructureInjection
         services.DbConfigure(configuration);
         services.RepositoriesConfigure();
         services.SignalRConfigure();
+        services.MessageBrokerConfigure(configuration);
         
         return services;
     }
@@ -57,6 +61,34 @@ public static class InfrastructureInjection
         services.AddScoped<IChatMemberNotificationService, ChatMemberNotificationService>();
         services.AddScoped<IMessageNotificationService, MessageNotificationService>();
         services.AddScoped<IReactionNotificationService, ReactionNotificationService>();
+        
+        return services;
+    }
+
+    private static IServiceCollection MessageBrokerConfigure(this IServiceCollection services, IConfiguration configuration)
+    {
+        var rabbitMqSettings = configuration.GetSection("RabbitMqSettings");
+        
+        services.AddMassTransit(x =>
+        {
+            x.AddConsumer<BlogCreatedConsumer>();
+            x.AddConsumer<BlogDeletedConsumer>();
+            
+            x.UsingRabbitMq((context, cfg) =>
+            {
+                cfg.Host(rabbitMqSettings["Host"], h =>
+                {
+                    h.Username(rabbitMqSettings["Username"]);
+                    h.Password(rabbitMqSettings["Password"]);
+                });
+                
+                cfg.ReceiveEndpoint("blog-queue", e =>
+                {
+                    e.ConfigureConsumer<BlogCreatedConsumer>(context);
+                    e.ConfigureConsumer<BlogDeletedConsumer>(context);
+                });
+            });
+        });
         
         return services;
     }

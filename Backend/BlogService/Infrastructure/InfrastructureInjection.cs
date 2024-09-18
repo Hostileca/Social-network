@@ -1,6 +1,7 @@
 ﻿using Domain.Repositories;
 using Infrastructure.Data;
 using Infrastructure.Data.Repositories;
+using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,7 +14,8 @@ public static class InfrastructureInjection
     {
         services.DbConfigure(configuration);
         services.RepositoriesConfigure();
-        
+        services.MessageBrokerConfigure(configuration);
+
         return services;
     }
     
@@ -36,6 +38,22 @@ public static class InfrastructureInjection
         services.AddScoped<ILikeRepository, LikeRepository>();
         services.AddScoped<IPostRepository, PostRepository>();
         services.AddScoped<ISubscriberRepository, SubscriberRepository>();
+        
+        return services;
+    }
+    
+    
+    private static IServiceCollection MessageBrokerConfigure(this IServiceCollection services, IConfiguration configuration)
+    {
+        var rabbitMqSettings = configuration.GetSection("RabbitMqSettings");
+        
+        services.AddMassTransit(x =>
+        {
+            x.UsingRabbitMq((context, cfg) =>
+            {
+                cfg.Host(rabbitMqSettings["Host"]);
+            });
+        });
         
         return services;
     }

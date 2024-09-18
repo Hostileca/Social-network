@@ -1,7 +1,9 @@
 using System.Text;
 using Application;
 using Infrastructure;
+using Infrastructure.MesssageBroker.Consumers;
 using Infrastructure.SignalR.Hubs;
+using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using SharedResources.Middlewares;
