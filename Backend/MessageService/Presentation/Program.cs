@@ -1,12 +1,35 @@
+using System.Text;
 using Application;
 using Infrastructure;
 using Infrastructure.SignalR.Hubs;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using Presentation.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddApplication();
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
+        IssuerSigningKey = new SymmetricSecurityKey(
+            Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:Key"]!)),
+        ValidateActor = true,
+        ValidateIssuer = true,
+        ValidateAudience = false,
+        RequireExpirationTime = true,
+        ValidateIssuerSigningKey = true
+    };
+});
+
 builder.Services.AddScoped<ExceptionHandlingMiddleware>();
 
 builder.Services.AddControllers();
