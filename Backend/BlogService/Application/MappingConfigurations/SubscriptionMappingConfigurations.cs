@@ -18,7 +18,7 @@ public class SubscriptionMappingConfigurations : IRegister
             .Map(dest => dest.Subscriptions, 
                 src => src.Subscriptions.Select(sub => new BlogReadDto
                 {
-                    Id = sub.SubscribedAtId,
+                    Id = new Guid(sub.SubscribedAtId),
                     Username = sub.SubscribedAt.Username,
                 }).ToList());
         
@@ -26,7 +26,7 @@ public class SubscriptionMappingConfigurations : IRegister
             .Map(dest => dest.Subscribers, 
                 src => src.Subscribers.Select(sub => new BlogReadDto
                 {
-                    Id = sub.SubscribedById,
+                    Id = new Guid(sub.SubscribedById),
                     Username = sub.SubscribedBy.Username,
                 }).ToList());
     }

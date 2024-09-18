@@ -1,4 +1,4 @@
-﻿namespace Application.Dtos;
+﻿namespace SharedResources.Dtos;
 
 public class ReactionReadDto
 {

@@ -1,7 +1,8 @@
-﻿using Application.Dtos;
-using Application.UseCases.ChatMembersCases.Commands.AddMemberToChat;
+﻿using Application.UseCases.ChatMembersCases.Commands.AddMemberToChat;
 using Domain.Entities;
 using Mapster;
+using SharedResources.Dtos;
+using SharedResources.Enums;
 
 namespace Application.Mapping;
 

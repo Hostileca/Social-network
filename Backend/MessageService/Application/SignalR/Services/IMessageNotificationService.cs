@@ -1,4 +1,4 @@
-﻿using Application.Dtos;
+﻿using SharedResources.Dtos;
 
 namespace Application.SignalR.Services;
 

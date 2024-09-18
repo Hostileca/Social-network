@@ -1,4 +1,4 @@
-﻿namespace BusinessLogicLayer.Dtos.Tokens;
+﻿namespace SharedResources.Dtos.Tokens;
 
 public class TokensResponse
 {

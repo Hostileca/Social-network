@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace BusinessLogicLayer.Dtos.User;
+namespace SharedResources.Dtos.User;
 
 public class UserUpdateDto
 {

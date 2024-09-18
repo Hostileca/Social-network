@@ -1,4 +1,4 @@
-﻿namespace Domain.Entities;
+﻿namespace SharedResources.Enums;
 
 public enum ChatRoles
 {

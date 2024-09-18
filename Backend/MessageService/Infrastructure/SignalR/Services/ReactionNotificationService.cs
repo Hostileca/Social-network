@@ -1,8 +1,7 @@
-﻿using Application.Dtos;
-using Application.SignalR.Services;
-using Domain.Repositories;
+﻿using Application.SignalR.Services;
 using Infrastructure.SignalR.Hubs;
 using Microsoft.AspNetCore.SignalR;
+using SharedResources.Dtos;
 
 namespace Infrastructure.SignalR.Services;
 

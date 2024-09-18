@@ -1,11 +1,11 @@
-﻿using BusinessLogicLayer.Dtos.Tokens;
-using BusinessLogicLayer.Dtos.User;
-using BusinessLogicLayer.Services.Algorithms;
+﻿using BusinessLogicLayer.Services.Algorithms;
 using BusinessLogicLayer.Services.Interfaces;
 using DataAccessLayer.Data.Repositories.Interfaces;
 using DataAccessLayer.Entities;
 using Mapster;
 using Microsoft.AspNetCore.Identity;
+using SharedResources.Dtos.Tokens;
+using SharedResources.Dtos.User;
 using SharedResources.Exceptions;
 using RefreshToken = DataAccessLayer.Entities.RefreshToken;
 

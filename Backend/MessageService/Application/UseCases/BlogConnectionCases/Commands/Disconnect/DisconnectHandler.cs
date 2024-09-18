@@ -8,8 +8,7 @@ namespace Application.UseCases.BlogConnectionCases.Commands.Disconnect;
 
 public class DisconnectHandler(
     IBlogConnectionRepository blogConnectionRepository,
-    IBlogRepository blogRepository, 
-    IChatNotificationService chatNotificationService)
+    IBlogRepository blogRepository)
     : IRequestHandler<DisconnectCommand>
 {
     public async Task Handle(DisconnectCommand request, CancellationToken cancellationToken)

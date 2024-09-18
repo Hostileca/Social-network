@@ -2,7 +2,7 @@
 
 public class BlogReadDto
 {
-    public string Id {get; init;}
+    public Guid Id {get; set;}
     
-    public string Username { get; init; }
+    public string Username { get; set; }
 }

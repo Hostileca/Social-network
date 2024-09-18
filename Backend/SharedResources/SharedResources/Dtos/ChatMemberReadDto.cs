@@ -1,6 +1,6 @@
-﻿using Domain.Entities;
+﻿using SharedResources.Enums;
 
-namespace Application.Dtos;
+namespace SharedResources.Dtos;
 
 public class ChatMemberReadDto
 {

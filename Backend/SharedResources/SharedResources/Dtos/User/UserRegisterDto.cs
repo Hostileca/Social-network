@@ -1,4 +1,4 @@
-﻿namespace BusinessLogicLayer.Dtos.User;
+﻿namespace SharedResources.Dtos.User;
 
 public class UserRegisterDto
 {

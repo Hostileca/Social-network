@@ -1,9 +1,9 @@
-﻿using Application.Dtos;
-using Application.SignalR.Services;
+﻿using Application.SignalR.Services;
 using Domain.Entities;
 using Domain.Repositories;
 using Mapster;
 using MediatR;
+using SharedResources.Dtos;
 using SharedResources.Exceptions;
 
 namespace Application.UseCases.BlogConnectionCases.Commands.Connect;
