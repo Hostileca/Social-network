@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Presentation.Controllers;
 
 [ApiController]
-[Route("chat/{chatId}/messages")]
+[Route("chats/{chatId}/messages")]
 public class MessageController(
     IMediator mediator)
     : ControllerBase
