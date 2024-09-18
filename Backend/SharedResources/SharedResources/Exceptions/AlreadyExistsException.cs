@@ -1,4 +1,4 @@
-﻿namespace Application.Exceptions;
+﻿namespace SharedResources.Exceptions;
 
 public class AlreadyExistsException(
     string message) 

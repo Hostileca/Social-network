@@ -1,8 +1,7 @@
-﻿using Application.Dtos;
-using Domain.Repositories;
-using Infrastructure.Specifications;
+﻿using Domain.Repositories;
 using Mapster;
 using MediatR;
+using SharedResources.Dtos;
 
 namespace Application.UseCases.BlogCases.Queries.GetUserBlogsCase;
 
@@ -12,8 +11,7 @@ public class GetUserBlogsHandler(
 {
     public async Task<UserBlogsDto> Handle(GetUserBlogsQuery request, CancellationToken cancellationToken)
     {
-        var specification = new UserBlogsSpecification(request.UserId);
-        var blogs = await blogRepository.FindAsync(specification, cancellationToken);
+        var blogs = await blogRepository.GetBlogsByUserId(request.UserId, cancellationToken);
 
         var response = new UserBlogsDto
         {

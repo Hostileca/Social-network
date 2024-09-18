@@ -1,9 +1,9 @@
 ﻿using Application.Dtos;
-using Application.Exceptions;
 using Domain.Entities;
 using Domain.Repositories;
 using Mapster;
 using MediatR;
+using SharedResources.Exceptions;
 
 namespace Application.UseCases.MessageCases.Queries.GetChatMessages;
 

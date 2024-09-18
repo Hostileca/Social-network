@@ -1,4 +1,4 @@
-﻿namespace BusinessLogicLayer.Exceptions;
+﻿namespace SharedResources.Exceptions;
 
 public class UpdateException(
     string message)

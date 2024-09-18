@@ -1,7 +1,7 @@
-﻿using Application.Dtos;
-using Application.UseCases.SubscriptionCases.Commands.SubscribeToBlogCase;
+﻿using Application.UseCases.SubscriptionCases.Commands.SubscribeToBlogCase;
 using Domain.Entities;
 using Mapster;
+using SharedResources.Dtos;
 
 namespace Application.MappingConfigurations;
 

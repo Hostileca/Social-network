@@ -1,7 +1,7 @@
 ﻿using System.Text.Json.Serialization;
-using Application.Dtos;
 using MediatR;
 using Microsoft.AspNetCore.Http;
+using SharedResources.Dtos;
 
 namespace Application.UseCases.PostCases.Commands.CreatePostCase;
 

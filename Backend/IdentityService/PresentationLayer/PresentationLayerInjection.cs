@@ -2,12 +2,11 @@
 using DataAccessLayer;
 using DataAccessLayer.Data.Contexts;
 using DataAccessLayer.Entities;
-using IdentityServer4.EntityFramework.DbContexts;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
-using PresentationLayer.Middlewares;
 using PresentationLayer.Policies;
+using SharedResources.Middlewares;
 
 namespace PresentationLayer;
 

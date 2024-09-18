@@ -1,6 +1,6 @@
-﻿namespace Application.Dtos;
+﻿namespace SharedResources.Dtos;
 
-public record BlogReadDto
+public class BlogReadDto
 {
     public string Id {get; init;}
     

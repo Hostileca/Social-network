@@ -1,10 +1,10 @@
 ﻿using Application.Dtos;
-using Application.Exceptions;
 using Application.SignalR.Services;
 using Domain.Entities;
 using Domain.Repositories;
 using Mapster;
 using MediatR;
+using SharedResources.Exceptions;
 
 namespace Application.UseCases.ChatCases.Commands.CreateChat;
 

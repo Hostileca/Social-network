@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
-using Application.Dtos;
 using MediatR;
+using SharedResources.Dtos;
 
 namespace Application.UseCases.SubscriptionCases.Queries.GetBlogSubscribersCase;
 

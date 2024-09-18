@@ -3,17 +3,20 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using Mapster;
 using MapsterMapper;
+using MassTransit;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Application;
 
 public static class ApplicationInjection
 {
-    public static IServiceCollection AddApplication(this IServiceCollection services)
+    public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration configuration)
     {
         services.MediatorConfigure();
         services.MapperConfigure();
         services.ValidationConfigure();
+        services.MessageBrokerConfigure(configuration);
         
         return services;
     }
@@ -40,6 +43,18 @@ public static class ApplicationInjection
     {
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
         services.AddFluentValidationAutoValidation();
+        
+        return services;
+    }
+
+    private static IServiceCollection MessageBrokerConfigure(this IServiceCollection services, IConfiguration configuration)
+    {
+        var connectionString = configuration.GetConnectionString("RabbitMqConnection");
+        
+        services.AddMassTransit(x =>
+        {
+            x.UsingRabbitMq((context, cfg) => cfg.Host(connectionString));
+        });
         
         return services;
     }

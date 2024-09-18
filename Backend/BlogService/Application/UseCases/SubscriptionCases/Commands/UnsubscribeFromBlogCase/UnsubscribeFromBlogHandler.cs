@@ -1,10 +1,9 @@
-﻿using Application.Dtos;
-using Application.Exceptions;
-using Application.MappingConfigurations;
-using Domain.Entities;
+﻿using Domain.Entities;
 using Domain.Repositories;
 using Mapster;
 using MediatR;
+using SharedResources.Dtos;
+using SharedResources.Exceptions;
 
 namespace Application.UseCases.SubscriptionCases.Commands.UnsubscribeFromBlogCase;
 
@@ -20,7 +19,7 @@ public class UnsubscribeFromBlogHandler(
 
         if (currentBlog is null)
         {
-            throw new NotFoundException(typeof(Blog).ToString());
+            throw new NotFoundException(typeof(Blog).ToString(), request.UserBlogId);
         }
         
         var subscribtion = currentBlog.Subscriptions
@@ -28,7 +27,7 @@ public class UnsubscribeFromBlogHandler(
 
         if (subscribtion is null)
         {
-            throw new NotFoundException(typeof(Subscription).ToString());
+            throw new NotFoundException(typeof(Subscription).ToString(), request.UnSubscribeFromId);
         }
         
         subscriberRepository.Delete(subscribtion);

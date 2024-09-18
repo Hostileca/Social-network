@@ -1,8 +1,10 @@
 ﻿using System.Text.Json;
-using BusinessLogicLayer.Exceptions;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using SharedResources.Exceptions;
 
-namespace PresentationLayer.Middlewares;
+namespace SharedResources.Middlewares;
 
 public class ExceptionHandlingMiddleware : IMiddleware
 {
@@ -19,13 +21,17 @@ public class ExceptionHandlingMiddleware : IMiddleware
         {
             await next(context);
         }
+        catch (NotFoundException ex)
+        {
+            await context.Response.WriteAsync(GenerateErrorDetails(context, ex, StatusCodes.Status404NotFound));
+        }
         catch (AlreadyExistsException ex)
         {
             await context.Response.WriteAsync(GenerateErrorDetails(context, ex, StatusCodes.Status409Conflict));
         }
-        catch (NotFoundException ex)
+        catch (NoPermissionException ex)
         {
-            await context.Response.WriteAsync(GenerateErrorDetails(context, ex, StatusCodes.Status404NotFound));
+            await context.Response.WriteAsync(GenerateErrorDetails(context, ex, StatusCodes.Status400BadRequest));
         }
         catch (OperationFailedException ex)
         {

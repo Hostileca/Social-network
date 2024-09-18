@@ -1,8 +1,7 @@
-﻿using Application.Dtos;
-using Application.UseCases.PostCases.Commands.CreatePostCase;
+﻿using Application.UseCases.PostCases.Commands.CreatePostCase;
 using Domain.Entities;
 using Mapster;
-using Microsoft.AspNetCore.Http;
+using SharedResources.Dtos;
 
 namespace Application.MappingConfigurations;
 

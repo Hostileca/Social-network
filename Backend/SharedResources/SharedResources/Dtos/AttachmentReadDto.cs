@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-
-namespace Application.Dtos;
+﻿namespace SharedResources.Dtos;
 
 public class AttachmentReadDto
 {

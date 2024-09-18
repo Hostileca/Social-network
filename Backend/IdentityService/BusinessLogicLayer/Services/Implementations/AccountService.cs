@@ -1,23 +1,13 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-using BusinessLogicLayer.Dtos.Tokens;
+﻿using BusinessLogicLayer.Dtos.Tokens;
 using BusinessLogicLayer.Dtos.User;
-using BusinessLogicLayer.Exceptions;
 using BusinessLogicLayer.Services.Algorithms;
 using BusinessLogicLayer.Services.Interfaces;
 using DataAccessLayer.Data.Repositories.Interfaces;
 using DataAccessLayer.Entities;
-using IdentityModel.Client;
-using IdentityServer4.EntityFramework.Stores;
-using IdentityServer4.Models;
-using IdentityServer4.Stores;
 using Mapster;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
+using SharedResources.Exceptions;
 using RefreshToken = DataAccessLayer.Entities.RefreshToken;
-using Token = BusinessLogicLayer.Dtos.Tokens.Token;
 
 namespace BusinessLogicLayer.Services.Implementations;
 
@@ -63,7 +53,7 @@ public class AccountService(
         
         if (currentRefreshToken is null)
         {
-            throw new NotFoundException(typeof(RefreshToken).ToString());
+            throw new NotFoundException(typeof(RefreshToken).ToString(), tokenRefreshRequest.RefreshToken);
         }
 
         var user = currentRefreshToken.User;
@@ -82,7 +72,7 @@ public class AccountService(
     
         if (user is null)
         {
-            throw new NotFoundException(typeof(User).ToString());
+            throw new NotFoundException(typeof(User).ToString(), userUpdateDto.Id);
         }
         
         userUpdateDto.Adapt(user);
@@ -103,7 +93,7 @@ public class AccountService(
     
         if (user is null)
         {
-            throw new NotFoundException(typeof(User).ToString());
+            throw new NotFoundException(typeof(User).ToString(), userId);
         }
         
         var result = await userManager.DeleteAsync(user);
@@ -122,7 +112,7 @@ public class AccountService(
     
         if (user is null)
         {
-            throw new NotFoundException(typeof(User).ToString());
+            throw new NotFoundException(typeof(User).ToString(), userId);
         }
         
         return user.Adapt<UserReadDto>();
@@ -134,7 +124,7 @@ public class AccountService(
         
         if (user is null)
         {
-            throw new NotFoundException(typeof(User).ToString());
+            throw new NotFoundException(typeof(User).ToString(), userLoginDto.Email);
         }
         
         var result = await userManager.CheckPasswordAsync(user, userLoginDto.Password);

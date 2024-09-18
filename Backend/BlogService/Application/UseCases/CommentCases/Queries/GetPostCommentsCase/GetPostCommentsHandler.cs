@@ -1,9 +1,9 @@
-﻿using Application.Dtos;
-using Application.Exceptions;
-using Domain.Entities;
+﻿using Domain.Entities;
 using Domain.Repositories;
 using Mapster;
 using MediatR;
+using SharedResources.Dtos;
+using SharedResources.Exceptions;
 
 namespace Application.UseCases.CommentCases.Queries.GetPostCommentsCase;
 
@@ -17,7 +17,7 @@ public class GetPostCommentsHandler(
 
         if (post is null)
         {
-            throw new NotFoundException(typeof(Post).ToString());
+            throw new NotFoundException(typeof(Post).ToString(), request.PostId.ToString());
         }
 
         return post.Comments.Adapt<IEnumerable<CommentReadDto>>();
