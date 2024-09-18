@@ -1,0 +1,58 @@
+﻿using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Ocelot.DependencyInjection;
+using Ocelot.Middleware;
+
+namespace ApiGateway;
+
+public static class GatewayConfigure
+{
+    public static IServiceCollection ConfigureGateway(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.OcelotConfigure(configuration);
+        services.AuthenticationConfigure(configuration);
+        
+        return services;
+    }
+
+    private static IServiceCollection OcelotConfigure(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddOcelot();
+
+        return services;
+    }
+    
+    private static IServiceCollection AuthenticationConfigure(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddAuthentication(options =>
+        {
+            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        }).AddJwtBearer(options =>
+        {
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidIssuer = configuration["JwtSettings:Issuer"],
+                IssuerSigningKey = new SymmetricSecurityKey(
+                    Encoding.UTF8.GetBytes(configuration["JwtSettings:Key"]!)),
+                ValidateActor = true,
+                ValidateIssuer = true,
+                ValidateAudience = false,
+                RequireExpirationTime = true,
+                ValidateIssuerSigningKey = true
+            };
+        });
+        
+        return services;
+    }
+
+    public static async Task<WebApplication> LaunchGateway(this WebApplication webApplication)
+    {
+        await webApplication.UseOcelot();
+        webApplication.UseHttpsRedirection(); 
+        await webApplication.RunAsync();
+        
+        return webApplication;
+    }
+}
