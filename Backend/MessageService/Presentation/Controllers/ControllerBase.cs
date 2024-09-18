@@ -1,6 +1,10 @@
-﻿namespace Presentation.Controllers;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
-public class ControllerBase : Microsoft.AspNetCore.Mvc.ControllerBase
+namespace Presentation.Controllers;
+
+[Authorize]
+public abstract class ControllerBase : Microsoft.AspNetCore.Mvc.ControllerBase
 {
-    public string UserId => "123";
+    protected string UserId => User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 }

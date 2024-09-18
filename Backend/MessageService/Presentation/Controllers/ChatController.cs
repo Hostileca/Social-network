@@ -16,6 +16,8 @@ public class ChatController(
     [HttpGet]
     public async Task<IActionResult> GetChats([FromQuery]GetBlogChatsQuery getBlogChatsQuery, CancellationToken cancellationToken = default)
     {
+        getBlogChatsQuery.UserId = UserId;
+        
         var chats = await mediator.Send(getBlogChatsQuery, cancellationToken);
 
         return Ok(chats);
@@ -44,7 +46,7 @@ public class ChatController(
         return Ok(chat);
     }
     
-    [HttpDelete("leave")]
+    [HttpDelete("{chatId}/leave")]
     public async Task<IActionResult> LeaveChat(Guid chatId, LeaveChatCommand leaveChatCommand,
         CancellationToken cancellationToken = default)
     {
