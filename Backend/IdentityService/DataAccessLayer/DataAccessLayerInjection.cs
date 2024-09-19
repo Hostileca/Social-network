@@ -2,6 +2,8 @@
 using DataAccessLayer.Data.Repositories.Implementations;
 using DataAccessLayer.Data.Repositories.Interfaces;
 using DataAccessLayer.Entities;
+using DataAccessLayer.gRPC.Services;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -54,6 +56,13 @@ public static class DataAccessLayerInjection
             .AddEntityFrameworkStores<AppDbContext>()
             .AddDefaultTokenProviders();
          
+        return services;
+    }
+
+    private static IServiceCollection GrpcConfigure(this IServiceCollection services)
+    {
+        services.AddGrpc();
+        
         return services;
     }
 }

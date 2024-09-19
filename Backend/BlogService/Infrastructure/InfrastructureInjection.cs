@@ -5,6 +5,7 @@ using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using UserGrpc;
 
 namespace Infrastructure;
 
@@ -15,13 +16,13 @@ public static class InfrastructureInjection
         services.DbConfigure(configuration);
         services.RepositoriesConfigure();
         services.MessageBrokerConfigure(configuration);
+        services.GrpcConfigure(configuration);
 
         return services;
     }
     
     private static IServiceCollection DbConfigure(this IServiceCollection services, IConfiguration configuration)
     {
-        
         var connectionString = configuration.GetConnectionString("MongoDbConnection");
         
         services.AddDbContext<MongoDbContext>(options => options
@@ -42,7 +43,6 @@ public static class InfrastructureInjection
         return services;
     }
     
-    
     private static IServiceCollection MessageBrokerConfigure(this IServiceCollection services, IConfiguration configuration)
     {
         var rabbitMqSettings = configuration.GetSection("RabbitMqSettings");
@@ -53,6 +53,17 @@ public static class InfrastructureInjection
             {
                 cfg.Host(rabbitMqSettings["Host"]);
             });
+        });
+        
+        return services;
+    }
+
+    private static IServiceCollection GrpcConfigure(this IServiceCollection services, IConfiguration configuration)
+    {
+        var connectionString = configuration.GetConnectionString("UserGrpcConnection");
+        services.AddGrpcClient<UserGrpcService.UserGrpcServiceClient>(options =>
+        {
+            options.Address = new Uri(connectionString);
         });
         
         return services;

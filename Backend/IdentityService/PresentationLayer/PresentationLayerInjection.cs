@@ -2,6 +2,7 @@
 using DataAccessLayer;
 using DataAccessLayer.Data.Contexts;
 using DataAccessLayer.Entities;
+using DataAccessLayer.gRPC.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
@@ -29,6 +30,7 @@ public static class PresentationLayerInjection
         webApplication.UseAuthentication();
         webApplication.UseAuthorization();
         webApplication.MapControllers();
+        webApplication.MapGrpc();
         webApplication.SwaggerStart();
         webApplication.SeedData();
         webApplication.UseMiddleware<ExceptionHandlingMiddleware>();
@@ -98,6 +100,13 @@ public static class PresentationLayerInjection
         var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
         var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
         DbInitializer.Seed(userManager, roleManager);
+        
+        return webApplication;
+    }
+    
+    private static WebApplication MapGrpc(this WebApplication webApplication)
+    {
+        webApplication.MapGrpcService<UserGrpcService>();
         
         return webApplication;
     }
