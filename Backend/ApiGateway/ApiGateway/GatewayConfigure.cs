@@ -8,14 +8,22 @@ namespace ApiGateway;
 
 public static class GatewayConfigure
 {
-    public static IServiceCollection ConfigureGateway(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection ConfigureGateway(this IServiceCollection services, ConfigurationManager configuration)
     {
+        configuration.AddJsonConfigs();
         services.OcelotConfigure(configuration);
         services.AuthenticationConfigure(configuration);
         
         return services;
     }
 
+    private static ConfigurationManager AddJsonConfigs(this ConfigurationManager configuration)
+    {
+        configuration
+            .AddJsonFile("ocelot.json", optional: false, reloadOnChange: true);
+        
+        return configuration;
+    }
     private static IServiceCollection OcelotConfigure(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddOcelot();
