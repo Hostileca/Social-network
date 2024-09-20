@@ -1,14 +1,17 @@
-﻿using Application.UseCases.BlogConnectionCases.Commands.Connect;
+﻿using System.Security.Claims;
+using Application.UseCases.BlogConnectionCases.Commands.Connect;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 
 namespace Infrastructure.SignalR.Hubs;
 
+[Authorize]
 public class ChatHub(
     IMediator mediator)
     : Hub
 {
-    protected string UserId => "123";
+    protected string UserId => Context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
     protected Guid BlogId => new Guid(GetBlogIdFromQuery());
     
     public override async Task OnConnectedAsync()

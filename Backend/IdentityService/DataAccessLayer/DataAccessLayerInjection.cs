@@ -19,6 +19,7 @@ public static class DataAccessLayerInjection
         services.IdentityConfigure();
         services.DbConfigure(configuration);
         services.RepositoriesConfigure();
+        services.GrpcConfigure();
 
         return services;
     }
