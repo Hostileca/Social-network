@@ -1,7 +1,7 @@
-﻿using Application.Dtos;
-using Domain.Repositories;
+﻿using Domain.Repositories;
 using Mapster;
 using MediatR;
+using SharedResources.Dtos;
 
 namespace Application.UseCases.BlogCases.Queries.GetAllBlogsCase;
 

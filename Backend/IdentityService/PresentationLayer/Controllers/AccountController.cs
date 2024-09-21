@@ -1,8 +1,8 @@
-﻿using BusinessLogicLayer.Dtos.Tokens;
-using BusinessLogicLayer.Dtos.User;
-using BusinessLogicLayer.Services.Interfaces;
+﻿using BusinessLogicLayer.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SharedResources.Dtos.Tokens;
+using SharedResources.Dtos.User;
 
 namespace PresentationLayer.Controllers;
 

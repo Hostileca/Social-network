@@ -1,9 +1,9 @@
-﻿using Application.Dtos;
-using Application.Exceptions;
-using Domain.Entities;
+﻿using Domain.Entities;
 using Domain.Repositories;
 using Mapster;
 using MediatR;
+using SharedResources.Dtos;
+using SharedResources.Exceptions;
 
 namespace Application.UseCases.PostCases.Commands.DeletePostCase;
 
@@ -18,14 +18,14 @@ public class DeletePostByIdHandler(
 
         if (blog is null)
         {
-            throw new NotFoundException(typeof(Blog).ToString());
+            throw new NotFoundException(typeof(Blog).ToString(), request.BlogId);
         }
         
         var post = await postRepository.GetByIdAsync(request.PostId, cancellationToken);
 
         if (post is null)
         {
-            throw new NotFoundException(typeof(Post).ToString());
+            throw new NotFoundException(typeof(Post).ToString(), request.PostId);
         }
 
         if (post.Owner != blog)

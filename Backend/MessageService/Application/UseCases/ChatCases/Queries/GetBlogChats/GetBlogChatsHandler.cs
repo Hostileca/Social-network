@@ -1,9 +1,7 @@
-﻿using Application.Dtos;
-using Application.Exceptions;
-using Domain.Entities;
-using Domain.Repositories;
+﻿using Domain.Repositories;
 using Mapster;
 using MediatR;
+using SharedResources.Dtos;
 
 namespace Application.UseCases.ChatCases.Queries.GetBlogChats;
 

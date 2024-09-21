@@ -1,9 +1,9 @@
-﻿using Application.Dtos;
-using Application.Exceptions;
-using Domain.Entities;
+﻿using Domain.Entities;
 using Domain.Repositories;
 using Mapster;
 using MediatR;
+using SharedResources.Dtos;
+using SharedResources.Exceptions;
 
 namespace Application.UseCases.BlogCases.Queries.GetBlogByIdCase;
 
@@ -17,7 +17,7 @@ public class GetBlogByIdHandler(
         
         if (blog is null)
         {
-            throw new NotFoundException(typeof(Blog).ToString());
+            throw new NotFoundException(typeof(Blog).ToString(), request.BlogId);
         }
         
         return blog.Adapt<BlogReadDto>();

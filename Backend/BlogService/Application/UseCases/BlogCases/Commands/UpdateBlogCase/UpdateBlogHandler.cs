@@ -1,9 +1,9 @@
-﻿using Application.Dtos;
-using Application.Exceptions;
-using Domain.Entities;
+﻿using Domain.Entities;
 using Domain.Repositories;
 using Mapster;
 using MediatR;
+using SharedResources.Dtos;
+using SharedResources.Exceptions;
 
 namespace Application.UseCases.BlogCases.Commands.UpdateBlogCase;
 
@@ -17,7 +17,7 @@ public class UpdateBlogHandler(
         
         if (existingBlog is null)
         {
-            throw new NotFoundException(typeof(Blog).ToString());
+            throw new NotFoundException(typeof(Blog).ToString(), request.Id);
         }
         
         existingBlog = request.Adapt<Blog>();

@@ -1,6 +1,15 @@
-﻿services:
+﻿version: '3.8'
+
+services:
   mongo:
-    image: mongo:5.0        
+    image: mongo:5.0
     container_name: mongo_container
     ports:
-      - "27017:27017" 
+      - "27017:27017"
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq_container
+    ports:
+      - "5672:5672"  
+      - "15672:15672"

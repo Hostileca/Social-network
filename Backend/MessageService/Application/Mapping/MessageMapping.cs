@@ -1,7 +1,7 @@
-﻿using Application.Dtos;
-using Application.UseCases.MessageCases.Commands.SendMessage;
+﻿using Application.UseCases.MessageCases.Commands.SendMessage;
 using Domain.Entities;
 using Mapster;
+using SharedResources.Dtos;
 
 namespace Application.Mapping;
 

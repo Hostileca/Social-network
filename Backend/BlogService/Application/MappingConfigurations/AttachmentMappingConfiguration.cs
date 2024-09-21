@@ -1,7 +1,6 @@
-﻿using System.Text;
-using Application.Dtos;
-using Domain.Entities;
+﻿using Domain.Entities;
 using Mapster;
+using SharedResources.Dtos;
 
 namespace Application.MappingConfigurations;
 

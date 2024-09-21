@@ -1,9 +1,9 @@
-﻿using Application.Dtos;
-using Application.Exceptions;
-using Domain.Entities;
+﻿using Domain.Entities;
 using Domain.Repositories;
 using Mapster;
 using MediatR;
+using SharedResources.Dtos;
+using SharedResources.Exceptions;
 
 namespace Application.UseCases.LikeCases.Commands.RemoveLikeFromPostCase;
 
@@ -18,21 +18,21 @@ public class RemoveLikeFromPostHandler(
         
         if (blog is null)
         {
-            throw new NotFoundException(typeof(Blog).ToString());
+            throw new NotFoundException(typeof(Blog).ToString(), request.BlogId);
         }
         
         var post = await postRepository.GetByIdAsync(request.PostId, cancellationToken);
         
         if (post is null)
         {
-            throw new NotFoundException(typeof(Post).ToString());
+            throw new NotFoundException(typeof(Post).ToString(), request.PostId);
         }
 
         var like = post.Likes.FirstOrDefault(x => x.SenderId == request.BlogId);
         
         if (like is null)
         {
-            throw new NotFoundException(typeof(Like).ToString());
+            throw new NotFoundException(typeof(Like).ToString(), request.PostId);
         }
         
         likeRepository.Delete(like);

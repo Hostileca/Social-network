@@ -1,5 +1,6 @@
 ﻿using Domain.Entities;
 using Domain.Repositories;
+using Infrastructure.Specifications;
 using Microsoft.EntityFrameworkCore;
 using MongoDB.Driver.Linq;
 
@@ -11,6 +12,15 @@ public class BlogRepository(
 {
     public async Task<Blog> GetByIdAndUserIdAsync(string id, string userId, CancellationToken cancellationToken)
     {
-        return await _dbSet.Where(x => x.Id == id && x.UserId == userId).FirstOrDefaultAsync(cancellationToken);
+        var spec = new BlogByIdAndUserIdSpecification(id, userId);
+        
+        return await _dbSet.Where(spec.ToFunction()).AsQueryable().FirstOrDefaultAsync(cancellationToken);
+    }
+
+    public async Task<IEnumerable<Blog>> GetBlogsByUserId(string userId, CancellationToken cancellationToken)
+    {
+        var spec = new UserBlogsSpecification(userId);
+
+        return await _dbSet.Where(spec.ToFunction()).AsQueryable().ToListAsync(cancellationToken);
     }
 }

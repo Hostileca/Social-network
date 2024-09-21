@@ -1,5 +1,5 @@
-﻿using BusinessLogicLayer.Dtos.Tokens;
-using BusinessLogicLayer.Dtos.User;
+﻿using SharedResources.Dtos.Tokens;
+using SharedResources.Dtos.User;
 
 namespace BusinessLogicLayer.Services.Interfaces;
 

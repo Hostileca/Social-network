@@ -1,7 +1,7 @@
 ﻿using System.Text.Json.Serialization;
-using Application.Dtos;
-using Domain.Entities;
 using MediatR;
+using SharedResources.Dtos;
+using SharedResources.Enums;
 
 namespace Application.UseCases.ChatRolesCases.Commands.SetRoleToMember;
 

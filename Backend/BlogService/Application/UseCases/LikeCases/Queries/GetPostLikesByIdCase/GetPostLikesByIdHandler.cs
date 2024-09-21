@@ -1,9 +1,9 @@
-﻿using Application.Dtos;
-using Application.Exceptions;
-using Domain.Entities;
+﻿using Domain.Entities;
 using Domain.Repositories;
 using Mapster;
 using MediatR;
+using SharedResources.Dtos;
+using SharedResources.Exceptions;
 
 namespace Application.UseCases.LikeCases.Queries.GetPostLikesByIdCase;
 
@@ -17,7 +17,7 @@ public class GetPostLikesByIdHandler(
 
         if (post is null)
         {
-            throw new NotFoundException(typeof(Post).ToString());
+            throw new NotFoundException(typeof(Post).ToString(), request.Id);
         }
 
         return post.Adapt<PostLikesReadDto>();

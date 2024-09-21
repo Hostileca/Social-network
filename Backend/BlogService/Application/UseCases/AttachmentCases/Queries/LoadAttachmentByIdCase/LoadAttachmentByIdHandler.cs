@@ -1,9 +1,9 @@
-﻿using Application.Dtos;
-using Application.Exceptions;
-using Domain.Entities;
+﻿using Domain.Entities;
 using Domain.Repositories;
 using Mapster;
 using MediatR;
+using SharedResources.Dtos;
+using SharedResources.Exceptions;
 
 namespace Application.UseCases.AttachmentCases.Queries.LoadAttachmentByIdCase;
 
@@ -17,7 +17,7 @@ public class LoadAttachmentByIdHandler(
 
         if (attachment is null)
         {
-            throw new NotFoundException(typeof(Attachment).ToString());
+            throw new NotFoundException(typeof(Attachment).ToString(), request.Id);
         }
 
         return attachment.Adapt<AttachmentReadDto>();

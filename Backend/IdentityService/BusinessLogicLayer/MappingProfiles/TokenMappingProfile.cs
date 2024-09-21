@@ -1,6 +1,6 @@
-﻿using BusinessLogicLayer.Dtos.Tokens;
-using DataAccessLayer.Entities;
+﻿using DataAccessLayer.Entities;
 using Mapster;
+using SharedResources.Dtos.Tokens;
 
 namespace BusinessLogicLayer.MappingProfiles;
 

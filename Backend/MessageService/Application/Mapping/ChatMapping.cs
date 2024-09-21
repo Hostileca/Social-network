@@ -1,7 +1,7 @@
-﻿using Application.Dtos;
-using Application.UseCases.ChatCases.Commands.CreateChat;
+﻿using Application.UseCases.ChatCases.Commands.CreateChat;
 using Domain.Entities;
 using Mapster;
+using SharedResources.Dtos;
 
 namespace Application.Mapping;
 

@@ -1,7 +1,7 @@
-﻿using Application.Dtos;
-using Application.UseCases.LikeCases.Commands.AddLikeToPostCase;
+﻿using Application.UseCases.LikeCases.Commands.AddLikeToPostCase;
 using Domain.Entities;
 using Mapster;
+using SharedResources.Dtos;
 
 namespace Application.MappingConfigurations;
 

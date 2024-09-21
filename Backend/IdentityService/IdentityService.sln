@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccessLayer", "DataAcce
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLogicLayer", "BusinessLogicLayer\BusinessLogicLayer.csproj", "{0FA7B673-9ED9-439F-80BF-CF4D62C00D17}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedResources", "..\SharedResources\SharedResources\SharedResources.csproj", "{8041977D-38E2-46EB-BBAE-F342E51585B5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,10 @@ Global
 		{0FA7B673-9ED9-439F-80BF-CF4D62C00D17}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0FA7B673-9ED9-439F-80BF-CF4D62C00D17}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0FA7B673-9ED9-439F-80BF-CF4D62C00D17}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8041977D-38E2-46EB-BBAE-F342E51585B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8041977D-38E2-46EB-BBAE-F342E51585B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8041977D-38E2-46EB-BBAE-F342E51585B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8041977D-38E2-46EB-BBAE-F342E51585B5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 	EndGlobalSection

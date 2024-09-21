@@ -1,5 +1,5 @@
-﻿using Application.Dtos;
-using MediatR;
+﻿using MediatR;
+using SharedResources.Dtos;
 
 namespace Application.UseCases.AttachmentCases.Queries.LoadAttachmentByIdCase;
 

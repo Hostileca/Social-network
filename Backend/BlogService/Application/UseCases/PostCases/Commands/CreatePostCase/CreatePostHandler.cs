@@ -1,10 +1,10 @@
-﻿using Application.Dtos;
-using Application.Exceptions;
-using Domain.Entities;
+﻿using Domain.Entities;
 using Domain.Repositories;
 using Mapster;
 using MediatR;
 using Microsoft.AspNetCore.Http;
+using SharedResources.Dtos;
+using SharedResources.Exceptions;
 
 namespace Application.UseCases.PostCases.Commands.CreatePostCase;
 
@@ -20,7 +20,7 @@ public class CreatePostHandler(
 
         if (blog is null)
         {
-            throw new NotFoundException(typeof(Blog).ToString());
+            throw new NotFoundException(typeof(Blog).ToString(), request.BlogId);
         }
         
         var post = request.Adapt<Post>();

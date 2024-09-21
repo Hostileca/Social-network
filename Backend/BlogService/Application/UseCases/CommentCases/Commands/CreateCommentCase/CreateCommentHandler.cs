@@ -1,9 +1,9 @@
-﻿using Application.Dtos;
-using Application.Exceptions;
-using Domain.Entities;
+﻿using Domain.Entities;
 using Domain.Repositories;
 using Mapster;
 using MediatR;
+using SharedResources.Dtos;
+using SharedResources.Exceptions;
 
 namespace Application.UseCases.CommentCases.Commands.CreateCommentCase;
 
@@ -19,14 +19,14 @@ public class CreateCommentHandler(
 
         if (blog is null)
         {
-            throw new NotFoundException(typeof(Blog).ToString());
+            throw new NotFoundException(typeof(Blog).ToString(), request.BlogId);
         }
         
         var post = await postRepository.GetByIdAsync(request.PostId, cancellationToken);
 
         if (post is null)
         {
-            throw new NotFoundException(typeof(Post).ToString());
+            throw new NotFoundException(typeof(Post).ToString(), request.BlogId);
         }
 
         var comment = request.Adapt<Comment>();

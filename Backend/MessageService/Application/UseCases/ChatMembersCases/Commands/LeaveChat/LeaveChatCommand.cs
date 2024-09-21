@@ -1,6 +1,6 @@
-﻿using Application.Dtos;
-using MediatR;
+﻿using MediatR;
 using Newtonsoft.Json;
+using SharedResources.Dtos;
 
 namespace Application.UseCases.ChatMembersCases.Commands.LeaveChat;
 
