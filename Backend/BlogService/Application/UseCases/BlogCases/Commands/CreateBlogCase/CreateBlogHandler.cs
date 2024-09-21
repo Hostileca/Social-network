@@ -4,17 +4,28 @@ using Mapster;
 using MassTransit;
 using MediatR;
 using SharedResources.Dtos;
+using SharedResources.Exceptions;
 using SharedResources.MessageBroker.Events;
+using UserGrpc;
 
 namespace Application.UseCases.BlogCases.Commands.CreateBlogCase;
 
 public class CreateBlogHandler(
     IBlogRepository repository,
-    IPublishEndpoint publishEndpoint) 
+    IPublishEndpoint publishEndpoint,
+    UserGrpcService.UserGrpcServiceClient userGrpcClient) 
     : IRequestHandler<CreateBlogCommand, BlogReadDto>
 {
     public async Task<BlogReadDto> Handle(CreateBlogCommand request, CancellationToken cancellationToken)
     {
+        var isUserExist = await userGrpcClient.CheckUserAsync(
+            new CheckUserRequest { UserId = request.UserId }, cancellationToken: cancellationToken);
+
+        if (!isUserExist.Exists)
+        {
+            throw new NotFoundException("User", request.UserId);
+        }
+        
         var newBlog = request.Adapt<Blog>();
         
         await repository.AddAsync(newBlog, cancellationToken);

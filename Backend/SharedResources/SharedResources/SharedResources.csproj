@@ -11,4 +11,15 @@
       <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Protobuf Include="gRPC\proto\user.proto">
+        <GrpcServices>Server</GrpcServices>
+        <Access>Public</Access>
+        <ProtoCompile>True</ProtoCompile>
+        <CompileOutputs>True</CompileOutputs>
+        <OutputDir>obj\Debug\net8.0\</OutputDir>
+        <Generator>MSBuild:Compile</Generator>
+      </Protobuf>
+    </ItemGroup>
+
 </Project>
