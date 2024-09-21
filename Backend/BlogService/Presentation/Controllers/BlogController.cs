@@ -58,6 +58,8 @@ public class BlogController(
     public async Task<IActionResult> UpdateBlog(string blogId, UpdateBlogCommand updateBlogCommand,
         CancellationToken cancellationToken)
     {
+        updateBlogCommand.UserId = UserId;
+        
         var blog = await mediator.Send(updateBlogCommand, cancellationToken);
         
         return Ok(blog);
