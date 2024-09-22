@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SharedResources.Dtos.Tokens;
 using SharedResources.Dtos.User;
+using SharedResources.Policies;
 
 namespace PresentationLayer.Controllers;
 
@@ -66,7 +67,7 @@ public class AccountController(
     }
     
     [HttpGet("{userId}")]
-    [Authorize(Policy = Policies.Policies.RequireStaff)]
+    [Authorize(Policy = Policies.RequireStaff)]
     public async Task<IActionResult> GetUserById(string userId)
     {
         var user = await accountService.GetUserById(userId);
