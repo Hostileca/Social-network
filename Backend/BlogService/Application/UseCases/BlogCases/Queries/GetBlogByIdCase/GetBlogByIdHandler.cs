@@ -13,7 +13,7 @@ public class GetBlogByIdHandler(
     ICacheRepository cacheRepository) 
     : IRequestHandler<GetBlogByIdQuery, BlogReadDto>
 {
-    private static readonly TimeSpan BlogCacheLifetime = TimeSpan.FromMinutes(10);
+    private static readonly TimeSpan BlogCacheTime = TimeSpan.FromMinutes(10);
 
     public async Task<BlogReadDto> Handle(GetBlogByIdQuery request, CancellationToken cancellationToken)
     {
@@ -33,7 +33,7 @@ public class GetBlogByIdHandler(
 
         var blogReadDto = blog.Adapt<BlogReadDto>();
 
-        await cacheRepository.SetAsync(blogReadDto.Id.ToString(), blogReadDto, BlogCacheLifetime);
+        await cacheRepository.SetAsync(blogReadDto.Id.ToString(), blogReadDto, BlogCacheTime);
         
         return blogReadDto;
     }

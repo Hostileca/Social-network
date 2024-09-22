@@ -8,11 +8,21 @@ using SharedResources.Exceptions;
 namespace Application.UseCases.PostCases.Queries.GetBlogPostsCase;
 
 public class GetBlogPostsHandler(
-    IBlogRepository blogRepository)
+    IBlogRepository blogRepository,
+    ICacheRepository cacheRepository)
     : IRequestHandler<GetBlogPostsQuery, IEnumerable<PostReadDto>>
 {
+    private static readonly TimeSpan PostsCacheTime = TimeSpan.FromMinutes(10);
+    
     public async Task<IEnumerable<PostReadDto>> Handle(GetBlogPostsQuery request, CancellationToken cancellationToken)
     {
+        var cachedPosts = await cacheRepository.GetAsync<IEnumerable<PostReadDto>>(request.BlogId);
+        
+        if (cachedPosts is not null)
+        {
+            return cachedPosts;
+        }
+        
         var blog = await blogRepository.GetByIdAsync(request.BlogId, cancellationToken);
 
         if (blog is null)
@@ -20,6 +30,10 @@ public class GetBlogPostsHandler(
             throw new NotFoundException(typeof(Blog).ToString(), request.BlogId);
         }
 
-        return blog.Posts.Adapt<IEnumerable<PostReadDto>>();
+        var postsReadDto = blog.Posts.Adapt<IEnumerable<PostReadDto>>();
+        
+        await cacheRepository.SetAsync(request.BlogId, postsReadDto, PostsCacheTime);
+        
+        return postsReadDto;
     }
 }
