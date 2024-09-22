@@ -10,9 +10,9 @@ namespace Application.UseCases.SubscriptionCases.Commands.SubscribeToBlogCase;
 public class SubscribeToBlogHandler(
     IBlogRepository blogRepository,
     ISubscriberRepository subscriberRepository) 
-    : IRequestHandler<SubscribeToBlogCommand, BlogSubscriptionsReadDto>
+    : IRequestHandler<SubscribeToBlogCommand, IEnumerable<BlogReadDto>>
 {
-    public async Task<BlogSubscriptionsReadDto> Handle(SubscribeToBlogCommand request, CancellationToken cancellationToken)
+    public async Task<IEnumerable<BlogReadDto>> Handle(SubscribeToBlogCommand request, CancellationToken cancellationToken)
     {
         var currentBlog = await blogRepository.GetByIdAndUserIdAsync(request.UserBlogId, 
             request.UserId, cancellationToken);
@@ -41,6 +41,6 @@ public class SubscribeToBlogHandler(
 
         await subscriberRepository.SaveChangesAsync(cancellationToken);
         
-        return currentBlog.Adapt<BlogSubscriptionsReadDto>();
+        return currentBlog.Subscriptions.Adapt<IEnumerable<BlogReadDto>>();
     }
 }

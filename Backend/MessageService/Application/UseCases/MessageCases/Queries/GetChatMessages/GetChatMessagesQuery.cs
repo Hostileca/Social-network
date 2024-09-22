@@ -4,7 +4,7 @@ using SharedResources.Dtos;
 
 namespace Application.UseCases.MessageCases.Queries.GetChatMessages;
 
-public class GetChatMessagesQuery : IRequest<ChatMessagesReadDto>
+public class GetChatMessagesQuery : IRequest<IEnumerable<MessageReadDto>>
 {
     [JsonIgnore]
     public string? UserId { get; set; }

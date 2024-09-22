@@ -5,6 +5,7 @@ using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using StackExchange.Redis;
 using UserGrpc;
 
 namespace Infrastructure;
@@ -17,6 +18,7 @@ public static class InfrastructureInjection
         services.RepositoriesConfigure();
         services.MessageBrokerConfigure(configuration);
         services.GrpcConfigure(configuration);
+        services.RedisConfigure(configuration);
 
         return services;
     }
@@ -46,7 +48,6 @@ public static class InfrastructureInjection
     private static IServiceCollection MessageBrokerConfigure(this IServiceCollection services, IConfiguration configuration)
     {
         var rabbitMqSettings = configuration.GetSection("RabbitMqSettings");
-        
         services.AddMassTransit(x =>
         {
             x.UsingRabbitMq((context, cfg) =>
@@ -69,6 +70,16 @@ public static class InfrastructureInjection
         {
             options.Address = new Uri(connectionString);
         });
+        
+        return services;
+    }
+
+    private static IServiceCollection RedisConfigure(this IServiceCollection services, IConfiguration configuration)
+    {
+        var redisConnectionString = configuration.GetConnectionString("RedisConnection");
+        var redis = ConnectionMultiplexer.Connect(redisConnectionString);
+        services.AddSingleton<IConnectionMultiplexer>(redis);
+        services.AddScoped<ICacheRepository, CacheRepository>();
         
         return services;
     }

@@ -8,9 +8,9 @@ using SharedResources.Exceptions;
 namespace Application.UseCases.LikeCases.Queries.GetBlogLikesCase;
 
 public class GetBlogLikesHandler(
-    IBlogRepository blogRepository) : IRequestHandler<GetBlogLikesQuery, BlogLikesReadDto>
+    IBlogRepository blogRepository) : IRequestHandler<GetBlogLikesQuery, IEnumerable<PostReadDto>>
 {
-    public async Task<BlogLikesReadDto> Handle(GetBlogLikesQuery request, CancellationToken cancellationToken)
+    public async Task<IEnumerable<PostReadDto>> Handle(GetBlogLikesQuery request, CancellationToken cancellationToken)
     {
         var blog = await blogRepository.GetByIdAsync(request.BlogId, cancellationToken);
 
@@ -19,6 +19,6 @@ public class GetBlogLikesHandler(
             throw new NotFoundException(typeof(Blog).ToString(), request.BlogId);
         }
 
-        return blog.Adapt<BlogLikesReadDto>();
+        return blog.SendedLikes.Adapt<IEnumerable<PostReadDto>>();
     }
 }

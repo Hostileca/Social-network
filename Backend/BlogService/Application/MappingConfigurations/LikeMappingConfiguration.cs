@@ -16,8 +16,5 @@ public class LikeMappingConfiguration : IRegister
         
         config.NewConfig<Post, PostLikesReadDto>()
             .Map(dest => dest.LikesCount, src => src.Likes.Count());
-        
-        config.NewConfig<Blog, BlogLikesReadDto>()
-            .Map(dest => dest.Posts, src => src.SendedLikes.Select(x => x.Post));
     }
 }
