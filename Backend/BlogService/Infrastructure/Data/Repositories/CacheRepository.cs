@@ -18,8 +18,7 @@ public class CacheRepository(
     public async Task<TObject> GetAsync<TObject>(string key)
     {
         var redisValue = await redisDatabase.StringGetAsync(Key<TObject>(key));
-        var serializedData = redisValue.ToString();
-        return serializedData == null ? default : JsonSerializer.Deserialize<TObject>(serializedData);
+        return redisValue.HasValue ? JsonSerializer.Deserialize<TObject>(redisValue.ToString()) : default;
     }
 
     private string Key<TObject>(string key) => $"{typeof(TObject)}_{key}";

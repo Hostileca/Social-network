@@ -1,6 +1,5 @@
 ﻿using Domain.Entities;
 using Domain.Repositories;
-using Domain.Specifications;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data.Repositories;
@@ -27,12 +26,6 @@ public class RepositoryBase<TEntity>
     public async Task<TEntity> GetByIdAsync(string id, CancellationToken cancellationToken = default)
     {
         return await _dbSet.FindAsync(id, cancellationToken);
-    }
-
-    public async Task<IEnumerable<TEntity>> FindAsync(ISpecification<TEntity> specification,
-        CancellationToken cancellationToken)
-    {
-        return await _dbSet.Where(specification.ToFunction()).AsQueryable().ToListAsync(cancellationToken);
     }
 
     public async Task AddAsync(TEntity item, CancellationToken cancellationToken = default)
