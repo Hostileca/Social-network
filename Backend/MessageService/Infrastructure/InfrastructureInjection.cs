@@ -1,5 +1,7 @@
 ﻿using Application.SignalR.Services;
 using Domain.Repositories;
+using Hangfire;
+using Hangfire.SqlServer;
 using Infrastructure.Data;
 using Infrastructure.Data.Repositories;
 using Infrastructure.MesssageBroker.Consumers;
@@ -9,7 +11,6 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using SharedResources.MessageBroker.Events;
 
 namespace Infrastructure;
 
@@ -22,6 +23,7 @@ public static class InfrastructureInjection
         services.RepositoriesConfigure();
         services.SignalRConfigure();
         services.MessageBrokerConfigure(configuration);
+        services.HangfireConfigure(configuration);
         
         return services;
     }
@@ -65,7 +67,8 @@ public static class InfrastructureInjection
         return services;
     }
 
-    private static IServiceCollection MessageBrokerConfigure(this IServiceCollection services, IConfiguration configuration)
+    private static IServiceCollection MessageBrokerConfigure(this IServiceCollection services, 
+        IConfiguration configuration)
     {
         var rabbitMqSettings = configuration.GetSection("RabbitMqSettings");
         
@@ -89,6 +92,22 @@ public static class InfrastructureInjection
                 });
             });
         });
+        
+        return services;
+    }
+
+    private static IServiceCollection HangfireConfigure(this IServiceCollection services,
+        IConfiguration configuration)
+    {
+        var connection = configuration.GetConnectionString("HangfireConnection");
+        services.AddHangfire(config => 
+            config.SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+                .UseSimpleAssemblyNameTypeSerializer()
+                .UseRecommendedSerializerSettings()
+                .UseSqlServerStorage(connection, new SqlServerStorageOptions()));
+        
+        services.AddHangfireServer();
+
         
         return services;
     }

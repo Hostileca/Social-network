@@ -9,6 +9,9 @@
     <ItemGroup>
       <PackageReference Include="FluentValidation" Version="11.10.0" />
       <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
+      <PackageReference Include="Hangfire" Version="1.8.14" />
+      <PackageReference Include="Hangfire.AspNetCore" Version="1.8.14" />
+      <PackageReference Include="Hangfire.SqlServer" Version="1.8.14" />
       <PackageReference Include="Mapster" Version="7.4.1-pre01" />
       <PackageReference Include="MediatR" Version="12.4.1" />
       <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.1.0" />
@@ -21,7 +24,6 @@
 
     <ItemGroup>
       <Folder Include="UseCases\ChatRolesCases\Commands\" />
-      <Folder Include="UseCases\MessageCases\Commands\" />
     </ItemGroup>
 
 </Project>

@@ -1,5 +1,6 @@
 using System.Text;
 using Application;
+using Hangfire;
 using Infrastructure;
 using Infrastructure.MesssageBroker.Consumers;
 using Infrastructure.SignalR.Hubs;
@@ -25,7 +26,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.MapHub<ChatHub>("/chatHub");
-
+app.UseHangfireDashboard();
 app.MapControllers();
 app.UseHttpsRedirection();
 
