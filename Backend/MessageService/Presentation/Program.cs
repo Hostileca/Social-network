@@ -18,16 +18,4 @@ builder.Services.AddPresentation(builder.Configuration);
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
-app.UseMiddleware<ExceptionHandlingMiddleware>();
-app.MapHub<ChatHub>("/chatHub");
-app.UseHangfireDashboard();
-app.MapControllers();
-app.UseHttpsRedirection();
-
-app.Run();
+app.StartApplication();

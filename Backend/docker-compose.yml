@@ -41,27 +41,67 @@ services:
       - "1444:1433"
         
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:8.15.1
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.15.0
     container_name: elasticsearch
-    environment:
-      - discovery.type=single-node
     ports:
       - "9200:9200"
-      - "9300:9300"
+    environment:
+      - xpack.security.enabled=false
+      - discovery.type=single-node
+    networks:
+      - elastic
 
   kibana:
     image: docker.elastic.co/kibana/kibana:8.15.0
     container_name: kibana
     ports:
       - "5601:5601"
-    environment:
-      ELASTICSEARCH_HOSTS: "http://elasticsearch:9200"
-
-  logstash:
-    image: docker.elastic.co/logstash/logstash:8.15.0
-    container_name: logstash
-    ports:
-      - "5044:5044"  # для передачи данных от Filebeat
-      - "9600:9600"  # для мониторинга
     depends_on:
       - elasticsearch
+    environment:
+      ELASTICSEARCH_HOSTS: "http://elasticsearch:9200"
+    networks:
+      - elastic
+
+  IdentityService-logstash:
+    image: docker.elastic.co/logstash/logstash:8.15.0
+    container_name: IdentityService-logstash
+    ports:
+      - "12201:12201"
+      - "9600:9600"
+    depends_on:
+      - elasticsearch
+    volumes:
+      - ./IdentityService/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+    networks:
+      - elastic
+      
+  BlogService-logstash:
+    image: docker.elastic.co/logstash/logstash:8.15.0
+    container_name: BlogService-logstash
+    ports:
+      - "12202:12201"
+      - "9601:9600"
+    depends_on:
+      - elasticsearch
+    volumes:
+      - ./BlogService/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+    networks:
+      - elastic
+  
+  MessageService-logstash:
+    image: docker.elastic.co/logstash/logstash:8.15.0
+    container_name: MessageService-logstash
+    ports:
+      - "12203:12201"
+      - "9602:9600"
+    depends_on:
+      - elasticsearch
+    volumes:
+      - ./MessageService/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+    networks:
+      - elastic
+      
+networks:
+  elastic:
+    driver: bridge
