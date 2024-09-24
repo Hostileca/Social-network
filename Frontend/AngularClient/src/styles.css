@@ -1,15 +1,1 @@
-:root{
-  --main-color: #000000;
-  --second-color: #FFFFFF;
-  --third-color:#b8b8b8;
-  --third-light-color:#d6d6d6;
-}
-
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-}
-
-a{
-  text-decoration: none;
-}
+/* You can add global styles to this file, and also import other style files */
