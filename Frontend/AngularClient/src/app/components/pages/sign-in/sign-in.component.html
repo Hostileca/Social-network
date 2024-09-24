@@ -1,15 +1,16 @@
-<div>
+<div 
+    class="signIn-container">
     <h2>Sign in</h2>
     <form
     [formGroup]="Form"
     (ngSubmit)="OnSubmit()">
         <label for="email">Email:</label>
         <input
-            formControlName = "email"
+            formControlName = "email" 
             type="text" id="email" name="email">
 
         <label for="password">Password:</label>
-        <input
+        <input 
             formControlName = "password"
             type="password" id="password" name="password">
 
