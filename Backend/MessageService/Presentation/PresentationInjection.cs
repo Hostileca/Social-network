@@ -76,6 +76,7 @@ public static class PresentationInjection
         }
 
         webApplication.UseMiddleware<ExceptionHandlingMiddleware>();
+        webApplication.UseMiddleware<LoggingMiddleware>();
         webApplication.MapHub<ChatHub>("/chatHub");
         webApplication.UseHangfireDashboard();
         webApplication.MapControllers();
