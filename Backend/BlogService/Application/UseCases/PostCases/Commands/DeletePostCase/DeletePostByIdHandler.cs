@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using Application.Configs;
+using Domain.Entities;
 using Domain.Repositories;
 using Mapster;
 using MediatR;
@@ -9,7 +10,8 @@ namespace Application.UseCases.PostCases.Commands.DeletePostCase;
 
 public class DeletePostByIdHandler(
     IBlogRepository blogRepository,
-    IPostRepository postRepository)
+    IPostRepository postRepository,
+    ICacheRepository cacheRepository)
     : IRequestHandler<DeletePostByIdCommand, PostReadDto>
 {
     public async Task<PostReadDto> Handle(DeletePostByIdCommand request, CancellationToken cancellationToken)
@@ -34,6 +36,11 @@ public class DeletePostByIdHandler(
         }
         
         postRepository.Delete(post);
+        
+        await postRepository.SaveChangesAsync(cancellationToken);
+        
+        await cacheRepository.SetAsync(blog.Id, blog.Posts.Adapt<IEnumerable<PostReadDto>>(), CacheConfig.PostCacheTime);
+        
         return post.Adapt<PostReadDto>();
     }
 }

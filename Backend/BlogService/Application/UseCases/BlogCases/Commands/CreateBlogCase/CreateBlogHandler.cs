@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using Application.Configs;
+using Domain.Entities;
 using Domain.Repositories;
 using Mapster;
 using MassTransit;
@@ -13,6 +14,7 @@ namespace Application.UseCases.BlogCases.Commands.CreateBlogCase;
 public class CreateBlogHandler(
     IBlogRepository repository,
     IPublishEndpoint publishEndpoint,
+    ICacheRepository cacheRepository,
     UserGrpcService.UserGrpcServiceClient userGrpcClient) 
     : IRequestHandler<CreateBlogCommand, BlogReadDto>
 {
@@ -36,6 +38,8 @@ public class CreateBlogHandler(
         var blogCreatedEvent = newBlog.Adapt<BlogCreatedEvent>();
         
         await publishEndpoint.Publish(blogCreatedEvent, cancellationToken);
+        
+        await cacheRepository.SetAsync(blogReadDto.Id.ToString(), blogReadDto, CacheConfig.BlogCacheTime);
         
         return blogReadDto;
     }

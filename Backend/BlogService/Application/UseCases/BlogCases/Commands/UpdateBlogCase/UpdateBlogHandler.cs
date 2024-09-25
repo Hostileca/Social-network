@@ -1,14 +1,19 @@
-﻿using Domain.Entities;
+﻿using Application.Configs;
+using Domain.Entities;
 using Domain.Repositories;
 using Mapster;
+using MassTransit;
 using MediatR;
 using SharedResources.Dtos;
 using SharedResources.Exceptions;
+using SharedResources.MessageBroker.Events;
 
 namespace Application.UseCases.BlogCases.Commands.UpdateBlogCase;
 
 public class UpdateBlogHandler(
-    IBlogRepository blogRepository)
+    IBlogRepository blogRepository,
+    ICacheRepository cacheRepository,
+    IPublishEndpoint publishEndpoint)
     : IRequestHandler<UpdateBlogCommand, BlogReadDto>
 {
     public async Task<BlogReadDto> Handle(UpdateBlogCommand request, CancellationToken cancellationToken)
@@ -21,9 +26,16 @@ public class UpdateBlogHandler(
         }
         
         existingBlog = request.Adapt<Blog>();
-
-        await blogRepository.SaveChangesAsync(cancellationToken);
         
-        return existingBlog.Adapt<BlogReadDto>();
+        await blogRepository.SaveChangesAsync(cancellationToken);
+
+        var blogReadDto = existingBlog.Adapt<BlogReadDto>();
+        var blogUpdatedEvent = blogReadDto.Adapt<BlogUpdatedEvent>();
+        
+        await publishEndpoint.Publish(blogUpdatedEvent, cancellationToken);
+        
+        await cacheRepository.SetAsync(blogReadDto.Id.ToString(), blogReadDto, CacheConfig.BlogCacheTime);
+        
+        return blogReadDto;
     }
 }

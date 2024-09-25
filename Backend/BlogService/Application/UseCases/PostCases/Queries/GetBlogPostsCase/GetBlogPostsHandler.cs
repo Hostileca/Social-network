@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using Application.Configs;
+using Domain.Entities;
 using Domain.Repositories;
 using Mapster;
 using MediatR;
@@ -12,8 +13,6 @@ public class GetBlogPostsHandler(
     ICacheRepository cacheRepository)
     : IRequestHandler<GetBlogPostsQuery, IEnumerable<PostReadDto>>
 {
-    private static readonly TimeSpan PostsCacheTime = TimeSpan.FromMinutes(10);
-    
     public async Task<IEnumerable<PostReadDto>> Handle(GetBlogPostsQuery request, CancellationToken cancellationToken)
     {
         var cachedPosts = await cacheRepository.GetAsync<IEnumerable<PostReadDto>>(request.BlogId);
@@ -32,7 +31,7 @@ public class GetBlogPostsHandler(
 
         var postsReadDto = blog.Posts.Adapt<IEnumerable<PostReadDto>>();
         
-        await cacheRepository.SetAsync(request.BlogId, postsReadDto, PostsCacheTime);
+        await cacheRepository.SetAsync(request.BlogId, postsReadDto, CacheConfig.PostCacheTime);
         
         return postsReadDto;
     }

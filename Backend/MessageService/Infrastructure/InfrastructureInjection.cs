@@ -86,6 +86,7 @@ public static class InfrastructureInjection
                 {
                     e.ConfigureConsumer<BlogCreatedConsumer>(context);
                     e.ConfigureConsumer<BlogDeletedConsumer>(context);
+                    e.ConfigureConsumer<BlogUpdatedConsumer>(context);
                 });
             });
         });
