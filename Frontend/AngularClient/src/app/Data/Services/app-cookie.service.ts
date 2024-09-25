@@ -19,4 +19,8 @@ export class AppCookieService {
     const object: TItem = JSON.parse(serializedObject)
     return object
   }
+
+  public Delete(name: string){
+    this._cookieService.delete(name)
+  }
 }
