@@ -1,7 +1,8 @@
 ﻿using System.Text.Json;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+using Microsoft.Data.SqlClient;
+using RabbitMQ.Client.Exceptions;
 using SharedResources.Exceptions;
 
 namespace SharedResources.Middlewares;

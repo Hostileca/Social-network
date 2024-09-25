@@ -37,7 +37,8 @@ public static class InfrastructureInjection
         };
         services.AddDbContext<AppDbContext>(options => options
             .UseLazyLoadingProxies()
-            .UseSqlServer(sqlConnectionBuilder.ConnectionString));
+            .UseSqlServer(sqlConnectionBuilder.ConnectionString)
+        );
         
         return services;
     }
