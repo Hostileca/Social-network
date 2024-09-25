@@ -1,11 +1,17 @@
-﻿import {HttpClient} from '@angular/common/http';
-import {Tokens} from "../Models/Tokens";
-import {AppCookieService} from "./appCookie.service";
+import { Injectable } from '@angular/core';
+import { Tokens } from '../Models/Tokens';
 import {CookiesName} from "../Consts/CookiesName";
+import {HttpClient} from "@angular/common/http";
+import {AppCookieService} from "./app-cookie.service";
+import {Observable, tap} from "rxjs";
 import {ApiConfig} from "../Consts/ApiConfig";
-import {Observable, tap, throwError} from "rxjs";
+import {User} from "../Models/User";
 
-export class AuthService{
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthService {
+
   public Tokens: Tokens | null = null
   public IsAuth(): boolean{
     if(!this.Tokens){
@@ -19,11 +25,15 @@ export class AuthService{
   }
 
   public Login(payload: {email: string, password: string}): Observable<any>{
-    return this._httpClient.post<Tokens>(`${ApiConfig.BaseUrl}/login`, payload).pipe(
+    return this._httpClient.post<Tokens>(`${ApiConfig.BaseUrl}/users/login`, payload).pipe(
       tap(tokens => {
         this.SaveTokens(tokens)
       })
     )
+  }
+
+  public Register(payload: {username: string, email: string, password: string, confirmPassword: string}){
+    return this._httpClient.post<User>(`${ApiConfig.BaseUrl}/users/register`, payload)
   }
 
   // public RefreshAuthToken():Observable<Tokens>{

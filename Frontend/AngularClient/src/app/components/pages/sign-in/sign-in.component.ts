@@ -1,10 +1,12 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-sign-in',
   standalone: true,
-  imports: [ReactiveFormsModule],
+    imports: [
+      ReactiveFormsModule
+    ],
   templateUrl: './sign-in.component.html',
   styleUrl: './sign-in.component.css'
 })
