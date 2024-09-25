@@ -1,12 +1,9 @@
-<div *ngIf="Blogs.length==0">
+<div *ngIf="!Blogs">
   <p>No blogs</p>
 </div>
 
-<div *ngIf="Blogs.length>0">
-  <h1>Choose who you are today!</h1>
+<div *ngIf="Blogs">
   <div *ngFor="let blog of Blogs">
     <app-blog-item [Blog]="blog"></app-blog-item>
   </div>
 </div>
-
-<a [href]="'/blog-create'">Create blog</a>
