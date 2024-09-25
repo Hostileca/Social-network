@@ -1,3 +1,3 @@
 ﻿export class ApiConfig{
-  public static readonly BaseUrl: string = "123"
+  public static readonly BaseUrl: string = "http://localhost:8080"
 }
