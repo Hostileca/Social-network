@@ -19,8 +19,9 @@ public static class GatewayConfigure
 
     private static ConfigurationManager AddJsonConfigs(this ConfigurationManager configuration)
     {
+        var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
         configuration
-            .AddJsonFile("ocelot.json", optional: false, reloadOnChange: true);
+            .AddJsonFile($"ocelot.{environment}.json", optional: false, reloadOnChange: true);
         
         return configuration;
     }

@@ -1,2 +1,0 @@
-﻿dotnet ef migrations add appDbContextCreate --verbose --project Infrastructure --startup-project Presentation
-dotnet ef database update --verbose --project Infrastructure --startup-project Presentation      
