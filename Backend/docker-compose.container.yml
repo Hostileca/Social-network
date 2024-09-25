@@ -39,15 +39,15 @@ services:
     networks:
       - identityService
 
-  MessageService-sqlserver:
+  MessageService-sqlServer:
     image: "mcr.microsoft.com/mssql/server:2022-latest"
-    container_name: MessageService-sqlserver
+    container_name: MessageService-sqlServer
     environment:
       ACCEPT_EULA: "Y"
       SA_PASSWORD: "Pa55w0rd!"
       MSSQL_PID: "Express"
     ports:
-      - "1444:1444"
+      - "1444:1433"
     networks:
       - messageService
       
@@ -91,7 +91,7 @@ services:
     ports:
       - "8083:8083"
     depends_on:
-      - MessageService-sqlserver
+      - MessageService-sqlServer
       - BlogService-rabbitmq
       #- MessageService-logstash
     restart: always
