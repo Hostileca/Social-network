@@ -106,6 +106,24 @@
         "AllowedScopes": []
       }
     },
+
+    {
+      "DownstreamPathTemplate": "/chatHub/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5003
+        }
+      ],
+      "UpstreamPathTemplate": "/chatHub/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete", "Options" ],
+      "EnableWebSockets": true,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      }
+    },
     
     {
       "DownstreamPathTemplate": "/chats/{everything}",
