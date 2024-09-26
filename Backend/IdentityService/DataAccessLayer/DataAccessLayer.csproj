@@ -7,7 +7,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Grpc.AspNetCore" Version="2.66.0-pre1" />
       <PackageReference Include="IdentityServer4" Version="4.1.2" />
       <PackageReference Include="IdentityServer4.AspNetIdentity" Version="4.1.2" />
       <PackageReference Include="IdentityServer4.EntityFramework" Version="4.1.2" />
