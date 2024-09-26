@@ -24,6 +24,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Protobuf Include="..\..\SharedResources\SharedResources\gRPC\proto\user.proto" GrpcServices="Server" />
+      <ProjectReference Include="..\..\SharedResources\SharedResources\SharedResources.csproj" />
     </ItemGroup>
 </Project>
