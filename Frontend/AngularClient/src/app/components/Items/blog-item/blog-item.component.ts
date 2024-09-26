@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {Blog} from "../../../Data/Models/Responses/Blog";
+import {Blog} from "../../../Data/Models/Blog/Blog";
 import {CurrentBlogService} from "../../../Data/Services/current-blog.service";
 
 @Component({

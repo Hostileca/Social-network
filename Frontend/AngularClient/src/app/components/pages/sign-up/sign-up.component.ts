@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {AuthService} from "../../../Data/Services/auth.service";
 import {SimpleValidators} from "../../../Helpers/SimpleValidators";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-sign-up',
@@ -13,8 +14,9 @@ import {SimpleValidators} from "../../../Helpers/SimpleValidators";
   styleUrl: './sign-up.component.css'
 })
 export class SignUpComponent {
-  constructor(private readonly _authService: AuthService) {
-  }
+  constructor(private readonly _authService: AuthService,
+              private readonly _router: Router
+  ) {}
 
   public Form: FormGroup = new FormGroup({
     username: new FormControl(null, [Validators.required, Validators.minLength(4)]),
@@ -28,7 +30,7 @@ export class SignUpComponent {
 
     this._authService.Register(this.Form.value).subscribe({
         next: (response) => {
-          console.log('Registration successful', response);
+          this._router.navigate(['/sign-in']);
         },
         error: (error) => {
           console.error('Registration failed', error);

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import {AuthService} from "../../../Data/Services/auth.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-sign-in',
@@ -12,7 +13,8 @@ import {AuthService} from "../../../Data/Services/auth.service";
   styleUrl: './sign-in.component.css'
 })
 export class SignInComponent {
-  constructor(private readonly _authService: AuthService
+  constructor(private readonly _authService: AuthService,
+              private readonly _router: Router
   ){}
 
   public Form: FormGroup = new FormGroup({
@@ -25,7 +27,7 @@ export class SignInComponent {
 
     this._authService.Login(this.Form.value).subscribe({
         next: (response) => {
-          console.log('Login successful', response);
+          this._router.navigate(['/my-blogs']);
         },
         error: (error) => {
           console.error('Login failed', error);

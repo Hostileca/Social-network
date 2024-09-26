@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Blog} from "../Models/Responses/Blog";
+import {Blog} from "../Models/Blog/Blog";
 import {CookiesName} from "../Consts/CookiesName";
 import {HttpClient} from "@angular/common/http";
 import {AppCookieService} from "./app-cookie.service";

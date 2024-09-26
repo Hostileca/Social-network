@@ -1,13 +1,17 @@
 import { Component } from '@angular/core';
 import {BlogService} from "../../../Data/Services/blog.service";
-import {Blog} from "../../../Data/Models/Responses/Blog";
+import {Blog} from "../../../Data/Models/Blog/Blog";
 import {BlogItemComponent} from "../../Items/blog-item/blog-item.component";
+import {NgForOf, NgIf} from "@angular/common";
+import {CreateBlogComponent} from "../create-blog/create-blog.component";
 
 @Component({
   selector: 'app-my-blogs',
   standalone: true,
   imports: [
-    BlogItemComponent
+    BlogItemComponent,
+    NgForOf,
+    NgIf
   ],
   templateUrl: './my-blogs.component.html',
   styleUrl: './my-blogs.component.css'
@@ -18,7 +22,12 @@ export class MyBlogsComponent {
   constructor(private readonly _blogService: BlogService
   ) {
     this._blogService.GetUserBlogs().subscribe(
-      value => this.Blogs = value
+      value => {
+        this.Blogs = value
+        console.log(value)
+      }
     )
   }
+
+  protected readonly CreateBlogComponent = CreateBlogComponent;
 }
