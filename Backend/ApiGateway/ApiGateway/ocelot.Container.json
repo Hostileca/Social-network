@@ -2,10 +2,10 @@
     "Routes": [
         {
             "DownstreamPathTemplate": "/users/register",
-            "DownstreamScheme": "http",
+            "DownstreamScheme": "https",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "IdentityService",
+                    "Host": "identity-service",
                     "Port": 8081
                 }
             ],
@@ -15,10 +15,10 @@
 
         {
             "DownstreamPathTemplate": "/users/login",
-            "DownstreamScheme": "http",
+            "DownstreamScheme": "https",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "IdentityService",
+                    "Host": "identity-service",
                     "Port": 8081
                 }
             ],
@@ -28,10 +28,10 @@
 
         {
             "DownstreamPathTemplate": "/users/token/refresh",
-            "DownstreamScheme": "http",
+            "DownstreamScheme": "https",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "IdentityService",
+                    "Host": "identity-service",
                     "Port": 8081
                 }
             ],
@@ -41,10 +41,10 @@
 
         {
             "DownstreamPathTemplate": "/users/{everything}",
-            "DownstreamScheme": "http",
+            "DownstreamScheme": "https",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "IdentityService",
+                    "Host": "identity-service",
                     "Port": 8081
                 }
             ],
@@ -58,10 +58,10 @@
 
         {
             "DownstreamPathTemplate": "/attachments/{everything}",
-            "DownstreamScheme": "http",
+            "DownstreamScheme": "https",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "BlogService",
+                    "Host": "blog-service",
                     "Port": 8082
                 }
             ],
@@ -75,10 +75,10 @@
 
         {
             "DownstreamPathTemplate": "/blogs/{everything}",
-            "DownstreamScheme": "http",
+            "DownstreamScheme": "https",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "BlogService",
+                    "Host": "blog-service",
                     "Port": 8082
                 }
             ],
@@ -92,10 +92,10 @@
 
         {
             "DownstreamPathTemplate": "/posts/{everything}",
-            "DownstreamScheme": "http",
+            "DownstreamScheme": "https",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "BlogService",
+                    "Host": "blog-service",
                     "Port": 8082
                 }
             ],
@@ -109,10 +109,10 @@
 
         {
             "DownstreamPathTemplate": "/chatHub/{everything}",
-            "DownstreamScheme": "http",
+            "DownstreamScheme": "https",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "MessageService",
+                    "Host": "message-service",
                     "Port": 8083
                 }
             ],
@@ -127,10 +127,10 @@
 
         {
             "DownstreamPathTemplate": "/chats/{everything}",
-            "DownstreamScheme": "http",
+            "DownstreamScheme": "https",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "MessageService",
+                    "Host": "message-service",
                     "Port": 8083
                 }
             ],
@@ -144,10 +144,10 @@
 
         {
             "DownstreamPathTemplate": "/messages/{everything}",
-            "DownstreamScheme": "http",
+            "DownstreamScheme": "https",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "MessageService",
+                    "Host": "message-service",
                     "Port": 8083
                 }
             ],
@@ -160,8 +160,8 @@
         }
     ],
     "GlobalConfiguration": {
-        "BaseUrl": "http://localhost:8080",
+        "BaseUrl": "https://localhost:8080",
         "RequestIdKey": "OcRequestId",
-        "DownstreamScheme": "http"
+        "DownstreamScheme": "https"
     }
 }

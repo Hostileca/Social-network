@@ -52,11 +52,7 @@ public static class InfrastructureInjection
         {
             x.UsingRabbitMq((context, cfg) =>
             {
-                cfg.Host(rabbitMqSettings["Host"], h =>
-                {
-                    h.Username(rabbitMqSettings["Username"]);
-                    h.Password(rabbitMqSettings["Password"]);
-                });
+                cfg.Host(rabbitMqSettings["Host"]);
             });
         });
         

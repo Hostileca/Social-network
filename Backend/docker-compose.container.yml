@@ -8,7 +8,7 @@ services:
     ports:
       - "27017:27017"
     networks:
-      - blogService
+      - network
 
   BlogService-rabbitmq:
     image: rabbitmq:3-management
@@ -17,7 +17,8 @@ services:
       - "5672:5672"  
       - "15672:15672"
     networks:
-      - messageBroker  
+      - network
+  
   
   BlogService-redis:
     image: redis:6.2
@@ -25,7 +26,7 @@ services:
     ports:
       - "6379:6379"
     networks:
-      - blogService
+      - network
 
   IdentityService-sqlServer:
     image: "mcr.microsoft.com/mssql/server:2022-latest"
@@ -37,7 +38,7 @@ services:
     ports:
       - "1433:1433"
     networks:
-      - identityService
+      - network
 
   MessageService-sqlServer:
     image: "mcr.microsoft.com/mssql/server:2022-latest"
@@ -49,12 +50,14 @@ services:
     ports:
       - "1444:1433"
     networks:
-      - messageService
-      
+      - network  
+  
   # Services
-  IdentityService:
-    image: identity-service
-    container_name: IdentityService
+  identity-service:
+    container_name: identity-service
+    build:
+      context: .
+      dockerfile: IdentityService/Dockerfile
     ports:
       - "8081:8081"
     depends_on:
@@ -62,14 +65,13 @@ services:
       #- IdentityService-logstash
     restart: always
     networks:
-      - elastic
-      - identityService
-      - identity-blog-grpc
-      - gateWay  
-  
-  BlogService:
-    image: blog-service
-    container_name: BlogService
+      - network
+
+  blog-service:
+    container_name: blog-service
+    build:
+      context: .
+      dockerfile: BlogService/Dockerfile
     ports:
       - "8082:8082"
     depends_on:
@@ -79,15 +81,13 @@ services:
       #- BlogService-logstash
     restart: always
     networks:
-      - blogService
-      - messageBroker  
-      - identity-blog-grpc
-      - elastic
-      - gateWay
+      - network
   
-  MessageService:
-    image: message-service
-    container_name: MessageService
+  message-service:
+    container_name: message-service
+    build:
+      context: .
+      dockerfile: MessageService/Dockerfile
     ports:
       - "8083:8083"
     depends_on:
@@ -96,24 +96,23 @@ services:
       #- MessageService-logstash
     restart: always
     networks:
-      - messageService
-      - messageBroker
-      - elastic
-      - gateWay
+      - network
   
-  ApiGateway:
-    image: api-gateway
-    container_name: ApiGateway
+  api-gateway:
+    container_name: api-gateway
+    build:
+      context: .
+      dockerfile: ApiGateway/Dockerfile
     ports:
       - "8080:8080"
     depends_on:
-      - IdentityService
-      - BlogService
-      - MessageService
+      - identity-service
+      - blog-service
+      - message-service
     networks:
-      - gateWay
-        
-  # ELK
+      - network
+      
+ # ELK
 #  elasticsearch:
 #    image: docker.elastic.co/elasticsearch/elasticsearch:8.15.0
 #    container_name: elasticsearch
@@ -123,7 +122,7 @@ services:
 #      - xpack.security.enabled=false
 #      - discovery.type=single-node
 #    networks:
-#      - elastic
+#      - network
 #
 #  kibana:
 #    image: docker.elastic.co/kibana/kibana:8.15.0
@@ -135,7 +134,7 @@ services:
 #    environment:
 #      ELASTICSEARCH_HOSTS: "http://elasticsearch:9200"
 #    networks:
-#      - elastic
+#      - network
 #
 #  IdentityService-logstash:
 #    image: docker.elastic.co/logstash/logstash:8.15.0
@@ -148,7 +147,7 @@ services:
 #    volumes:
 #      - ./IdentityService/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
 #    networks:
-#      - elastic
+#      - network
 #      
 #  BlogService-logstash:
 #    image: docker.elastic.co/logstash/logstash:8.15.0
@@ -174,21 +173,9 @@ services:
 #    volumes:
 #      - ./MessageService/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
 #    networks:
-#      - elastic
+#     - network
       
 networks:
-  elastic:
-    driver: bridge
-  blogService:
-    driver: bridge
-  messageService:
-    driver: bridge
-  identityService:
-    driver: bridge
-  identity-blog-grpc:
-    driver: bridge
-  messageBroker:
-    driver: bridge
-  gateWay:
+  network:
     driver: bridge
   
