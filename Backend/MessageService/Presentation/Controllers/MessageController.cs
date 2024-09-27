@@ -13,7 +13,7 @@ public class MessageController(
     : ControllerBase
 {
     [HttpGet("messages")]
-    public async Task<IActionResult> GetMessages(Guid chatId, GetChatMessagesQuery getChatMessagesQuery,
+    public async Task<IActionResult> GetMessages(Guid chatId, [FromQuery]GetChatMessagesQuery getChatMessagesQuery,
         CancellationToken cancellationToken = default)
     {
         getChatMessagesQuery.UserId = UserId;

@@ -1,5 +1,5 @@
-﻿using MediatR;
-using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
+using MediatR;
 using SharedResources.Dtos;
 
 namespace Application.UseCases.MessageCases.Queries.GetChatMessages;
