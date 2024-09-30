@@ -13,4 +13,5 @@ export const routes: Routes = [
     { path: "my-blogs", component: MyBlogsComponent, canActivate: [authGuard] },
     { path: "blog-create", component: CreateBlogComponent, canActivate: [authGuard] },
     { path: "my-chats", component: MyChatsComponent, canActivate: [authGuard, blogGuard] },
+    { path: "**", redirectTo: "sign-in" }
 ];

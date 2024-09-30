@@ -24,7 +24,6 @@ export class MyBlogsComponent {
     this._blogService.GetUserBlogs().subscribe(
       value => {
         this.Blogs = value
-        console.log(value)
       }
     )
   }
