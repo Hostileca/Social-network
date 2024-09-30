@@ -14,15 +14,4 @@ builder.Services.AddPresentation(builder.Configuration);
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
-app.UseMiddleware<ExceptionHandlingMiddleware>();
-
-app.MapControllers();
-app.UseHttpsRedirection();
-
-app.Run();
+app.StartApplication();

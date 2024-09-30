@@ -4,8 +4,14 @@ using DataAccessLayer.Data.Contexts;
 using DataAccessLayer.Entities;
 using DataAccessLayer.gRPC.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Connections;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
+using Serilog;
+using Serilog.Configuration;
+using Serilog.Events;
+using Serilog.Exceptions;
+using Serilog.Formatting.Compact;
 using SharedResources.Middlewares;
 using SharedResources.Policies;
 
@@ -19,7 +25,9 @@ public static class PresentationLayerInjection
         services.AddControllers();
         services.AuthConfigure(configuration);
         services.AddSwaggerGen();
+        services.LoggerConfigure(configuration);
         services.AddScoped<ExceptionHandlingMiddleware>();
+        services.AddScoped<LoggingMiddleware>();
         
         return services;
     }
@@ -34,25 +42,12 @@ public static class PresentationLayerInjection
         webApplication.SwaggerStart();
         webApplication.SeedData();
         webApplication.UseMiddleware<ExceptionHandlingMiddleware>();
+        webApplication.UseMiddleware<LoggingMiddleware>();
         webApplication.Run();
          
         return webApplication;
     }
-    
-    private static WebApplication DbInitialize(this WebApplication webApplication)
-    {
-        using var scope = webApplication.Services.CreateScope();
-        try
-        {
-            var appDbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-            DbInitializer.Initialize(appDbContext);
-        }
-        catch (Exception ex)
-        {
-        }
 
-        return webApplication;
-    }
 
     private static IServiceCollection AuthConfigure(this IServiceCollection services, IConfiguration configuration)
     {
@@ -83,6 +78,36 @@ public static class PresentationLayerInjection
         return services;
     }
 
+    private static IServiceCollection LoggerConfigure(this IServiceCollection services, IConfiguration configuration)
+    {
+        var connection = configuration.GetConnectionString("LogstashConnection");
+        Log.Logger = new LoggerConfiguration()
+            .Enrich.FromLogContext()
+            .Enrich.WithExceptionDetails()
+            .WriteTo.Http(connection, 
+                queueLimitBytes: null, 
+                textFormatter: new CompactJsonFormatter())
+            .CreateLogger();
+        
+        Log.Logger.Write(LogEventLevel.Information, "Service started");
+        return services;
+    }
+    
+    private static WebApplication DbInitialize(this WebApplication webApplication)
+    {
+        using var scope = webApplication.Services.CreateScope();
+        try
+        {
+            var appDbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+            DbInitializer.Initialize(appDbContext);
+        }
+        catch (Exception ex)
+        {
+        }
+
+        return webApplication;
+    }
+    
     private static WebApplication SwaggerStart(this WebApplication webApplication)
     {
         if (webApplication.Environment.IsDevelopment())
