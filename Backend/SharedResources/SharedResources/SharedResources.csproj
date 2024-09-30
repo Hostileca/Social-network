@@ -7,8 +7,10 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="Grpc.AspNetCore" Version="2.66.0" />
       <PackageReference Include="Mapster" Version="7.4.1-pre01" />
       <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
+      <PackageReference Include="Microsoft.Data.SqlClient" Version="6.0.0-preview1.24240.8" />
       <PackageReference Include="Serilog" Version="4.0.2-dev-02226" />
       <PackageReference Include="Serilog.Exceptions" Version="8.4.0" />
       <PackageReference Include="Serilog.Formatting.Compact" Version="3.0.0" />
@@ -17,7 +19,7 @@
 
     <ItemGroup>
       <Protobuf Include="gRPC\proto\user.proto">
-        <GrpcServices>Server</GrpcServices>
+        <GrpcServices>Both</GrpcServices>
         <Access>Public</Access>
         <ProtoCompile>True</ProtoCompile>
         <CompileOutputs>True</CompileOutputs>

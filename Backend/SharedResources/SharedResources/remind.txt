@@ -1,0 +1,13 @@
+﻿dotnet ef migrations add appDbContextCreate --verbose --project DataAccessLayer --startup-project PresentationLayer
+dotnet ef database update --verbose --project DataAccessLayer --startup-project PresentationLayer       
+docker build --no-cache-t name -f ProjectDirectory/Dockerfile ./
+docker-compose -f docker-compose.container.yml up -d
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout identity-service.key -out identity-service.crt -subj "/CN=identity-service"
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout blog-service.key -out blog-service.crt -subj "/CN=blog-service"
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout message-service.key -out message-service.crt -subj "/CN=message-service"
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout api-gateway.key -out api-gateway.crt -subj "/CN=api-gateway"
+
+openssl pkcs12 -export -out identity-service.pfx -inkey identity-service.key -in identity-service.crt -password pass:1256
+openssl pkcs12 -export -out blog-service.pfx -inkey blog-service.key -in blog-service.crt -password pass:1256
+openssl pkcs12 -export -out message-service.pfx -inkey message-service.key -in message-service.crt -password pass:1256
+openssl pkcs12 -export -out api-gateway.pfx -inkey api-gateway.key -in api-gateway.crt -password pass:1256

@@ -1,5 +1,7 @@
 ﻿using System.Text;
 using Hangfire;
+using Infrastructure;
+using Infrastructure.Data;
 using Infrastructure.SignalR.Hubs;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -20,9 +22,9 @@ public static class PresentationInjection
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
         services.LoggerConfigure(configuration);
-        services.AddScoped<LoggingMiddleware>();
-        services.AddScoped<ExceptionHandlingMiddleware>();
         services.AuthorizationConfigure(configuration);
+        services.AddScoped<ExceptionHandlingMiddleware>();
+        services.AddScoped<LoggingMiddleware>();
         
         return services;
     }
@@ -75,14 +77,24 @@ public static class PresentationInjection
             webApplication.UseSwaggerUI();
         }
 
-        webApplication.UseMiddleware<ExceptionHandlingMiddleware>();
-        webApplication.UseMiddleware<LoggingMiddleware>();
+        webApplication.DbInitialize();
         webApplication.MapHub<ChatHub>("/chatHub");
         webApplication.UseHangfireDashboard();
         webApplication.MapControllers();
         webApplication.UseHttpsRedirection();
-
+        webApplication.UseMiddleware<ExceptionHandlingMiddleware>();
+        webApplication.UseMiddleware<LoggingMiddleware>();
         webApplication.Run();
+
+        return webApplication;
+    }
+    
+    private static WebApplication DbInitialize(this WebApplication webApplication)
+    {
+        using var scope = webApplication.Services.CreateScope();
+        var appDbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        DbInitializer.Initialize(appDbContext);
+
         return webApplication;
     }
 }

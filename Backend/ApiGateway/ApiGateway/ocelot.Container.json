@@ -1,0 +1,167 @@
+﻿{
+    "Routes": [
+        {
+            "DownstreamPathTemplate": "/users/register",
+            "DownstreamScheme": "https",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "identity-service",
+                    "Port": 8081
+                }
+            ],
+            "UpstreamPathTemplate": "/users/register",
+            "UpstreamHttpMethod": [ "Post" ]
+        },
+
+        {
+            "DownstreamPathTemplate": "/users/login",
+            "DownstreamScheme": "https",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "identity-service",
+                    "Port": 8081
+                }
+            ],
+            "UpstreamPathTemplate": "/users/login",
+            "UpstreamHttpMethod": [ "Post" ]
+        },
+
+        {
+            "DownstreamPathTemplate": "/users/token/refresh",
+            "DownstreamScheme": "https",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "identity-service",
+                    "Port": 8081
+                }
+            ],
+            "UpstreamPathTemplate": "/users/token/refresh",
+            "UpstreamHttpMethod": [ "Post" ]
+        },
+
+        {
+            "DownstreamPathTemplate": "/users/{everything}",
+            "DownstreamScheme": "https",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "identity-service",
+                    "Port": 8081
+                }
+            ],
+            "UpstreamPathTemplate": "/users/{everything}",
+            "UpstreamHttpMethod": [ "Post", "Get", "Put", "Delete" ],
+            "AuthenticationOptions": {
+                "AuthenticationProviderKey": "Bearer",
+                "AllowedScopes": []
+            }
+        },
+
+        {
+            "DownstreamPathTemplate": "/attachments/{everything}",
+            "DownstreamScheme": "https",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "blog-service",
+                    "Port": 8082
+                }
+            ],
+            "UpstreamPathTemplate": "/attachments/{everything}",
+            "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+            "AuthenticationOptions": {
+                "AuthenticationProviderKey": "Bearer",
+                "AllowedScopes": []
+            }
+        },
+
+        {
+            "DownstreamPathTemplate": "/blogs/{everything}",
+            "DownstreamScheme": "https",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "blog-service",
+                    "Port": 8082
+                }
+            ],
+            "UpstreamPathTemplate": "/blogs/{everything}",
+            "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+            "AuthenticationOptions": {
+                "AuthenticationProviderKey": "Bearer",
+                "AllowedScopes": []
+            }
+        },
+
+        {
+            "DownstreamPathTemplate": "/posts/{everything}",
+            "DownstreamScheme": "https",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "blog-service",
+                    "Port": 8082
+                }
+            ],
+            "UpstreamPathTemplate": "/posts/{everything}",
+            "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+            "AuthenticationOptions": {
+                "AuthenticationProviderKey": "Bearer",
+                "AllowedScopes": []
+            }
+        },
+
+        {
+            "DownstreamPathTemplate": "/chatHub/{everything}",
+            "DownstreamScheme": "https",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "message-service",
+                    "Port": 8083
+                }
+            ],
+            "UpstreamPathTemplate": "/chatHub/{everything}",
+            "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete", "Options" ],
+            "EnableWebSockets": true,
+            "AuthenticationOptions": {
+                "AuthenticationProviderKey": "Bearer",
+                "AllowedScopes": []
+            }
+        },
+
+        {
+            "DownstreamPathTemplate": "/chats/{everything}",
+            "DownstreamScheme": "https",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "message-service",
+                    "Port": 8083
+                }
+            ],
+            "UpstreamPathTemplate": "/chats/{everything}",
+            "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+            "AuthenticationOptions": {
+                "AuthenticationProviderKey": "Bearer",
+                "AllowedScopes": []
+            }
+        },
+
+        {
+            "DownstreamPathTemplate": "/messages/{everything}",
+            "DownstreamScheme": "https",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "message-service",
+                    "Port": 8083
+                }
+            ],
+            "UpstreamPathTemplate": "/messages/{everything}",
+            "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+            "AuthenticationOptions": {
+                "AuthenticationProviderKey": "Bearer",
+                "AllowedScopes": []
+            }
+        }
+    ],
+    "GlobalConfiguration": {
+        "BaseUrl": "https://localhost:8080",
+        "RequestIdKey": "OcRequestId",
+        "DownstreamScheme": "https"
+    }
+}

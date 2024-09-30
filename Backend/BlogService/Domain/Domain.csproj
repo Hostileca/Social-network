@@ -12,12 +12,4 @@
       <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.8" />
       <PackageReference Include="MongoDB.Driver" Version="2.28.0" />
     </ItemGroup>
-
-    <ItemGroup>
-        <Protobuf Include="..\..\SharedResources\SharedResources\gRPC\proto\user.proto" GrpcServices="Client" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\..\SharedResources\SharedResources\SharedResources.csproj" />
-    </ItemGroup>
 </Project>

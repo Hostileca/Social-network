@@ -11,6 +11,7 @@ public static class GatewayConfigure
     public static IServiceCollection ConfigureGateway(this IServiceCollection services, ConfigurationManager configuration)
     {
         configuration.AddJsonConfigs();
+        services.CorsConfigure();
         services.OcelotConfigure(configuration);
         services.AuthenticationConfigure(configuration);
         
@@ -19,8 +20,9 @@ public static class GatewayConfigure
 
     private static ConfigurationManager AddJsonConfigs(this ConfigurationManager configuration)
     {
+        var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
         configuration
-            .AddJsonFile("ocelot.json", optional: false, reloadOnChange: true);
+            .AddJsonFile($"ocelot.{environment}.json", optional: false, reloadOnChange: true);
         
         return configuration;
     }
@@ -55,8 +57,27 @@ public static class GatewayConfigure
         return services;
     }
 
+    private static IServiceCollection CorsConfigure(this IServiceCollection services)
+    {
+        services
+            .AddCors(options =>
+            {
+                options.AddPolicy("AllowSpecificOrigin",
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost:4200", "https://localhost:4200")
+                            .AllowAnyHeader()
+                            .AllowAnyMethod()
+                            .AllowCredentials();
+                    });
+            });
+        
+        return services;
+    }
+
     public static async Task<WebApplication> LaunchGateway(this WebApplication webApplication)
     {
+        webApplication.UseCors("AllowSpecificOrigin");
         await webApplication.UseOcelot();
         webApplication.UseHttpsRedirection(); 
         await webApplication.RunAsync();

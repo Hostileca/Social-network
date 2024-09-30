@@ -96,14 +96,8 @@ public static class PresentationLayerInjection
     private static WebApplication DbInitialize(this WebApplication webApplication)
     {
         using var scope = webApplication.Services.CreateScope();
-        try
-        {
-            var appDbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-            DbInitializer.Initialize(appDbContext);
-        }
-        catch (Exception ex)
-        {
-        }
+        var appDbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        DbInitializer.Initialize(appDbContext);
 
         return webApplication;
     }

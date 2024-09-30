@@ -1,0 +1,181 @@
+﻿version: '3.8'
+
+services:
+  # Dependencies
+  BlogService-mongoDb:
+    image: mongo:5.0
+    container_name: BlogService-mongoDb
+    ports:
+      - "27017:27017"
+    networks:
+      - network
+
+  BlogService-rabbitmq:
+    image: rabbitmq:3-management
+    container_name: BlogService-rabbitmq
+    ports:
+      - "5672:5672"  
+      - "15672:15672"
+    networks:
+      - network
+  
+  
+  BlogService-redis:
+    image: redis:6.2
+    container_name: BlogService-redis
+    ports:
+      - "6379:6379"
+    networks:
+      - network
+
+  IdentityService-sqlServer:
+    image: "mcr.microsoft.com/mssql/server:2022-latest"
+    container_name: IdentityService-sqlServer
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "Pa55w0rd!"
+      MSSQL_PID: "Express"
+    ports:
+      - "1433:1433"
+    networks:
+      - network
+
+  MessageService-sqlServer:
+    image: "mcr.microsoft.com/mssql/server:2022-latest"
+    container_name: MessageService-sqlServer
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "Pa55w0rd!"
+      MSSQL_PID: "Express"
+    ports:
+      - "1444:1433"
+    networks:
+      - network  
+  
+  # Services
+  identity-service:
+    container_name: identity-service
+    build:
+      context: .
+      dockerfile: IdentityService/Dockerfile
+    ports:
+      - "8081:8081"
+    depends_on:
+      - IdentityService-sqlServer
+      #- IdentityService-logstash
+    restart: always
+    networks:
+      - network
+
+  blog-service:
+    container_name: blog-service
+    build:
+      context: .
+      dockerfile: BlogService/Dockerfile
+    ports:
+      - "8082:8082"
+    depends_on:
+      - BlogService-mongoDb
+      - BlogService-rabbitmq
+      - BlogService-redis
+      #- BlogService-logstash
+    restart: always
+    networks:
+      - network
+  
+  message-service:
+    container_name: message-service
+    build:
+      context: .
+      dockerfile: MessageService/Dockerfile
+    ports:
+      - "8083:8083"
+    depends_on:
+      - MessageService-sqlServer
+      - BlogService-rabbitmq
+      #- MessageService-logstash
+    restart: always
+    networks:
+      - network
+  
+  api-gateway:
+    container_name: api-gateway
+    build:
+      context: .
+      dockerfile: ApiGateway/Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - identity-service
+      - blog-service
+      - message-service
+    networks:
+      - network
+      
+ # ELK
+#  elasticsearch:
+#    image: docker.elastic.co/elasticsearch/elasticsearch:8.15.0
+#    container_name: elasticsearch
+#    ports:
+#      - "9200:9200"
+#    environment:
+#      - xpack.security.enabled=false
+#      - discovery.type=single-node
+#    networks:
+#      - network
+#
+#  kibana:
+#    image: docker.elastic.co/kibana/kibana:8.15.0
+#    container_name: kibana
+#    ports:
+#      - "5601:5601"
+#    depends_on:
+#      - elasticsearch
+#    environment:
+#      ELASTICSEARCH_HOSTS: "http://elasticsearch:9200"
+#    networks:
+#      - network
+#
+#  IdentityService-logstash:
+#    image: docker.elastic.co/logstash/logstash:8.15.0
+#    container_name: IdentityService-logstash
+#    ports:
+#      - "12201:12201"
+#      - "9600:9600"
+#    depends_on:
+#      - elasticsearch
+#    volumes:
+#      - ./IdentityService/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+#    networks:
+#      - network
+#      
+#  BlogService-logstash:
+#    image: docker.elastic.co/logstash/logstash:8.15.0
+#    container_name: BlogService-logstash
+#    ports:
+#      - "12202:12202"
+#      - "9601:9600"
+#    depends_on:
+#      - elasticsearch
+#    volumes:
+#      - ./BlogService/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+#    networks:
+#      - elastic
+#  
+#  MessageService-logstash:
+#    image: docker.elastic.co/logstash/logstash:8.15.0
+#    container_name: MessageService-logstash
+#    ports:
+#      - "12203:12203"
+#      - "9602:9600"
+#    depends_on:
+#      - elasticsearch
+#    volumes:
+#      - ./MessageService/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+#    networks:
+#     - network
+      
+networks:
+  network:
+    driver: bridge
+  
