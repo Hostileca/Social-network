@@ -13,38 +13,14 @@ public class SendMessageHandler(
     IChatRepository chatRepository,
     IMessageRepository messageRepository,
     IMessageNotificationService messageNotificationService)
-    : IRequestHandler<SendMessageCommand, MessageReadDto>
+    : SendMessageHandlerBase(blogRepository, chatRepository, messageRepository, messageNotificationService),
+        IRequestHandler<SendMessageCommand, MessageReadDto>
 {
     public async Task<MessageReadDto> Handle(SendMessageCommand request, CancellationToken cancellationToken)
     {
-        var userBlog = await blogRepository.GetBlogByIdAndUserIdAsync(request.UserBlogId, request.UserId, cancellationToken);
+        var message = await CreateMessageAsync(request, cancellationToken);
 
-        if (userBlog is null)
-        {
-            throw new NotFoundException(typeof(Blog).ToString(), request.UserBlogId.ToString());
-        }
-        
-        var chat = await chatRepository.GetByIdAsync(request.ChatId, cancellationToken);
-
-        if (chat is null)
-        {
-            throw new NotFoundException(typeof(Chat).ToString(), request.ChatId.ToString());
-        }
-
-        if (chat.Members.All(m => m.BlogId != userBlog.Id))
-        {
-            throw new NoPermissionException("You are not a member of this chat");
-        }
-
-        var message = request.Adapt<Message>();
-
-        await messageRepository.AddAsync(message, cancellationToken);
-        
-        await messageRepository.SaveChangesAsync(cancellationToken);
-
-        var messageReadDto = message.Adapt<MessageReadDto>();
-        
-        await messageNotificationService.SendMessageAsync(messageReadDto, chat.Id, cancellationToken);
+        var messageReadDto = await SendMessageAsync(message, cancellationToken);
         
         return messageReadDto;
     }
