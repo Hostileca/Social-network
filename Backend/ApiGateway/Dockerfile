@@ -31,7 +31,7 @@ WORKDIR /app
 COPY --from=publish /app/publish .
 
 ENV ASPNETCORE_ENVIRONMENT=Container
-ENV ASPNETCORE_URLS=https://*:8080
+ENV ASPNETCORE_URLS=https://*:8080;http://*:80
 ENV ASPNETCORE_Kestrel__Certificates__Default__Path=/https/api-gateway.pfx
 ENV ASPNETCORE_Kestrel__Certificates__Default__Password=1256
 ENTRYPOINT ["dotnet", "ApiGateway.dll"]
