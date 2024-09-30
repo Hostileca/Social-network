@@ -2,12 +2,15 @@
 using MediatR;
 using SharedResources.Dtos;
 
-namespace Application.UseCases.ChatCases.Queries.GetBlogChats;
+namespace Application.UseCases.ChatCases.Queries.GetBlogChatById;
 
-public class GetBlogChatsQuery : IRequest<IEnumerable<ChatReadDto>>
+public class GetBlogChatByIdQuery : IRequest<ChatReadDto>
 {
     [JsonIgnore]
     public string? UserId { get; set; }
     
     public Guid UserBlogId { get; set; }
+    
+    [JsonIgnore]
+    public Guid ChatId { get; set; }
 }

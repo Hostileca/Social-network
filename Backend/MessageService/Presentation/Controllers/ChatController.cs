@@ -1,5 +1,6 @@
 ﻿using Application.UseCases.ChatCases.Commands.CreateChat;
 using Application.UseCases.ChatCases.Commands.DeleteChat;
+using Application.UseCases.ChatCases.Queries.GetBlogChatById;
 using Application.UseCases.ChatCases.Queries.GetBlogChats;
 using Application.UseCases.ChatMembersCases.Commands.LeaveChat;
 using MediatR;
@@ -19,6 +20,18 @@ public class ChatController(
         getBlogChatsQuery.UserId = UserId;
         
         var chats = await mediator.Send(getBlogChatsQuery, cancellationToken);
+
+        return Ok(chats);
+    }
+    
+    [HttpGet("chatId")]
+    public async Task<IActionResult> GetChatById(Guid chatId, [FromQuery]GetBlogChatByIdQuery getBlogChatByIdQuery, 
+        CancellationToken cancellationToken = default)
+    {
+        getBlogChatByIdQuery.UserId = UserId;
+        getBlogChatByIdQuery.ChatId = chatId;
+        
+        var chats = await mediator.Send(getBlogChatByIdQuery, cancellationToken);
 
         return Ok(chats);
     }
