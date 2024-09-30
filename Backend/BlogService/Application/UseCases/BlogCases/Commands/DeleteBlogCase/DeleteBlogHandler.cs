@@ -34,7 +34,7 @@ public class DeleteBlogHandler(
 
         await publishEndpoint.Publish(blogDeletedEvent, cancellationToken);
         
-        await cacheRepository.SetAsync(blogReadDto.Id.ToString(), blogReadDto, CacheConfig.BlogCacheTime);
+        await cacheRepository.DeleteAsync<BlogReadDto>(blogReadDto.Id.ToString());
         
         return blogReadDto;
     }
