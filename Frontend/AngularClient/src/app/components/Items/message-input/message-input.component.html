@@ -1,0 +1,13 @@
+<div>
+  <form
+    [formGroup]="Form"
+    (ngSubmit)="SendMessage()">
+
+    <label for="text">Text:</label>
+    <input
+      formControlName = "text"
+      type="text" id="text" name="text">
+
+    <button type="submit">Send</button>
+  </form>
+</div>

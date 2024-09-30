@@ -3,7 +3,6 @@ import {BlogService} from "../../../Data/Services/blog.service";
 import {Blog} from "../../../Data/Models/Blog/Blog";
 import {BlogItemComponent} from "../../Items/blog-item/blog-item.component";
 import {NgForOf, NgIf} from "@angular/common";
-import {CreateBlogComponent} from "../create-blog/create-blog.component";
 
 @Component({
   selector: 'app-my-blogs',

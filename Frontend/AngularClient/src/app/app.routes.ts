@@ -6,6 +6,7 @@ import {authGuard} from "./Guards/auth.guard";
 import {CreateBlogComponent} from "./components/pages/create-blog/create-blog.component";
 import {MyChatsComponent} from "./components/pages/my-chats/my-chats.component";
 import {blogGuard} from "./Guards/blog.guard";
+import {ChatComponent} from "./components/pages/chat/chat.component";
 
 export const routes: Routes = [
     { path: "sign-in", component: SignInComponent },
@@ -13,5 +14,6 @@ export const routes: Routes = [
     { path: "my-blogs", component: MyBlogsComponent, canActivate: [authGuard] },
     { path: "blog-create", component: CreateBlogComponent, canActivate: [authGuard] },
     { path: "my-chats", component: MyChatsComponent, canActivate: [authGuard, blogGuard] },
+    { path: "chats/:id", component: ChatComponent, canActivate: [authGuard, blogGuard] },
     { path: "**", redirectTo: "sign-in" }
 ];
