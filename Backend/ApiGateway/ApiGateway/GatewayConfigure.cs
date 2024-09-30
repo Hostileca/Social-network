@@ -78,6 +78,7 @@ public static class GatewayConfigure
     public static async Task<WebApplication> LaunchGateway(this WebApplication webApplication)
     {
         webApplication.UseCors("AllowSpecificOrigin");
+        webApplication.UseWebSockets();
         await webApplication.UseOcelot();
         webApplication.UseHttpsRedirection(); 
         await webApplication.RunAsync();

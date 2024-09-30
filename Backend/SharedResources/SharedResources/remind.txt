@@ -1,6 +1,6 @@
 ﻿dotnet ef migrations add appDbContextCreate --verbose --project DataAccessLayer --startup-project PresentationLayer
 dotnet ef database update --verbose --project DataAccessLayer --startup-project PresentationLayer       
-docker build --no-cache-t name -f ProjectDirectory/Dockerfile ./
+docker build --no-cache -t name -f ProjectDirectory/Dockerfile ./
 docker-compose -f docker-compose.container.yml up -d
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout identity-service.key -out identity-service.crt -subj "/CN=identity-service"
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout blog-service.key -out blog-service.crt -subj "/CN=blog-service"

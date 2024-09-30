@@ -109,7 +109,7 @@
 
         {
             "DownstreamPathTemplate": "/chatHub/{everything}",
-            "DownstreamScheme": "https",
+            "DownstreamScheme": "wss",
             "DownstreamHostAndPorts": [
                 {
                     "Host": "message-service",
