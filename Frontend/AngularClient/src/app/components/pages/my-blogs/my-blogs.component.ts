@@ -28,6 +28,4 @@ export class MyBlogsComponent {
       }
     )
   }
-
-  protected readonly CreateBlogComponent = CreateBlogComponent;
 }
