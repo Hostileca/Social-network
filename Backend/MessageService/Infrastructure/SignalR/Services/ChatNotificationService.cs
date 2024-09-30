@@ -47,9 +47,9 @@ public class ChatNotificationService(
         }
     }
 
-    public async Task JoinChatsAsync(string connectionId, BlogChatsReadDto chats, CancellationToken cancellationToken)
+    public async Task JoinChatsAsync(string connectionId, IEnumerable<ChatReadDto> chats, CancellationToken cancellationToken)
     {
-        foreach (var chat in chats.Chats)
+        foreach (var chat in chats)
         {
             await chatHub.Groups.AddToGroupAsync(connectionId, $"chat_{chat.Id}", cancellationToken);
         }

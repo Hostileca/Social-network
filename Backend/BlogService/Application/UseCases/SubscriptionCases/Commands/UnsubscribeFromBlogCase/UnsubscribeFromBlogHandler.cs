@@ -10,9 +10,9 @@ namespace Application.UseCases.SubscriptionCases.Commands.UnsubscribeFromBlogCas
 public class UnsubscribeFromBlogHandler(
     IBlogRepository blogRepository,
     ISubscriberRepository subscriberRepository) 
-    : IRequestHandler<UnsubscribeFromBlogCommand, BlogSubscriptionsReadDto>
+    : IRequestHandler<UnsubscribeFromBlogCommand, IEnumerable<BlogReadDto>>
 {
-    public async Task<BlogSubscriptionsReadDto> Handle(UnsubscribeFromBlogCommand request, CancellationToken cancellationToken)
+    public async Task<IEnumerable<BlogReadDto>> Handle(UnsubscribeFromBlogCommand request, CancellationToken cancellationToken)
     {
         var currentBlog = await blogRepository.GetByIdAndUserIdAsync(request.UserBlogId,
             request.UserId, cancellationToken);
@@ -34,7 +34,7 @@ public class UnsubscribeFromBlogHandler(
 
         await subscriberRepository.SaveChangesAsync(cancellationToken);
         
-        return currentBlog.Adapt<BlogSubscriptionsReadDto>();
+        return currentBlog.Subscriptions.Adapt<IEnumerable<BlogReadDto>>();
     }
     
 }

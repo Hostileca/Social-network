@@ -3,7 +3,7 @@ using SharedResources.Dtos;
 
 namespace Application.UseCases.BlogCases.Queries.GetUserBlogsCase;
 
-public class GetUserBlogsQuery : IRequest<UserBlogsDto>
+public class GetUserBlogsQuery : IRequest<IEnumerable<BlogReadDto>>
 {
     public string UserId { get; set; }
 }

@@ -1,4 +1,4 @@
-﻿namespace PresentationLayer.Policies;
+﻿namespace SharedResources.Policies;
 
 public static class Policies
 {

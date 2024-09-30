@@ -9,9 +9,9 @@ namespace Application.UseCases.MessageCases.Queries.GetChatMessages;
 
 public class GetChatMessagesHandler(
     IBlogRepository blogRepository)
-    : IRequestHandler<GetChatMessagesQuery, ChatMessagesReadDto>
+    : IRequestHandler<GetChatMessagesQuery, IEnumerable<MessageReadDto>>
 {
-    public async Task<ChatMessagesReadDto> Handle(GetChatMessagesQuery request, CancellationToken cancellationToken)
+    public async Task<IEnumerable<MessageReadDto>> Handle(GetChatMessagesQuery request, CancellationToken cancellationToken)
     {
         var userBlog = await blogRepository.GetBlogByIdAndUserIdAsync(request.UserBlogId,
             request.UserId, cancellationToken);
@@ -28,6 +28,6 @@ public class GetChatMessagesHandler(
             throw new NotFoundException(typeof(Chat).ToString(), request.ChatId.ToString());
         }
 
-        return chatMember.Chat.Adapt<ChatMessagesReadDto>();
+        return chatMember.Chat.Messages.Adapt<IEnumerable<MessageReadDto>>();
     }
 }

@@ -15,9 +15,5 @@ public class MessageMapping : IRegister
             .Map(dest => dest.SenderId, src => src.UserBlogId)
             .Map(dest => dest.ChatId, src => src.ChatId)
             .Map(dest => dest.Text, src => src.Text);
-        
-        config.NewConfig<Chat, ChatMessagesReadDto>()
-            .Map(dest => dest.Messages, 
-                src => src.Messages);
     }
 }

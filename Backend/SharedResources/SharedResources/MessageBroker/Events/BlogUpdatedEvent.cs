@@ -1,6 +1,6 @@
-﻿namespace SharedResources.Dtos;
+﻿namespace SharedResources.MessageBroker.Events;
 
-public class BlogReadDto
+public class BlogUpdatedEvent
 {
     public Guid Id {get; set; }
     

@@ -20,7 +20,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Dtos\" />
       <Folder Include="UseCases\ChatRolesCases\Commands\" />
       <Folder Include="UseCases\MessageCases\Commands\" />
     </ItemGroup>

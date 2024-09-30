@@ -12,6 +12,7 @@
       "UpstreamPathTemplate": "/users/register",
       "UpstreamHttpMethod": [ "Post" ]
     },
+    
     {
       "DownstreamPathTemplate": "/users/login",
       "DownstreamScheme": "https",
@@ -24,6 +25,7 @@
       "UpstreamPathTemplate": "/users/login",
       "UpstreamHttpMethod": [ "Post" ]
     },
+    
     {
       "DownstreamPathTemplate": "/users/token/refresh",
       "DownstreamScheme": "https",
@@ -36,6 +38,24 @@
       "UpstreamPathTemplate": "/users/token/refresh",
       "UpstreamHttpMethod": [ "Post" ]
     },
+    
+    {
+      "DownstreamPathTemplate": "/users/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5001
+        }
+      ],
+      "UpstreamPathTemplate": "/users/{everything}",
+      "UpstreamHttpMethod": [ "Post", "Get", "Put", "Delete" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      }
+    },
+    
     {
       "DownstreamPathTemplate": "/attachments/{everything}",
       "DownstreamScheme": "https",
@@ -52,6 +72,7 @@
         "AllowedScopes": []
       }
     },
+    
     {
       "DownstreamPathTemplate": "/blogs/{everything}",
       "DownstreamScheme": "https",
@@ -68,6 +89,7 @@
         "AllowedScopes": []
       }
     },
+    
     {
       "DownstreamPathTemplate": "/posts/{everything}",
       "DownstreamScheme": "https",
@@ -84,6 +106,7 @@
         "AllowedScopes": []
       }
     },
+    
     {
       "DownstreamPathTemplate": "/chats/{everything}",
       "DownstreamScheme": "https",
@@ -100,6 +123,7 @@
         "AllowedScopes": []
       }
     },
+    
     {
       "DownstreamPathTemplate": "/messages/{everything}",
       "DownstreamScheme": "https",

@@ -30,6 +30,6 @@ public class ConnectHandler(
         
         await blogConnectionRepository.SaveChangesAsync(cancellationToken);
         
-        await chatNotificationService.JoinChatsAsync(connection.ConnectionId, userBlog.Adapt<BlogChatsReadDto>(), cancellationToken);
+        await chatNotificationService.JoinChatsAsync(connection.ConnectionId, userBlog.ChatsMember.Adapt<IEnumerable<ChatReadDto>>(), cancellationToken);
     }
 }

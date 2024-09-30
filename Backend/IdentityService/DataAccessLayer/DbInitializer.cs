@@ -31,7 +31,7 @@ public static class DbInitializer
             
             var admin = new User
             {
-                Email = "admin",
+                Email = "admin@gmail.com",
                 UserName = "admin",
                 EmailConfirmed = true
             };

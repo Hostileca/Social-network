@@ -17,9 +17,5 @@ public class ChatMapping : IRegister
             .Map(dest => dest.Id, src => src.Id)
             .Map(dest => dest.Name, src => src.Name)
             .Map(dest => dest.Members, src => src.Members.Select(member => member.Adapt<ChatMemberReadDto>()));
-        
-        config.NewConfig<Blog, BlogChatsReadDto>()
-            .Map(dest => dest.Chats, 
-                src => src.ChatsMember.Select(cm => cm.Chat.Adapt<ChatReadDto>()).ToList());
     }
 }

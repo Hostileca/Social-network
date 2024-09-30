@@ -6,8 +6,8 @@ using DataAccessLayer.gRPC.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
-using PresentationLayer.Policies;
 using SharedResources.Middlewares;
+using SharedResources.Policies;
 
 namespace PresentationLayer;
 
@@ -76,8 +76,8 @@ public static class PresentationLayerInjection
         });
         services.AddAuthorization(option =>
         {
-            option.AddPolicy(Policies.Policies.RequireStaff, 
-                policy => policy.Requirements.Add(new RolesRequirement([Roles.Admin])));
+            option.AddPolicy(Policies.RequireStaff, 
+                policy => policy.RequireRole(Roles.Admin));
         });
         
         return services;
