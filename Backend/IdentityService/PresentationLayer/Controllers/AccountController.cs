@@ -27,10 +27,11 @@ public class AccountController(
     public async Task<IActionResult> Login(UserLoginDto userLoginDto)
     {
         var tokens = await accountService.LoginAsync(userLoginDto);
+        
         return Ok(tokens);
     }
 
-    [HttpPost("token/refresh")]
+    [HttpPost("tokens/refresh")]
     [AllowAnonymous]
     public async Task<IActionResult> RefreshToken(TokenRefreshRequest tokenRefreshRequest)
     {
