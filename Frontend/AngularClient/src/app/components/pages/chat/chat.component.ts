@@ -5,8 +5,9 @@ import {ChatService} from "../../../Data/Services/chat.service";
 import {MessageService} from "../../../Data/Services/message.service";
 import {Message} from "../../../Data/Models/Message/Message";
 import {MessageItemComponent} from "../../Items/message-item/message-item.component";
-import {NgForOf} from "@angular/common";
+import {NgForOf, NgIf} from "@angular/common";
 import {MessageInputComponent} from "../../Items/message-input/message-input.component";
+import {CurrentBlogService} from "../../../Data/Services/current-blog.service";
 
 @Component({
   selector: 'app-chat',
@@ -14,7 +15,8 @@ import {MessageInputComponent} from "../../Items/message-input/message-input.com
   imports: [
     MessageItemComponent,
     NgForOf,
-    MessageInputComponent
+    MessageInputComponent,
+    NgIf
   ],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.css'
@@ -25,7 +27,8 @@ export class ChatComponent {
 
   constructor(private readonly _route: ActivatedRoute,
               private readonly _chatService: ChatService,
-              private readonly _messageService: MessageService) {
+              private readonly _messageService: MessageService,
+              private readonly _currentBlogService: CurrentBlogService) {
    const chatId = _route.snapshot.params['id'];
 
    this.LoadChat(chatId)
@@ -33,13 +36,13 @@ export class ChatComponent {
   }
 
   private LoadChat(chatId: string) {
-    this._chatService.GetChatById(chatId).subscribe(chat => {
+    this._chatService.GetChatById(chatId, this._currentBlogService.CurrentBlog!.id).subscribe(chat => {
       this.Chat = chat
     })
   }
 
   private LoadMessages(chatId: string) {
-    this._messageService.GetChatMessages(chatId).subscribe(messages => {
+    this._messageService.GetChatMessages(chatId, this._currentBlogService.CurrentBlog!.id).subscribe(messages => {
       this.Messages = messages
     })
   }

@@ -10,6 +10,4 @@ import {Message} from "../../../Data/Models/Message/Message";
 })
 export class MessageItemComponent {
   @Input() Message!: Message
-
-
 }

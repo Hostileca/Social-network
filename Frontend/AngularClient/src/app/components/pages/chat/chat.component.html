@@ -1,7 +1,11 @@
-<h1>{{Chat.name}}</h1>
 
-<div *ngFor="let message of Messages">
-  <app-message-item [Message]="message"></app-message-item>
+<div *ngIf="this.Chat">
+  <h1>{{this.Chat.name}}</h1>
+
+  <div *ngFor="let message of this.Messages">
+    <app-message-item [Message]="message"></app-message-item>
+  </div>
+
+  <app-message-input [ChatId]="this.Chat.id"></app-message-input>
 </div>
 
-<app-message-input [ChatId]="Chat.id"><app-message-item/>

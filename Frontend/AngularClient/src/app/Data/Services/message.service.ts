@@ -11,12 +11,11 @@ import { SendMessage } from '../Models/Message/Send-message';
 })
 export class MessageService {
 
-  constructor(private readonly _httpClient: HttpClient,
-              private readonly currentBlogService: CurrentBlogService
+  constructor(private readonly _httpClient: HttpClient
   ) { }
 
-  public GetChatMessages(chatId: string): Observable<Message[]> {
-    return this._httpClient.get<Message[]>(`${ApiConfig.BaseUrl}/chats/${chatId}/messages`)
+  public GetChatMessages(chatId: string, userBlogId: string): Observable<Message[]> {
+    return this._httpClient.get<Message[]>(`${ApiConfig.BaseUrl}/chats/${chatId}/messages?userBlogId=${userBlogId}`)
   }
 
   public SendMessage(chatId: string, sendMessage: SendMessage): Observable<Message> {

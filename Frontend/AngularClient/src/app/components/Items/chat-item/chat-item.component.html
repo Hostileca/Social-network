@@ -1,1 +1,4 @@
-<a href="/chat/{{ this.Chat.id }}">{{ this.Chat.name }}</a>
+
+<div *ngIf="this.Chat">
+  <a href="/chats/{{this.Chat.id}}">{{this.Chat.name}}</a>
+</div>

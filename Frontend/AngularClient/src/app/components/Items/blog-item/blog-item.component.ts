@@ -19,6 +19,6 @@ export class BlogItemComponent {
 
   public SelectBlog(){
     this._currentBlogService.SelectBlog(this.Blog)
-    this._router.navigate(['/my-chats']);
+    this._router.navigate(['/my-chats'])
   }
 }

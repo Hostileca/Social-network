@@ -17,7 +17,7 @@ export class ChatService {
     return this._httpClient.get<Chat[]>(`${ApiConfig.BaseUrl}/chats?userBlogId=${this.currentBlogService.CurrentBlog?.id}`);
   }
 
-  public GetChatById(chatId: string): Observable<Chat> {
-    return this._httpClient.get<Chat>(`${ApiConfig.BaseUrl}/chats/${chatId}`);
+  public GetChatById(chatId: string, userBlogId: string): Observable<Chat> {
+    return this._httpClient.get<Chat>(`${ApiConfig.BaseUrl}/chats/${chatId}?userBlogId=${userBlogId}`);
   }
 }

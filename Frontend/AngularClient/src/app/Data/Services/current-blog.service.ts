@@ -21,7 +21,7 @@ export class CurrentBlogService {
 
   public SelectBlog(blog: Blog){
     this.CurrentBlog = blog
-    this._appCookieService.Save<Blog>(CookiesName.Tokens, this.CurrentBlog)
+    this._appCookieService.Save<Blog>(CookiesName.Blog, this.CurrentBlog)
   }
 
   public Logout(){
