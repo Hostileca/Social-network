@@ -6,5 +6,7 @@ public class ReactionReadDto
     
     public string Emoji { get; set; }
     
+    public Guid SenderId { get; set; }
+    
     public Guid MessageId { get; set; }
 }
