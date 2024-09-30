@@ -1,5 +1,4 @@
-﻿using Application.Configs;
-using Domain.Entities;
+﻿using Domain.Entities;
 using Domain.Repositories;
 using Mapster;
 using MassTransit;
@@ -35,6 +34,8 @@ public class DeleteBlogHandler(
         await publishEndpoint.Publish(blogDeletedEvent, cancellationToken);
         
         await cacheRepository.DeleteAsync<BlogReadDto>(blogReadDto.Id.ToString());
+        
+        await cacheRepository.DeleteAsync<IEnumerable<PostReadDto>>(blogReadDto.Id.ToString());
         
         return blogReadDto;
     }
