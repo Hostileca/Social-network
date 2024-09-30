@@ -30,7 +30,7 @@ public class ChatHub(
     
     private string GetBlogIdFromQuery()
     {
-        var blogId = Context.GetHttpContext().Request.Query["blogId"];
+        var blogId = Context.GetHttpContext().Request.Query["userBlogId"];
         
         if (string.IsNullOrEmpty(blogId))
         {
