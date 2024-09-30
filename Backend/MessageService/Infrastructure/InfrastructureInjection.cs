@@ -77,6 +77,7 @@ public static class InfrastructureInjection
         {
             x.AddConsumer<BlogCreatedConsumer>();
             x.AddConsumer<BlogDeletedConsumer>();
+            x.AddConsumer<BlogUpdatedConsumer>();
             
             x.UsingRabbitMq((context, cfg) =>
             {
