@@ -108,7 +108,7 @@
         },
 
         {
-            "DownstreamPathTemplate": "/chatHub/{everything}",
+            "DownstreamPathTemplate": "/chats/hub/{everything}",
             "DownstreamScheme": "wss",
             "DownstreamHostAndPorts": [
                 {
@@ -116,7 +116,7 @@
                     "Port": 8083
                 }
             ],
-            "UpstreamPathTemplate": "/chatHub/{everything}",
+            "UpstreamPathTemplate": "/chats/hub/{everything}",
             "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete", "Options" ],
             "EnableWebSockets": true,
             "AuthenticationOptions": {
