@@ -8,7 +8,8 @@ public static class SimpleValidators
     {
         return ruleBuilder
             .NotEmptyAndNotNull()
-            .Must(v => v != Guid.Empty);
+            .Must(v => v != Guid.Empty)
+            .WithMessage("{PropertyName} must be a valid Guid");
     }
     
     public static IRuleBuilder<T, TValidation> NotEmptyAndNotNull<T, TValidation>(this IRuleBuilder<T, TValidation> ruleBuilder)
