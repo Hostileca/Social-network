@@ -27,7 +27,7 @@
         },
 
         {
-            "DownstreamPathTemplate": "/users/token/refresh",
+            "DownstreamPathTemplate": "/users/tokens/refresh",
             "DownstreamScheme": "https",
             "DownstreamHostAndPorts": [
                 {
@@ -35,7 +35,7 @@
                     "Port": 8081
                 }
             ],
-            "UpstreamPathTemplate": "/users/token/refresh",
+            "UpstreamPathTemplate": "/users/tokens/refresh",
             "UpstreamHttpMethod": [ "Post" ]
         },
 
