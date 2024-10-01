@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import * as signalR from '@microsoft/signalr';
 import {ApiConfig} from "../Consts/ApiConfig";
 import {Blog} from "../Models/Blog/Blog";
 import {AuthService} from "../Services/auth.service";
-import {IHttpConnectionOptions} from "@microsoft/signalr";
+import signalR, {IHttpConnectionOptions} from "@microsoft/signalr";
 
 
 @Injectable({
@@ -20,7 +19,6 @@ export class ChatHubService {
     const options: IHttpConnectionOptions = {
       skipNegotiation: true,
       transport: signalR.HttpTransportType.WebSockets,
-      accessTokenFactory: () => `${accessToken}`
     };
 
     this._hubConnection = new signalR.HubConnectionBuilder()
