@@ -49,6 +49,21 @@ public static class PresentationInjection
                 RequireExpirationTime = true,
                 ValidateIssuerSigningKey = true
             };
+            
+            options.Events = new JwtBearerEvents
+            {
+                OnMessageReceived = context =>
+                {
+                    var accessToken = context.Request.Query["access_token"];
+
+                    var path = context.HttpContext.Request.Path;
+                    if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/chats/hub"))
+                    {
+                        context.Token = accessToken;
+                    }
+                    return Task.CompletedTask;
+                }
+            };
         });
         
         return services;
@@ -78,12 +93,14 @@ public static class PresentationInjection
         }
 
         webApplication.DbInitialize();
-        webApplication.MapHub<ChatHub>("/chatHub");
+        webApplication.MapHub<ChatHub>("/chats/hub");
         webApplication.UseHangfireDashboard();
         webApplication.MapControllers();
         webApplication.UseHttpsRedirection();
         webApplication.UseMiddleware<ExceptionHandlingMiddleware>();
         webApplication.UseMiddleware<LoggingMiddleware>();
+        webApplication.UseAuthentication();
+        webApplication.UseAuthorization();
         webApplication.Run();
 
         return webApplication;

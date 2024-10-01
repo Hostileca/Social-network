@@ -15,23 +15,27 @@ public class ChatController(
     : ControllerBase
 {
     [HttpGet]
-    public async Task<IActionResult> GetChats([FromQuery]GetBlogChatsQuery getBlogChatsQuery, CancellationToken cancellationToken = default)
+    public async Task<IActionResult> GetChats([FromQuery]Guid userBlogId, CancellationToken cancellationToken = default)
     {
-        getBlogChatsQuery.UserId = UserId;
-        
-        var chats = await mediator.Send(getBlogChatsQuery, cancellationToken);
+        var chats = await mediator.Send(new GetBlogChatsQuery
+        {
+            UserId = UserId,
+            UserBlogId = userBlogId
+        }, cancellationToken);
 
         return Ok(chats);
     }
     
     [HttpGet("chatId")]
-    public async Task<IActionResult> GetChatById(Guid chatId, [FromQuery]GetBlogChatByIdQuery getBlogChatByIdQuery, 
+    public async Task<IActionResult> GetChatById(Guid chatId, [FromQuery]Guid userBlogId, 
         CancellationToken cancellationToken = default)
     {
-        getBlogChatByIdQuery.UserId = UserId;
-        getBlogChatByIdQuery.ChatId = chatId;
-        
-        var chats = await mediator.Send(getBlogChatByIdQuery, cancellationToken);
+        var chats = await mediator.Send(new GetBlogChatByIdQuery
+        {
+            UserId = UserId,
+            ChatId = chatId,
+            UserBlogId = userBlogId
+        }, cancellationToken);
 
         return Ok(chats);
     }
