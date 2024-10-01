@@ -3,6 +3,7 @@ import {Blog} from "../Models/Blog/Blog";
 import {CookiesName} from "../Consts/CookiesName";
 import {HttpClient} from "@angular/common/http";
 import {AppCookieService} from "./app-cookie.service";
+import {ChatHubService} from "../Hubs/chat-hub.service";
 
 @Injectable({
   providedIn: 'root'
@@ -16,12 +17,15 @@ export class CurrentBlogService {
     }
     return !!this.CurrentBlog
   }
-  constructor(private readonly _httpClient: HttpClient,
-              private readonly _appCookieService: AppCookieService) { }
+
+  constructor(private readonly _appCookieService: AppCookieService,
+              private readonly _chatHubService: ChatHubService) { }
 
   public SelectBlog(blog: Blog){
     this.CurrentBlog = blog
     this._appCookieService.Save<Blog>(CookiesName.Blog, this.CurrentBlog)
+
+    this._chatHubService.Connect(this.CurrentBlog)
   }
 
   public Logout(){

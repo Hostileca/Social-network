@@ -15,10 +15,10 @@ export class MessageService {
   ) { }
 
   public GetChatMessages(chatId: string, userBlogId: string): Observable<Message[]> {
-    return this._httpClient.get<Message[]>(`${ApiConfig.BaseUrl}/chats/${chatId}/messages?userBlogId=${userBlogId}`)
+    return this._httpClient.get<Message[]>(`${ApiConfig.BaseHttpsUrl}/chats/${chatId}/messages?userBlogId=${userBlogId}`)
   }
 
   public SendMessage(chatId: string, sendMessage: SendMessage): Observable<Message> {
-    return this._httpClient.post<Message>(`${ApiConfig.BaseUrl}/chats/${chatId}/messages`, sendMessage)
+    return this._httpClient.post<Message>(`${ApiConfig.BaseHttpsUrl}/chats/${chatId}/messages`, sendMessage)
   }
 }

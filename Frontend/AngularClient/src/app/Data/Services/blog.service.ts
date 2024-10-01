@@ -12,10 +12,10 @@ export class BlogService {
   ) { }
 
   public GetUserBlogs(): Observable<Blog[]> {
-    return this._httpClient.get<Blog[]>(`${ApiConfig.BaseUrl}/blogs/me`);
+    return this._httpClient.get<Blog[]>(`${ApiConfig.BaseHttpsUrl}/blogs/me`);
   }
 
   public CreateBlog(blog: Blog): Observable<Blog> {
-    return this._httpClient.post<Blog>(`${ApiConfig.BaseUrl}/blogs`, blog);
+    return this._httpClient.post<Blog>(`${ApiConfig.BaseHttpsUrl}/blogs`, blog);
   }
 }
