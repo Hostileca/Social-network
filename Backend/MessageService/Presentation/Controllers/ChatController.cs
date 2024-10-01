@@ -26,7 +26,7 @@ public class ChatController(
         return Ok(chats);
     }
     
-    [HttpGet("chatId")]
+    [HttpGet("{chatId}")]
     public async Task<IActionResult> GetChatById(Guid chatId, [FromQuery]Guid userBlogId, 
         CancellationToken cancellationToken = default)
     {
