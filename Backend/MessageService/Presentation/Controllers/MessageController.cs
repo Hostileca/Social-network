@@ -13,13 +13,15 @@ public class MessageController(
     : ControllerBase
 {
     [HttpGet("messages")]
-    public async Task<IActionResult> GetMessages(Guid chatId, [FromQuery]GetChatMessagesQuery getChatMessagesQuery,
+    public async Task<IActionResult> GetMessages(Guid chatId, [FromQuery]Guid userBlogId,
         CancellationToken cancellationToken = default)
     {
-        getChatMessagesQuery.UserId = UserId;
-        getChatMessagesQuery.ChatId = chatId;
-        
-        var messages = await mediator.Send(getChatMessagesQuery, cancellationToken);
+        var messages = await mediator.Send(new GetChatMessagesQuery
+        {
+            UserId = UserId,
+            ChatId = chatId,
+            UserBlogId = userBlogId
+        }, cancellationToken);
         
         return Ok(messages);
     }
