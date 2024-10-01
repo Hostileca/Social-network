@@ -31,6 +31,9 @@ public class ChatNotificationService(
     
     public async Task DeleteChatAsync(ChatReadDto chatReadDto, CancellationToken cancellationToken)
     {
+        await chatHub.Clients.Group($"chat_{chatReadDto.Id}").SendAsync(
+            ClientEvents.ChatDeleted, chatReadDto, cancellationToken);
+        
         foreach (var chatMember in chatReadDto.Members)
         {
             var blogConnections = await blogConnectionRepository.GetConnectionsByBlogId(
@@ -42,9 +45,6 @@ public class ChatNotificationService(
                     $"chat_{chatReadDto.Id}", cancellationToken);
             }
         }
-                                    
-        await chatHub.Clients.Group($"chat_{chatReadDto.Id}").SendAsync(
-            ClientEvents.ChatDeleted, chatReadDto, cancellationToken);
     }
 
     public async Task JoinChatsAsync(string connectionId, IEnumerable<ChatReadDto> chats, CancellationToken cancellationToken)
