@@ -6,5 +6,7 @@ public class PostReadDto
     
     public string Content { get; set; }
     
+    public string OwnerId { get; set; }
+    
     public virtual IEnumerable<string> AttachmentsId { get; set; }
 }
