@@ -29,6 +29,9 @@ public class ChatMemberNotificationService(
     public async Task RemoveMemberFromChatAsync(ChatMemberReadDto chatMemberReadDto, Guid chatId,
         CancellationToken cancellationToken)
     {
+        await chatHub.Clients.Group($"chat_{chatId}").SendAsync(
+            ClientEvents.ChatMemberRemoved, chatMemberReadDto, cancellationToken);
+        
         var blogConnections = await blogConnectionRepository.GetConnectionsByBlogId(
             chatMemberReadDto.Blog.Id, cancellationToken);
         
@@ -37,9 +40,6 @@ public class ChatMemberNotificationService(
             await chatHub.Groups.RemoveFromGroupAsync(blogConnection.ConnectionId, 
                 $"chat_{chatId}", cancellationToken);
         }
-        
-        await chatHub.Clients.Group($"chat_{chatId}").SendAsync(
-            ClientEvents.ChatMemberRemoved, chatMemberReadDto, cancellationToken);
     }
 
     public async Task ChatMemberUpdateAsync(ChatMemberReadDto chatMemberReadDto, Guid chatId, CancellationToken cancellationToken)
