@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
-import { Tokens } from '../Models/Responses/Tokens';
+import { Tokens } from '../Models/Tokens/Tokens';
 import {CookiesName} from "../Consts/CookiesName";
 import {HttpClient} from "@angular/common/http";
 import {AppCookieService} from "./app-cookie.service";
 import {catchError, Observable, tap, throwError} from "rxjs";
 import {ApiConfig} from "../Consts/ApiConfig";
-import {User} from "../Models/Responses/User";
-import {TokenRefreshRequest} from "../Models/Requests/TokenRefreshRequest";
-import {Blog} from "../Models/Responses/Blog";
+import {User} from "../Models/User/User";
+import {TokenRefresh} from "../Models/Tokens/Token-refresh";
+import {UserLogin} from "../Models/User/User-login";
+import {UserRegister} from "../Models/User/User-register";
 
 @Injectable({
   providedIn: 'root'
@@ -27,27 +28,27 @@ export class AuthService {
     private readonly _appCookieService: AppCookieService) {
   }
 
-  public Login(payload: {email: string, password: string}): Observable<any>{
-    return this._httpClient.post<Tokens>(`${ApiConfig.BaseUrl}/users/login`, payload).pipe(
+  public Login(userLogin: UserLogin): Observable<any>{
+    return this._httpClient.post<Tokens>(`${ApiConfig.BaseHttpsUrl}/users/login`, userLogin).pipe(
       tap(tokens => {
         this.SaveTokens(tokens)
       })
     )
   }
 
-  public Register(payload: {username: string, email: string, password: string, confirmPassword: string}){
-    return this._httpClient.post<User>(`${ApiConfig.BaseUrl}/users/register`, payload)
+  public Register(userRegister: UserRegister){
+    return this._httpClient.post<User>(`${ApiConfig.BaseHttpsUrl}/users/register`, userRegister)
   }
 
   public RefreshAuthToken():Observable<Tokens>{
     if (this.Tokens === null) {
       return throwError(new Error('Tokens are null'));
     }
-    const tokenRefreshRequest: TokenRefreshRequest = {
+    const tokenRefreshRequest: TokenRefresh = {
       refreshToken: this.Tokens.refreshToken.value
     };
 
-    return this._httpClient.post<Tokens>(`${ApiConfig.BaseUrl}/token/refresh`, tokenRefreshRequest)
+    return this._httpClient.post<Tokens>(`${ApiConfig.BaseHttpsUrl}/tokens/refresh`, tokenRefreshRequest)
       .pipe(
         tap(tokenResponse => { this.SaveTokens(tokenResponse) }),
         catchError(error => {
