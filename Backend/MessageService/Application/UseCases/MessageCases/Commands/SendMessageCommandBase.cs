@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Http;
 
 namespace Application.UseCases.MessageCases.Commands;
 
@@ -13,4 +14,6 @@ public abstract class SendMessageCommandBase
     public Guid UserBlogId { get; set; }
         
     public string Text { get; set; }      
+    
+    public IEnumerable<IFormFile>? Attachments { get; set; }
 }

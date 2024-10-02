@@ -1,4 +1,5 @@
 ﻿dotnet ef migrations add appDbContextCreate --verbose --project DataAccessLayer --startup-project PresentationLayer
+dotnet ef migrations add appDbContextCreate --verbose --project Infrastructure --startup-project Presentation
 dotnet ef database update --verbose --project DataAccessLayer --startup-project PresentationLayer       
 docker build --no-cache -t name -f ProjectDirectory/Dockerfile ./
 docker-compose -f docker-compose.container.yml up -d

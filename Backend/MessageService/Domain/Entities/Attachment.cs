@@ -7,4 +7,6 @@ public class Attachment : EntityBase
     public Guid MessageId { get; set; }
     
     public string Data { get; set; }
+    
+    public string ContentType { get; set; }
 }

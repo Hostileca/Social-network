@@ -3,6 +3,7 @@ using Application.UseCases.MessageCases.Commands.SendMessage;
 using Domain.Entities;
 using Domain.Repositories;
 using Mapster;
+using Microsoft.AspNetCore.Http;
 using SharedResources.Dtos;
 using SharedResources.Exceptions;
 
@@ -37,11 +38,32 @@ public abstract class SendMessageHandlerBase(
 
         var message = request.Adapt<Message>();
         
+        if(request.Attachments is not null)
+        {
+            var attachments = new List<Attachment>();
+
+            foreach (var file in request.Attachments)
+            {
+                attachments.Add(
+                    new Attachment
+                    {
+                        Id = Guid.NewGuid(), 
+                        Data = await ConvertToBase64Async(file, cancellationToken),
+                        Message = message,
+                        ContentType = MimeTypes.GetMimeType(file.FileName)
+                    });
+            }
+            
+            message.Attachments = attachments;
+        }
+        
         return message;
     }
 
     public async Task<MessageReadDto> SendMessageAsync(Message message, CancellationToken cancellationToken)
     {
+        message.Date = DateTime.UtcNow;
+        
         await messageRepository.AddAsync(message, cancellationToken);
         
         await messageRepository.SaveChangesAsync(cancellationToken);
@@ -51,5 +73,19 @@ public abstract class SendMessageHandlerBase(
         await messageNotificationService.SendMessageAsync(messageReadDto, message.ChatId, cancellationToken);
 
         return messageReadDto;
+    }
+    
+    private static async Task<string> ConvertToBase64Async(IFormFile formFile, CancellationToken cancellationToken)
+    {
+        if (formFile == null || formFile.Length == 0)
+        {
+            return string.Empty;
+        }
+
+        using var memoryStream = new MemoryStream();
+        await formFile.CopyToAsync(memoryStream, cancellationToken);
+        var fileBytes = memoryStream.ToArray();
+
+        return Convert.ToBase64String(fileBytes);
     }
 }

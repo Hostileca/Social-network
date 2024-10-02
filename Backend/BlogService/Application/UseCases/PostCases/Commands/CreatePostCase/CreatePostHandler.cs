@@ -44,6 +44,7 @@ public class CreatePostHandler(
                     cancellationToken);
             }
         }
+        
         await postRepository.SaveChangesAsync(cancellationToken);
 
         var newPostReadDto = post.Adapt<PostReadDto>();

@@ -13,4 +13,6 @@ public class MessageReadDto
     public string Text { get; set; }
     
     public IEnumerable<ReactionReadDto> Reactions { get; set; }
+    
+    public IEnumerable<Guid> AttachmentsId { get; set; }
 }

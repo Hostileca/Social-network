@@ -28,7 +28,7 @@ public class MessageController(
     
     [HttpPost("messages")]
     public async Task<IActionResult> SendMessage(Guid chatId,
-        SendMessageCommand sendMessageCommand, CancellationToken cancellationToken = default)
+        [FromForm]SendMessageCommand sendMessageCommand, CancellationToken cancellationToken = default)
     {
         sendMessageCommand.UserId = UserId;
         sendMessageCommand.ChatId = chatId;
@@ -40,7 +40,7 @@ public class MessageController(
 
     [HttpPost("delayed-messages")]
     public async Task<IActionResult> SendDelayedMessage(Guid chatId,
-        SendDelayedMessageCommand sendDelayedMessageCommand, CancellationToken cancellationToken = default)
+        [FromForm]SendDelayedMessageCommand sendDelayedMessageCommand, CancellationToken cancellationToken = default)
     {
         sendDelayedMessageCommand.UserId = UserId;
         sendDelayedMessageCommand.ChatId = chatId;
