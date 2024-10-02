@@ -14,8 +14,15 @@ public class BlogMappingConfigurations : IRegister
             .Map(dest => dest.UserId, src => src.UserId)
             .Map(dest => dest.Id, src => Guid.NewGuid().ToString());
 
-        config.NewConfig<Blog, BlogReadDto>();
-        
-        config.NewConfig<Blog, BlogCreatedEvent>();
+        config.NewConfig<Blog, BlogReadDto>()            
+            .Map(dest => dest.Id, src => src.Id)
+            .Map(dest => dest.Username, src => src.Username)
+            .Map(dest => dest.BIO, src => src.BIO)
+            .Map(dest => dest.MainImagePath, src => src.MainImagePath);
+
+        config.NewConfig<Blog, BlogCreatedEvent>()
+            .Map(dest => dest.Id, src => src.Id)
+            .Map(dest => dest.Username, src => src.Username)
+            .Map(dest => dest.UserId, src => src.UserId);
     }
 }

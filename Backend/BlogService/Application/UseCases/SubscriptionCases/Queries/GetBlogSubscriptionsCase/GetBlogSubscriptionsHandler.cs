@@ -9,9 +9,9 @@ namespace Application.UseCases.SubscriptionCases.Queries.GetBlogSubscriptionsCas
 
 public class GetBlogSubscriptionsHandler(
     IBlogRepository blogRepository)
-    : IRequestHandler<GetBlogSubscriptionsQuery, IEnumerable<BlogReadDto>>
+    : IRequestHandler<GetBlogSubscriptionsQuery, IEnumerable<SubscriptionReadDto>>
 {
-    public async Task<IEnumerable<BlogReadDto>> Handle(GetBlogSubscriptionsQuery request,
+    public async Task<IEnumerable<SubscriptionReadDto>> Handle(GetBlogSubscriptionsQuery request,
         CancellationToken cancellationToken)
     {
         var blog = await blogRepository.GetByIdAsync(request.BlogId, cancellationToken);
@@ -21,6 +21,6 @@ public class GetBlogSubscriptionsHandler(
             throw new NotFoundException(typeof(Blog).ToString(), request.BlogId);
         }
         
-        return blog.Subscriptions.Adapt<IEnumerable<BlogReadDto>>();
+        return blog.Subscriptions.Adapt<IEnumerable<SubscriptionReadDto>>();
     }
 }
