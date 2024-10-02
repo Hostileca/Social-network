@@ -27,7 +27,7 @@ export class CreateBlogComponent {
 
     this._blogService.CreateBlog(this.Form.value).subscribe({
         next: (response) => {
-          this._router.navigate(['/my-blogs']);
+          this._router.navigateByUrl('/my-blogs');
         },
         error: (error) => {
           console.error('Create blog failed', error);

@@ -14,10 +14,10 @@ export class ChatService {
   ) { }
 
   public GetMyChats(): Observable<Chat[]> {
-    return this._httpClient.get<Chat[]>(`${ApiConfig.BaseHttpsUrl}/chats?userBlogId=${this.currentBlogService.CurrentBlog?.id}`);
+    return this._httpClient.get<Chat[]>(`${ApiConfig.BaseUrl}/chats?userBlogId=${this.currentBlogService.CurrentBlog?.id}`);
   }
 
   public GetChatById(chatId: string, userBlogId: string): Observable<Chat> {
-    return this._httpClient.get<Chat>(`${ApiConfig.BaseHttpsUrl}/chats/${chatId}?userBlogId=${userBlogId}`);
+    return this._httpClient.get<Chat>(`${ApiConfig.BaseUrl}/chats/${chatId}?userBlogId=${userBlogId}`);
   }
 }

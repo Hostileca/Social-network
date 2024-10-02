@@ -29,7 +29,7 @@ export class AuthService {
   }
 
   public Login(userLogin: UserLogin): Observable<any>{
-    return this._httpClient.post<Tokens>(`${ApiConfig.BaseHttpsUrl}/users/login`, userLogin).pipe(
+    return this._httpClient.post<Tokens>(`${ApiConfig.BaseUrl}/users/login`, userLogin).pipe(
       tap(tokens => {
         this.SaveTokens(tokens)
       })
@@ -37,7 +37,7 @@ export class AuthService {
   }
 
   public Register(userRegister: UserRegister){
-    return this._httpClient.post<User>(`${ApiConfig.BaseHttpsUrl}/users/register`, userRegister)
+    return this._httpClient.post<User>(`${ApiConfig.BaseUrl}/users/register`, userRegister)
   }
 
   public RefreshAuthToken():Observable<Tokens>{
@@ -48,7 +48,7 @@ export class AuthService {
       refreshToken: this.Tokens.refreshToken.value
     };
 
-    return this._httpClient.post<Tokens>(`${ApiConfig.BaseHttpsUrl}/tokens/refresh`, tokenRefreshRequest)
+    return this._httpClient.post<Tokens>(`${ApiConfig.BaseUrl}/tokens/refresh`, tokenRefreshRequest)
       .pipe(
         tap(tokenResponse => { this.SaveTokens(tokenResponse) }),
         catchError(error => {

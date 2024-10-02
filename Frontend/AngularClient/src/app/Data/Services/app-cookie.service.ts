@@ -16,6 +16,9 @@ export class AppCookieService {
 
   public Get<TItem>(name: string){
     const serializedObject = this._cookieService.get(name)
+    if (!serializedObject) {
+      return null;
+    }
     const object: TItem = JSON.parse(serializedObject)
     return object
   }

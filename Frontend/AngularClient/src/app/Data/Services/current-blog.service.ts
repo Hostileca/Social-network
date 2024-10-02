@@ -19,13 +19,14 @@ export class CurrentBlogService {
   }
 
   constructor(private readonly _appCookieService: AppCookieService,
-              private readonly _chatHubService: ChatHubService) { }
+              //private readonly _chatHubService: ChatHubService
+  ) { }
 
   public SelectBlog(blog: Blog){
     this.CurrentBlog = blog
     this._appCookieService.Save<Blog>(CookiesName.Blog, this.CurrentBlog)
 
-    this._chatHubService.Connect(this.CurrentBlog)
+    //this._chatHubService.Connect(this.CurrentBlog)
   }
 
   public Logout(){

@@ -8,6 +8,9 @@ import {MessageItemComponent} from "../../Items/message-item/message-item.compon
 import {NgForOf, NgIf} from "@angular/common";
 import {MessageInputComponent} from "../../Items/message-input/message-input.component";
 import {CurrentBlogService} from "../../../Data/Services/current-blog.service";
+import {ChatHubService} from "../../../Data/Hubs/chat-hub.service";
+import {EventBusService} from "../../../Data/Services/event-bus.service";
+import {Events} from "../../../Data/Hubs/Events";
 
 @Component({
   selector: 'app-chat',
@@ -28,11 +31,13 @@ export class ChatComponent {
   constructor(private readonly _route: ActivatedRoute,
               private readonly _chatService: ChatService,
               private readonly _messageService: MessageService,
-              private readonly _currentBlogService: CurrentBlogService) {
-   const chatId = _route.snapshot.params['id'];
+              private readonly _currentBlogService: CurrentBlogService,
+              private readonly _eventBusService: EventBusService) {
+    const chatId = _route.snapshot.params['id'];
 
-   this.LoadChat(chatId)
-   this.LoadMessages(chatId)
+    this.LoadChat(chatId)
+    this.LoadMessages(chatId)
+    this.StartListening(chatId)
   }
 
   private LoadChat(chatId: string) {
@@ -45,5 +50,19 @@ export class ChatComponent {
     this._messageService.GetChatMessages(chatId, this._currentBlogService.CurrentBlog!.id).subscribe(messages => {
       this.Messages = messages
     })
+  }
+
+  private StartListening(chatId: string){
+    this._eventBusService.On<Message>(Events.MessageSent).subscribe(message => {
+      this.OnMessageReceive(message, chatId)
+    })
+  }
+
+  private OnMessageReceive(message: Message, chatId: string){
+    if(message.chatId == chatId){
+      this.Messages.push(message)
+      console.log("chat:" + message)
+    }
+    console.log("smth")
   }
 }

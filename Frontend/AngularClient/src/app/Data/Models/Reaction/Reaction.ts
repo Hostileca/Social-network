@@ -2,4 +2,5 @@
   id: string
   emoji: string
   messageId: string
+  senderId: string
 }
