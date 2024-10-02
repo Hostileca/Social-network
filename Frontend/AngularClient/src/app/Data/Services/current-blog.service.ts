@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Blog} from "../Models/Blog/Blog";
 import {CookiesName} from "../Consts/CookiesName";
-import {HttpClient} from "@angular/common/http";
 import {AppCookieService} from "./app-cookie.service";
-import {ChatHubService} from "../Hubs/chat-hub.service";
 
 @Injectable({
   providedIn: 'root'

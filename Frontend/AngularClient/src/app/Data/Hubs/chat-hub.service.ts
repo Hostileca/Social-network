@@ -1,7 +1,6 @@
 import {Injectable, OnInit} from '@angular/core';
 import * as signalR from '@microsoft/signalr';
 import {ApiConfig} from "../Consts/ApiConfig";
-import {Blog} from "../Models/Blog/Blog";
 import {AuthService} from "../Services/auth.service";
 import {IHttpConnectionOptions} from "@microsoft/signalr";
 import {EventBusService} from "../Services/event-bus.service";

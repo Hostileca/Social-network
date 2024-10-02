@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {BlogService} from "../../../Data/Services/blog.service";
-import {BlogItemComponent} from "../../Items/blog-item/blog-item.component";
+import {MyBlogItemComponent} from "../../Items/my-blog-item/my-blog-item.component";
 import {NgForOf, NgIf} from "@angular/common";
 import {Blog} from "../../../Data/Models/Blog/Blog";
 
@@ -8,7 +8,7 @@ import {Blog} from "../../../Data/Models/Blog/Blog";
   selector: 'app-my-blogs',
   standalone: true,
   imports: [
-    BlogItemComponent,
+    MyBlogItemComponent,
     NgIf,
     NgForOf
   ],

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {Chat} from "../../../Data/Models/Chat/Chat";
 import {ChatService} from "../../../Data/Services/chat.service";
-import {BlogItemComponent} from "../../Items/blog-item/blog-item.component";
+import {MyBlogItemComponent} from "../../Items/my-blog-item/my-blog-item.component";
 import {NgForOf, NgIf} from "@angular/common";
 import {ChatItemComponent} from "../../Items/chat-item/chat-item.component";
 
@@ -9,7 +9,7 @@ import {ChatItemComponent} from "../../Items/chat-item/chat-item.component";
   selector: 'app-my-chats',
   standalone: true,
   imports: [
-    BlogItemComponent,
+    MyBlogItemComponent,
     NgForOf,
     NgIf,
     ChatItemComponent

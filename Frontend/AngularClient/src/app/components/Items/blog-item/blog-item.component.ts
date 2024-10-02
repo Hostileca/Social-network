@@ -1,7 +1,5 @@
-import {Component, Input} from '@angular/core';
-import {CurrentBlogService} from "../../../Data/Services/current-blog.service";
+import { Component, Input } from '@angular/core';
 import { Blog } from '../../../Data/Models/Blog/Blog';
-import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-blog-item',
@@ -11,14 +9,9 @@ import {Router} from "@angular/router";
   styleUrl: './blog-item.component.css'
 })
 export class BlogItemComponent {
-  @Input() Blog!: Blog;
+  @Input() Blog!: Blog
 
-  constructor(private readonly _router: Router,
-              private readonly _currentBlogService: CurrentBlogService) {
-  }
+  constructor() {
 
-  public SelectBlog(){
-    this._currentBlogService.SelectBlog(this.Blog)
-    this._router.navigateByUrl("/my-chats")
   }
 }

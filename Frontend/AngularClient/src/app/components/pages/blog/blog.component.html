@@ -1,0 +1,12 @@
+<div *ngIf="Blog">
+  <h1>{{ this.Blog.username }}</h1>
+
+  <div *ngIf="this.Subscribers">
+    <app-blog-item *ngFor="let blog of Subscribers" [Blog]="blog"></app-blog-item>
+  </div>
+
+  <div *ngIf ="this.Subscribers && !IsMe()">
+    <button *ngIf ="!AmISubscribed()" (click)="SubscribeToBlog()">Subscribe</button>
+    <button *ngIf ="AmISubscribed()" (click)="UnsubscribeFromBlog()">Unsubscribe</button>
+  </div>
+</div>

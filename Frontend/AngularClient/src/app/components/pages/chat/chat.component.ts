@@ -8,7 +8,6 @@ import {MessageItemComponent} from "../../Items/message-item/message-item.compon
 import {NgForOf, NgIf} from "@angular/common";
 import {MessageInputComponent} from "../../Items/message-input/message-input.component";
 import {CurrentBlogService} from "../../../Data/Services/current-blog.service";
-import {ChatHubService} from "../../../Data/Hubs/chat-hub.service";
 import {EventBusService} from "../../../Data/Services/event-bus.service";
 import {Events} from "../../../Data/Hubs/Events";
 
