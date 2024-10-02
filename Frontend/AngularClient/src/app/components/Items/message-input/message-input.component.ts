@@ -17,20 +17,18 @@ import {SendMessage} from "../../../Data/Models/Message/Send-message";
 export class MessageInputComponent {
   @Input() ChatId!: string
 
-  public Form: FormGroup = new FormGroup({
-    text: new FormControl(null, [Validators.required, Validators.minLength(1)]),
-  });
+  public Form: FormGroup;
 
   constructor(private readonly _messageService: MessageService,
               private readonly _currentBlogService: CurrentBlogService) {
+    this.Form = new FormGroup({
+      text: new FormControl<string>('', [Validators.required, Validators.minLength(1)]),
+      userBlogId: new FormControl<string>(this._currentBlogService.CurrentBlog!.id, [Validators.required])
+    });
   }
 
   public SendMessage() {
-    const sendMessage: SendMessage = {
-      text: this.Form.value.text,
-      userBlogId: this._currentBlogService.CurrentBlog!.id
-    }
-    this._messageService.SendMessage(this.ChatId, sendMessage).subscribe({
+    this._messageService.SendMessage(this.ChatId, this.Form.value).subscribe({
         next: (response) => {
         },
         error: (error) => {

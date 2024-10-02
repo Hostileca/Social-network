@@ -14,13 +14,15 @@ import {Router} from "@angular/router";
   styleUrl: './create-blog.component.css'
 })
 export class CreateBlogComponent {
-  constructor(private readonly _blogService: BlogService,
-              private readonly _router: Router
-  ){}
+  public Form: FormGroup;
 
-  public Form: FormGroup = new FormGroup({
-    username: new FormControl(null, [Validators.required, Validators.minLength(4)])
-  });
+  constructor(private readonly _blogService: BlogService,
+              private readonly _router: Router){
+    this.Form = new FormGroup({
+      username: new FormControl<string>('', [Validators.required, Validators.minLength(4)])
+    });
+  }
+
 
   public OnSubmit(){
     if(!this.Form.valid){ return; }

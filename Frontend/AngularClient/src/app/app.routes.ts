@@ -9,13 +9,15 @@ import {blogGuard} from "./Guards/blog.guard";
 import {ChatComponent} from "./components/pages/chat/chat.component";
 import {BlogsComponent} from "./components/pages/blogs/blogs.component";
 import {BlogComponent} from "./components/pages/blog/blog.component";
+import {CreateChatComponent} from "./components/pages/create-chat/create-chat.component";
 
 export const routes: Routes = [
     { path: "sign-in", component: SignInComponent },
     { path: "sign-up", component: SignUpComponent },
     { path: "my-blogs", component: MyBlogsComponent, canActivate: [authGuard] },
-    { path: "create-blog", component: CreateBlogComponent, canActivate: [authGuard] },
+    { path: "my-blogs/create", component: CreateBlogComponent, canActivate: [authGuard] },
     { path: "my-chats", component: MyChatsComponent, canActivate: [authGuard, blogGuard] },
+    { path: "my-chats/create", component: CreateChatComponent, canActivate: [authGuard, blogGuard] },
     { path: "my-chats/:id", component: ChatComponent, canActivate: [authGuard, blogGuard] },
     { path: "blogs", component: BlogsComponent, canActivate: [authGuard, blogGuard] },
     { path: "blogs/:id", component: BlogComponent, canActivate: [authGuard, blogGuard] },

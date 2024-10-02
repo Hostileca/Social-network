@@ -10,6 +10,7 @@ import {MessageInputComponent} from "../../Items/message-input/message-input.com
 import {CurrentBlogService} from "../../../Data/Services/current-blog.service";
 import {EventBusService} from "../../../Data/Services/event-bus.service";
 import {Events} from "../../../Data/Hubs/Events";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-chat',
@@ -35,33 +36,31 @@ export class ChatComponent {
     const chatId = _route.snapshot.params['id'];
 
     this.LoadChat(chatId)
-    this.LoadMessages(chatId)
-    this.StartListening(chatId)
   }
 
   private LoadChat(chatId: string) {
     this._chatService.GetChatById(chatId, this._currentBlogService.CurrentBlog!.id).subscribe(chat => {
       this.Chat = chat
+      this.LoadMessages()
+      this.StartListening()
     })
   }
 
-  private LoadMessages(chatId: string) {
-    this._messageService.GetChatMessages(chatId, this._currentBlogService.CurrentBlog!.id).subscribe(messages => {
+  private LoadMessages() {
+    this._messageService.GetChatMessages(this.Chat.id, this._currentBlogService.CurrentBlog!.id).subscribe(messages => {
       this.Messages = messages
     })
   }
 
-  private StartListening(chatId: string){
+  private StartListening(){
     this._eventBusService.On<Message>(Events.MessageSent).subscribe(message => {
-      this.OnMessageReceive(message, chatId)
+      this.OnMessageReceive(message, this.Chat.id)
     })
   }
 
   private OnMessageReceive(message: Message, chatId: string){
     if(message.chatId == chatId){
       this.Messages.push(message)
-      console.log("chat:" + message)
     }
-    console.log("smth")
   }
 }

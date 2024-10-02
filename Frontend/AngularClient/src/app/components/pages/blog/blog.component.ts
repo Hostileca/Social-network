@@ -6,7 +6,6 @@ import {NgForOf, NgIf} from "@angular/common";
 import {SubscriptionService} from "../../../Data/Services/subscription.service";
 import {CurrentBlogService} from "../../../Data/Services/current-blog.service";
 import {SubscribeToBlog} from "../../../Data/Models/Subscription/Subscribe-to-blog";
-import { UnsubscribeFromBlog } from '../../../Data/Models/Subscription/Unsubscribe-from-blog';
 import {BlogItemComponent} from "../../Items/blog-item/blog-item.component";
 import {Subscriber} from "../../../Data/Models/Subscription/Subscriber";
 import {Subscription} from "../../../Data/Models/Subscription/Subscription";
@@ -39,7 +38,7 @@ export class BlogComponent {
   }
 
   public AmISubscribed(): boolean{
-    return this.Subscribers.some(x => x.id === this._currentBlogService.CurrentBlog!.id)
+    return this.Subscribers.some(x => x.blog.id === this._currentBlogService.CurrentBlog!.id)
   }
 
   public IsMe(): boolean{
@@ -68,17 +67,19 @@ export class BlogComponent {
     const subscribeToBlog: SubscribeToBlog = {
       SubscribeAtId: this.Blog.id
     }
-    this._subscriptionService.SubscribeToBlog(this._currentBlogService.CurrentBlog!.id, subscribeToBlog).subscribe(() =>{
-      this.Subscribers.push(this._currentBlogService.CurrentBlog!)
+    this._subscriptionService.SubscribeToBlog(this._currentBlogService.CurrentBlog!.id, subscribeToBlog).subscribe(subscription =>{
+      const mySubscription: Subscriber = {
+        id: subscription.id,
+        blog: this._currentBlogService.CurrentBlog!
+      }
+      this.Subscribers.push(mySubscription)
     })
   }
 
   public UnsubscribeFromBlog(){
-    const unsubscribeToBlog: UnsubscribeFromBlog = {
-      unSubscribeFromId: this.Blog.id
-    }
-    this._subscriptionService.UnsubscribeFromBlog(this._currentBlogService.CurrentBlog!.id, unsubscribeToBlog).subscribe(() =>{
-      this.Subscribers = this.Subscribers.filter(x => x.id !== this._currentBlogService.CurrentBlog!.id)
+    const mySubscription = this.Subscribers.find(x => x.blog.id === this._currentBlogService.CurrentBlog!.id)!
+    this._subscriptionService.UnsubscribeFromBlog(this._currentBlogService.CurrentBlog!.id, mySubscription.id).subscribe(subscription =>{
+      this.Subscribers = this.Subscribers.filter(x => x.id !== subscription.id)
     })
   }
 }

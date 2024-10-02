@@ -2,7 +2,8 @@
   <h1>{{ this.Blog.username }}</h1>
 
   <div *ngIf="this.Subscribers">
-    <app-blog-item *ngFor="let blog of Subscribers" [Blog]="blog"></app-blog-item>
+    <h1>Subscribers:</h1>
+    <app-blog-item *ngFor="let subscriber of Subscribers" [Blog]="subscriber.blog"></app-blog-item>
   </div>
 
   <div *ngIf ="this.Subscribers && !IsMe()">

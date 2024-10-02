@@ -4,6 +4,7 @@ import {Observable} from "rxjs";
 import {Chat} from "../Models/Chat/Chat";
 import { ApiConfig } from '../Consts/ApiConfig';
 import {CurrentBlogService} from "./current-blog.service";
+import { CreateChat } from '../Models/Chat/Create-chat';
 
 @Injectable({
   providedIn: 'root'
@@ -19,5 +20,9 @@ export class ChatService {
 
   public GetChatById(chatId: string, userBlogId: string): Observable<Chat> {
     return this._httpClient.get<Chat>(`${ApiConfig.BaseUrl}/chats/${chatId}?userBlogId=${userBlogId}`);
+  }
+
+  public CreateChat(chat: CreateChat): Observable<Chat> {
+    return this._httpClient.post<Chat>(`${ApiConfig.BaseUrl}/chats`, chat);
   }
 }
