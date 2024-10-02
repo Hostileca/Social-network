@@ -2,7 +2,9 @@
 
 namespace SharedResources;
 
-public class SubscriberReadDto : BlogReadDto
+public class SubscriberReadDto
 {
-    
+    public string Id { get; set; }
+        
+    public BlogReadDto Blog { get; set; }
 }

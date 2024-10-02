@@ -4,7 +4,7 @@ using SharedResources.Dtos;
 
 namespace Application.UseCases.SubscriptionCases.Commands.UnsubscribeFromBlogCase;
 
-public class UnsubscribeFromBlogCommand : IRequest<IEnumerable<BlogReadDto>>
+public class UnsubscribeFromBlogCommand : IRequest<SubscriptionReadDto>
 {
     [JsonIgnore]
     public string? UserBlogId { get; set; }

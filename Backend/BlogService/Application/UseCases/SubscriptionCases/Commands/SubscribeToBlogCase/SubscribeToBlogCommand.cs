@@ -4,7 +4,7 @@ using SharedResources.Dtos;
 
 namespace Application.UseCases.SubscriptionCases.Commands.SubscribeToBlogCase;
     
-public class SubscribeToBlogCommand : IRequest<IEnumerable<BlogReadDto>>
+public class SubscribeToBlogCommand : IRequest<SubscriptionReadDto>
 {
     [JsonIgnore]
     public string? UserBlogId { get; set; }

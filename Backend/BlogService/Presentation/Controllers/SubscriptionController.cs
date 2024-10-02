@@ -15,43 +15,49 @@ public class SubscriptionController(
 {
     [HttpPost("subscriptions")]
     public async Task<IActionResult> AddSubscription(string blogId, SubscribeToBlogCommand subscribeToBlogCommand,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken = default)
     {
         subscribeToBlogCommand.UserBlogId = blogId;
         subscribeToBlogCommand.UserId = UserId;
         
-        var subscriptions = await mediator.Send(subscribeToBlogCommand, cancellationToken);
+        var subscription = await mediator.Send(subscribeToBlogCommand, cancellationToken);
         
-        return Ok(subscriptions);
+        return Ok(subscription);
     }
 
-    [HttpDelete("subscriptions")]
-    public async Task<IActionResult> RemoveSubscription(string blogId, UnsubscribeFromBlogCommand unsubscribeFromBlogCommand,
-        CancellationToken cancellationToken)
+    [HttpDelete("subscriptions/{id}")]
+    public async Task<IActionResult> RemoveSubscription(string blogId, string id,
+        CancellationToken cancellationToken = default)
     {
-        unsubscribeFromBlogCommand.UserBlogId = blogId;
-        unsubscribeFromBlogCommand.UserId = UserId;
+        var unsubscribeFromBlogCommand = new UnsubscribeFromBlogCommand
+        {
+            UserBlogId = blogId,
+            UnSubscribeFromId = id,
+            UserId = UserId
+        };
         
-        var subscriptions = await mediator.Send(unsubscribeFromBlogCommand, cancellationToken);
+        var subscription = await mediator.Send(unsubscribeFromBlogCommand, cancellationToken);
         
-        return Ok(subscriptions);
+        return Ok(subscription);
     }
     
     [HttpGet("subscriptions")]
-    public async Task<IActionResult> GetBlogSubscriptions(string blogId, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetBlogSubscriptions(string blogId, 
+        CancellationToken cancellationToken = default)
     {
         var getBlogSubscriptions = new GetBlogSubscriptionsQuery
         {
             BlogId = blogId
         };
         
-        var subscribtions = await mediator.Send(getBlogSubscriptions, cancellationToken);
+        var subscribtion = await mediator.Send(getBlogSubscriptions, cancellationToken);
         
-        return Ok(subscribtions);
+        return Ok(subscribtion);
     }
     
     [HttpGet("subscribers")]
-    public async Task<IActionResult> GetBlogSubscribers(string blogId, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetBlogSubscribers(string blogId, 
+        CancellationToken cancellationToken = default)
     {
         var getBlogSubscribers = new GetBlogSubscribersQuery()
         {
