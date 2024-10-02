@@ -10,5 +10,5 @@ public class UnsubscribeFromBlogCommand : IRequest<SubscriptionReadDto>
     public string? UserBlogId { get; set; }
     [JsonIgnore]
     public string? UserId { get; set; }
-    public string UnSubscribeFromId { get; set; }
+    public string Id { get; set; }
 }

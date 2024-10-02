@@ -23,11 +23,11 @@ public class UnsubscribeFromBlogHandler(
         }
         
         var subscribtion = currentBlog.Subscriptions
-            .FirstOrDefault(x => x.SubscribedById == request.UnSubscribeFromId);
+            .FirstOrDefault(x => x.Id == request.Id);
 
         if (subscribtion is null)
         {
-            throw new NotFoundException(typeof(Subscription).ToString(), request.UnSubscribeFromId);
+            throw new NotFoundException(typeof(Subscription).ToString(), request.Id);
         }
         
         subscriberRepository.Delete(subscribtion);

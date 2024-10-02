@@ -32,7 +32,7 @@ public class SubscriptionController(
         var unsubscribeFromBlogCommand = new UnsubscribeFromBlogCommand
         {
             UserBlogId = blogId,
-            UnSubscribeFromId = id,
+            Id = id,
             UserId = UserId
         };
         
