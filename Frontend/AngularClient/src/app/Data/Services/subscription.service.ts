@@ -5,6 +5,8 @@ import {ApiConfig} from "../Consts/ApiConfig";
 import {SubscribeToBlog} from "../Models/Subscription/Subscribe-to-blog";
 import { UnsubscribeFromBlog } from '../Models/Subscription/Unsubscribe-from-blog';
 import { Blog } from '../Models/Blog/Blog';
+import {Subscriber} from "../Models/Subscription/Subscriber";
+import {Subscription} from "../Models/Subscription/Subscription";
 
 @Injectable({
   providedIn: 'root'
@@ -14,11 +16,11 @@ export class SubscriptionService {
   constructor(private readonly _httpClient: HttpClient)
   { }
 
-  public GetBlogSubscribers(blogId: string): Observable<Blog[]> {
+  public GetBlogSubscribers(blogId: string): Observable<Subscriber[]> {
     return this._httpClient.get<Blog[]>(`${ApiConfig.BaseUrl}/blogs/${blogId}/subscribers`)
   }
 
-  public GetBlogSubscriptions(blogId: string): Observable<Blog[]> {
+  public GetBlogSubscriptions(blogId: string): Observable<Subscription[]> {
     return this._httpClient.get<Blog[]>(`${ApiConfig.BaseUrl}/blogs/${blogId}/subscriptions`)
   }
 

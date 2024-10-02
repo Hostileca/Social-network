@@ -8,6 +8,8 @@ import {CurrentBlogService} from "../../../Data/Services/current-blog.service";
 import {SubscribeToBlog} from "../../../Data/Models/Subscription/Subscribe-to-blog";
 import { UnsubscribeFromBlog } from '../../../Data/Models/Subscription/Unsubscribe-from-blog';
 import {BlogItemComponent} from "../../Items/blog-item/blog-item.component";
+import {Subscriber} from "../../../Data/Models/Subscription/Subscriber";
+import {Subscription} from "../../../Data/Models/Subscription/Subscription";
 
 @Component({
   selector: 'app-blog',
@@ -22,8 +24,8 @@ import {BlogItemComponent} from "../../Items/blog-item/blog-item.component";
 })
 export class BlogComponent {
   public Blog!: Blog;
-  public Subscribers!: Blog[];
-  public Subscriptions!: Blog[];
+  public Subscribers!: Subscriber[];
+  public Subscriptions!: Subscription[];
 
   constructor(private readonly _route: ActivatedRoute,
               private readonly _blogService: BlogService,
