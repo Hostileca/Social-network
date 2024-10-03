@@ -45,6 +45,9 @@ public class ChatNotificationService(
                     $"chat_{chatReadDto.Id}", cancellationToken);
             }
         }
+                                    
+        await chatHub.Clients.Group($"chat_{chatReadDto.Id}").SendAsync(
+            ClientEvents.ChatDeleted, chatReadDto, cancellationToken);
     }
 
     public async Task JoinChatsAsync(string connectionId, IEnumerable<ChatReadDto> chats, CancellationToken cancellationToken)
