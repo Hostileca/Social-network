@@ -2,13 +2,15 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import {AuthService} from "../../../Data/Services/auth.service";
 import {Router} from "@angular/router";
+import {NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-sign-in',
   standalone: true,
-    imports: [
-      ReactiveFormsModule
-    ],
+  imports: [
+    ReactiveFormsModule,
+    NgIf
+  ],
   templateUrl: './sign-in.component.html',
   styleUrl: './sign-in.component.css'
 })
@@ -18,9 +20,17 @@ export class SignInComponent {
   ){}
 
   public Form: FormGroup = new FormGroup({
-    email: new FormControl(null, [Validators.required, Validators.minLength(4)]),
+    email: new FormControl(null, [Validators.required, Validators.email]),
     password: new FormControl(null, [Validators.required, Validators.minLength(4)])
   });
+
+  public Email(){
+    return this.Form.controls['email'];
+  }
+
+  public Password(){
+    return this.Form.controls['password']
+  }
 
   public OnSubmit(){
     if(!this.Form.valid){ return; }

@@ -1,0 +1,6 @@
+<div *ngIf="Post">
+  <p> {{ Post.content }} </p>
+  <div *ngFor="let attachmentUrl of AttachmentsUrls">
+    <a [href]="attachmentUrl">file</a>
+  </div>
+</div>

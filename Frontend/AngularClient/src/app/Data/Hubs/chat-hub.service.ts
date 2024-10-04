@@ -22,10 +22,9 @@ export class ChatHubService{
               private readonly _eventBusService: EventBusService,
               private readonly _currentBlogService: CurrentBlogService) {
 
-    if(!this._authService.IsAuth() || !this._currentBlogService.IsBlogSelected()){
-      return
+    if(this._authService.IsAuth() && this._currentBlogService.IsBlogSelected()){
+      this.Connect()
     }
-    this.Connect()
   }
 
   public Connect() {

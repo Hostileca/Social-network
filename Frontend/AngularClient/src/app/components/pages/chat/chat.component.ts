@@ -33,7 +33,7 @@ export class ChatComponent {
               private readonly _messageService: MessageService,
               private readonly _currentBlogService: CurrentBlogService,
               private readonly _eventBusService: EventBusService) {
-    const chatId = _route.snapshot.params['id'];
+    const chatId = _route.snapshot.params['chatId'];
 
     this.LoadChat(chatId)
   }

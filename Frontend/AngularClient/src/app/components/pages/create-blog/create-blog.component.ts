@@ -24,7 +24,7 @@ export class CreateBlogComponent {
   }
 
 
-  public OnSubmit(){
+  public OnCreateBlog(){
     if(!this.Form.valid){ return; }
 
     this._blogService.CreateBlog(this.Form.value).subscribe({

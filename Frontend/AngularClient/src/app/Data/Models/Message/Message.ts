@@ -7,4 +7,5 @@ export interface Message{
   date: Date
   text: string
   reactions: Reaction[]
+  attachmentsId: string[]
 }

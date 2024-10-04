@@ -1,13 +1,29 @@
-<div *ngIf="Blog">
+<div *ngIf="Blog" class="container">
+  <div class="blog-avatar">
+    <img ngSrc="{{this.Blog.mainImagePath ? Blog.mainImagePath : this.BlogConfig.BlogMainImageByDefaultUrl}}"
+         class="avatar" width="120" height="120" priority>
+  </div>
   <h1>{{ this.Blog.username }}</h1>
 
-  <div *ngIf="this.Subscribers">
+  <div *ngIf="!IsMe()">
+    <button *ngIf ="!AmISubscribed()" (click)="SubscribeToBlog()" class="btn">Subscribe</button>
+    <button *ngIf ="AmISubscribed()" (click)="UnsubscribeFromBlog()" class="btn">Unsubscribe</button>
+  </div>
+</div>
+
+  <div class="container">
     <h1>Subscribers:</h1>
     <app-blog-item *ngFor="let subscriber of Subscribers" [Blog]="subscriber.blog"></app-blog-item>
   </div>
 
-  <div *ngIf ="this.Subscribers && !IsMe()">
-    <button *ngIf ="!AmISubscribed()" (click)="SubscribeToBlog()">Subscribe</button>
-    <button *ngIf ="AmISubscribed()" (click)="UnsubscribeFromBlog()">Unsubscribe</button>
+<div class="container">
+  <h1>Posts:</h1>
+  <div *ngFor="let post of Posts">
+    <app-post-item [Post]="post"></app-post-item>
+  </div>
+
+  <div *ngIf="Posts.length==0">
+    <p>No posts</p>
   </div>
 </div>
+

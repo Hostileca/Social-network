@@ -1,0 +1,22 @@
+<form
+  [formGroup]="Form"
+  (ngSubmit)="OnCreateChat()">
+  <div>
+    <label for="name">Chat Name:</label>
+    <input id="name" formControlName="name" />
+  </div>
+
+  <div>
+    <label>Other Members:</label>
+    <div *ngFor="let contact of this.MyContacts">
+      <input
+        #checkbox
+        type="checkbox"
+        [value]="contact.id"
+        (change)="OnMemberSelect(contact.id, checkbox.checked)">
+      {{ contact.username }}
+    </div>
+  </div>
+
+  <button type="submit">Create Chat</button>
+</form>

@@ -1,14 +1,16 @@
 import { Component } from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {AuthService} from "../../../Data/Services/auth.service";
-import {SimpleValidators} from "../../../Helpers/SimpleValidators";
+import {SimpleValidators} from "../../../Helpers/simple-validators";
+import {NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-sign-up',
   standalone: true,
-    imports: [
-        ReactiveFormsModule
-    ],
+  imports: [
+    ReactiveFormsModule,
+    NgIf
+  ],
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.css'
 })
@@ -17,11 +19,27 @@ export class SignUpComponent {
   }
 
   public Form: FormGroup = new FormGroup({
-    username: new FormControl(null, [Validators.required, Validators.minLength(4)]),
-    email: new FormControl(null, [Validators.required, Validators.minLength(4)]),
-    password: new FormControl(null, [Validators.required, Validators.minLength(4)]),
-    confirmPassword: new FormControl(null, [Validators.required, Validators.minLength(4), SimpleValidators.equalTo('password')])
+    username: new FormControl<string>('', [Validators.required, Validators.minLength(4)]),
+    email: new FormControl<string>('', [Validators.required, Validators.email]),
+    password: new FormControl<string>('', [Validators.required, Validators.minLength(4)]),
+    confirmPassword: new FormControl<string>('', [Validators.required, SimpleValidators.equalTo('password')])
   })
+
+  public Username(){
+    return this.Form.controls['username'];
+  }
+
+  public Email(){
+    return this.Form.controls['email'];
+  }
+
+  public Password(){
+    return this.Form.controls['password']
+  }
+
+  public ConfirmPassword(){
+    return this.Form.controls['confirmPassword']
+  }
 
   public OnSubmit(){
     if(!this.Form.valid){ return; }

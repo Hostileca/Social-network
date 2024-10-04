@@ -12,8 +12,13 @@ export class SimpleValidators{
         return null;
       }
 
+
       const isEqual = control.value === controlToCompare.value;
-      return isEqual ? null : { notEqual: true };
+      if(isEqual) {
+        return null
+      }
+
+      return  { notEqual: true };
     };
   }
 }

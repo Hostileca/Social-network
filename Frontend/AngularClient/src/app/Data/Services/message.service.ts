@@ -9,15 +9,22 @@ import { SendMessage } from '../Models/Message/Send-message';
   providedIn: 'root'
 })
 export class MessageService {
-
-  constructor(private readonly _httpClient: HttpClient
-  ) { }
+  constructor(private readonly _httpClient: HttpClient) { }
 
   public GetChatMessages(chatId: string, userBlogId: string): Observable<Message[]> {
     return this._httpClient.get<Message[]>(`${ApiConfig.BaseUrl}/chats/${chatId}/messages?userBlogId=${userBlogId}`)
   }
 
   public SendMessage(chatId: string, sendMessage: SendMessage): Observable<Message> {
-    return this._httpClient.post<Message>(`${ApiConfig.BaseUrl}/chats/${chatId}/messages`, sendMessage)
+    const formData = new FormData();
+    formData.append('text', sendMessage.text);
+    formData.append('userBlogId', sendMessage.userBlogId);
+    if(sendMessage.attachments){
+      for (const file of sendMessage.attachments) {
+
+        formData.append('attachments', file);
+      }
+    }
+    return this._httpClient.post<Message>(`${ApiConfig.BaseUrl}/chats/${chatId}/messages`, formData)
   }
 }

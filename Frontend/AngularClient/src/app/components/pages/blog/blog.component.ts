@@ -2,13 +2,17 @@ import { Component } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import { BlogService } from '../../../Data/Services/blog.service';
 import { Blog } from '../../../Data/Models/Blog/Blog';
-import {NgForOf, NgIf} from "@angular/common";
+import {NgForOf, NgIf, NgOptimizedImage} from "@angular/common";
 import {SubscriptionService} from "../../../Data/Services/subscription.service";
 import {CurrentBlogService} from "../../../Data/Services/current-blog.service";
 import {SubscribeToBlog} from "../../../Data/Models/Subscription/Subscribe-to-blog";
 import {BlogItemComponent} from "../../Items/blog-item/blog-item.component";
 import {Subscriber} from "../../../Data/Models/Subscription/Subscriber";
 import {Subscription} from "../../../Data/Models/Subscription/Subscription";
+import {Post} from "../../../Data/Models/Post/Post";
+import {PostService} from "../../../Data/Services/post.service";
+import {PostItemComponent} from "../../Items/post-item/post-item.component";
+import {BlogConfig} from "../../../Data/Consts/BlogConfig";
 
 @Component({
   selector: 'app-blog',
@@ -16,25 +20,31 @@ import {Subscription} from "../../../Data/Models/Subscription/Subscription";
   imports: [
     NgIf,
     BlogItemComponent,
-    NgForOf
+    NgForOf,
+    PostItemComponent,
+    NgOptimizedImage
   ],
   templateUrl: './blog.component.html',
   styleUrl: './blog.component.css'
 })
 export class BlogComponent {
   public Blog!: Blog;
-  public Subscribers!: Subscriber[];
-  public Subscriptions!: Subscription[];
+  public Subscribers: Subscriber[] = [];
+  public Subscriptions: Subscription[] = [];
+  public Posts: Post[] = [];
+  protected BlogConfig = BlogConfig;
 
   constructor(private readonly _route: ActivatedRoute,
               private readonly _blogService: BlogService,
               private readonly _subscriptionService: SubscriptionService,
-              private readonly _currentBlogService: CurrentBlogService) {
-    const blogId = _route.snapshot.params['id'];
+              private readonly _currentBlogService: CurrentBlogService,
+              private readonly _postService: PostService) {
+    const blogId = _route.snapshot.params['blogId'];
 
     this.LoadBlog(blogId)
     this.LoadSubscribers(blogId)
     this.LoadSubscriptions(blogId)
+    this.LoadPosts(blogId)
   }
 
   public AmISubscribed(): boolean{
@@ -60,6 +70,13 @@ export class BlogComponent {
   private LoadSubscriptions(blogId: string){
     this._subscriptionService.GetBlogSubscriptions(blogId).subscribe(subscriptions => {
       this.Subscriptions = subscriptions
+    })
+  }
+
+  private LoadPosts(blogId: string){
+    this._postService.GetBlogPosts(blogId).subscribe(posts => {
+      this.Posts = posts
+      console.log(posts)
     })
   }
 

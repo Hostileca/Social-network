@@ -9,6 +9,7 @@ import {User} from "../Models/User/User";
 import {TokenRefresh} from "../Models/Tokens/Token-refresh";
 import {UserLogin} from "../Models/User/User-login";
 import {UserRegister} from "../Models/User/User-register";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -23,9 +24,9 @@ export class AuthService {
     return !!this.Tokens
   }
 
-  constructor(
-    private readonly _httpClient: HttpClient,
-    private readonly _appCookieService: AppCookieService) {
+  constructor(private readonly _router: Router,
+              private readonly _httpClient: HttpClient,
+              private readonly _appCookieService: AppCookieService) {
   }
 
   public Login(userLogin: UserLogin): Observable<any>{
@@ -66,5 +67,6 @@ export class AuthService {
   public Logout(){
     this.Tokens = null
     this._appCookieService.Delete(CookiesName.Tokens)
+    this._router.navigateByUrl("/sign-in")
   }
 }

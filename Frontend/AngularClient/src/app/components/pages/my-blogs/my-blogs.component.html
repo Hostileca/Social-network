@@ -1,11 +1,13 @@
-<div *ngIf="Blogs.length == 0">
-  <p>No blogs</p>
-</div>
-
-<div *ngIf="Blogs.length > 0">
-  <div *ngFor="let blog of Blogs">
+<h1>Your blogs</h1>
+<div *ngIf="Blogs.length > 0" class="blog-container">
+  <div *ngIf="Blogs.length == 0">
+    <p>No blogs</p>
+  </div>
+  <div *ngFor="let blog of Blogs" class="blog-item">
     <app-my-blog-item [Blog]="blog"></app-my-blog-item>
   </div>
 </div>
 
-<a href="my-blogs/create">Create blog</a>
+<div class="create-blog-container">
+  <a href="my-blogs/create" class="btn">Create blog</a>
+</div>
