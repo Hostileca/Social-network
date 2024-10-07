@@ -68,7 +68,7 @@ public class BlogController(
         return Ok(blog);
     }
 
-    [HttpPut("{blogId}")]
+    [HttpPatch("{blogId}")]
     public async Task<IActionResult> UpdateBlog([FromBody]UpdateBlogCommand updateBlogCommand,
         CancellationToken cancellationToken = default)
     {
