@@ -1,16 +1,21 @@
 ﻿using System.Text.Json.Serialization;
+using Application.UseCases.BaseQueries;
+using Application.UseCases.BaseQueries.Paged;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using SharedResources.Dtos;
 
 namespace Application.UseCases.MessageCases.Queries.GetChatMessages;
 
-public class GetChatMessagesQuery : IRequest<IEnumerable<MessageReadDto>>
+public class GetChatMessagesQuery : PagedQuery, IRequest<IEnumerable<MessageReadDto>>
 {
-    [JsonIgnore]
+    [BindNever]
     public string? UserId { get; set; }
     
-    [JsonIgnore]
+    [FromRoute]
     public Guid ChatId { get; set; }
     
+    [FromQuery]
     public Guid UserBlogId { get; set; }
 }

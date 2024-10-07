@@ -41,18 +41,6 @@ public abstract class SendMessageHandlerBase(
         if(request.Attachments is not null)
         {
             var attachments = new List<Attachment>();
-
-            foreach (var file in request.Attachments)
-            {
-                attachments.Add(
-                    new Attachment
-                    {
-                        Id = Guid.NewGuid(), 
-                        Data = await ConvertToBase64Async(file, cancellationToken),
-                        Message = message,
-                        ContentType = MimeTypes.GetMimeType(file.FileName)
-                    });
-            }
             
             message.Attachments = attachments;
         }
@@ -73,19 +61,5 @@ public abstract class SendMessageHandlerBase(
         await messageNotificationService.SendMessageAsync(messageReadDto, message.ChatId, cancellationToken);
 
         return messageReadDto;
-    }
-    
-    private static async Task<string> ConvertToBase64Async(IFormFile formFile, CancellationToken cancellationToken)
-    {
-        if (formFile == null || formFile.Length == 0)
-        {
-            return string.Empty;
-        }
-
-        using var memoryStream = new MemoryStream();
-        await formFile.CopyToAsync(memoryStream, cancellationToken);
-        var fileBytes = memoryStream.ToArray();
-
-        return Convert.ToBase64String(fileBytes);
     }
 }

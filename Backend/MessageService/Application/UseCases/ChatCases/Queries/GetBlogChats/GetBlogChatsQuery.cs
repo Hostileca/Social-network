@@ -1,13 +1,15 @@
-﻿using System.Text.Json.Serialization;
-using MediatR;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using SharedResources.Dtos;
 
 namespace Application.UseCases.ChatCases.Queries.GetBlogChats;
 
 public class GetBlogChatsQuery : IRequest<IEnumerable<ChatReadDto>>
 {
-    [JsonIgnore]
+    [BindNever]
     public string? UserId { get; set; }
     
+    [FromQuery]
     public Guid UserBlogId { get; set; }
 }

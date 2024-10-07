@@ -1,20 +1,23 @@
 ﻿using System.Text.Json.Serialization;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using SharedResources.Dtos;
 
 namespace Application.UseCases.ChatMembersCases.Commands.RemoveMemberFromChat;
 
 public class RemoveMemberFromChatCommand : IRequest<ChatMemberReadDto>
 {
-    [JsonIgnore]
+    [BindNever]
     public string? UserId { get; set; }
     
-    [JsonIgnore]
+    [FromRoute]
     public Guid ChatId { get; set; }
     
-    [JsonIgnore]
-    public Guid ChatMemberId { get; set; }
+    [FromRoute]
+    public Guid MemberId { get; set; }
     
+    [FromQuery]
     public Guid UserBlogId { get; set; }
 
 }

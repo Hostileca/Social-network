@@ -14,10 +14,9 @@ public class MessageConfig : IEntityTypeConfiguration<Message>
         builder
             .Property(x => x.Text)
             .IsRequired();
-        
+
         builder
-            .Property(x => x.Date)
-            .IsRequired();
+            .HasIndex(x => x.Date);
 
         builder
             .HasOne(x => x.Chat)

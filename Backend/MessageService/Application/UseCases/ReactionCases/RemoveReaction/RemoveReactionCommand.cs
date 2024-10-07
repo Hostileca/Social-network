@@ -1,18 +1,22 @@
 ﻿using System.Text.Json.Serialization;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using SharedResources.Dtos;
 
 namespace Application.UseCases.ReactionCases.RemoveReaction;
 
 public class RemoveReactionCommand : IRequest<ReactionReadDto>
 {
-    [JsonIgnore]
+    [BindNever]
     public string? UserId { get; set; }
     
-    [JsonIgnore]
+    [FromRoute]
     public Guid MessageId { get; set; }
-    
-    public Guid UserBlogId { get; set; }
-    
+        
+    [FromRoute]
     public Guid ReactionId { get; set; }
+    
+    [FromQuery]
+    public Guid UserBlogId { get; set; }
 }

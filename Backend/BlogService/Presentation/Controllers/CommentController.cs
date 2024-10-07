@@ -12,21 +12,18 @@ public class CommentController(
     : ControllerBase
 {
     [HttpGet]
-    public async Task<IActionResult> GetPostComments(string postId, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetPostComments(GetPostCommentsQuery getPostCommentsQuery, 
+        CancellationToken cancellationToken = default)
     {
-        var comments = await mediator.Send(new GetPostCommentsQuery
-        {
-            PostId = postId
-        }, cancellationToken);
+        var comments = await mediator.Send(getPostCommentsQuery, cancellationToken);
         
         return Ok(comments);
     }
     
     [HttpPost]
-    public async Task<IActionResult> CreateComment(string postId, CreateCommentCommand createCommentCommand,
+    public async Task<IActionResult> CreateComment([FromBody]CreateCommentCommand createCommentCommand,
         CancellationToken cancellationToken)
     {
-        createCommentCommand.PostId = postId;
         createCommentCommand.UserId = UserId;
         
         var comment = await mediator.Send(createCommentCommand, cancellationToken);

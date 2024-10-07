@@ -8,6 +8,7 @@ using SharedResources.Exceptions;
 namespace Application.UseCases.MessageCases.Queries.GetChatMessages;
 
 public class GetChatMessagesHandler(
+    IMessageRepository messageRepository, 
     IBlogRepository blogRepository)
     : IRequestHandler<GetChatMessagesQuery, IEnumerable<MessageReadDto>>
 {
@@ -28,6 +29,8 @@ public class GetChatMessagesHandler(
             throw new NotFoundException(typeof(Chat).ToString(), request.ChatId.ToString());
         }
 
-        return chatMember.Chat.Messages.Adapt<IEnumerable<MessageReadDto>>();
+        var messages =
+            await messageRepository.GetChatMessages(request.PageNumber, request.PageSize, request.ChatId, cancellationToken);
+        return messages.Adapt<IEnumerable<MessageReadDto>>();
     }
 }

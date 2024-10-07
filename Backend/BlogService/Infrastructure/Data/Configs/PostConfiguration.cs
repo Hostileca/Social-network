@@ -12,8 +12,10 @@ public class PostConfiguration : IEntityTypeConfiguration<Post>
             .HasKey(x => x.Id);
 
         builder
-            .Property(x => x.Content)
-            .IsRequired();
+            .Property(x => x.Content);
+
+        builder
+            .HasIndex(x => x.CreatedAt);
         
         builder
             .HasOne(x => x.Owner)

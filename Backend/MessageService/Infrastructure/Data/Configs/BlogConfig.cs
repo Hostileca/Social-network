@@ -20,10 +20,10 @@ public class BlogConfig : IEntityTypeConfiguration<Blog>
             .IsRequired();
 
         builder
-            .Property(x => x.BIO);
+            .Property(x => x.Bio);
 
         builder
-            .Property(x => x.MainImagePath);
+            .Property(x => x.ImageAttachmentId);
 
         builder
             .HasMany(x => x.ChatsMember)

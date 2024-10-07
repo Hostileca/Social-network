@@ -1,9 +1,12 @@
-﻿using MediatR;
+﻿using System.Text.Json.Serialization;
+using MediatR;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using SharedResources.Dtos;
 
 namespace Application.UseCases.BlogCases.Queries.GetUserBlogsCase;
 
 public class GetUserBlogsQuery : IRequest<IEnumerable<BlogReadDto>>
 {
-    public string UserId { get; set; }
+    [BindNever]
+    public string? UserId { get; set; }
 }

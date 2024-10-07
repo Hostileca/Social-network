@@ -2,7 +2,7 @@
 using Domain.Entities;
 using SharedResources.Specifications;
 
-namespace Infrastructure.Specifications;
+namespace Infrastructure.Specifications.Blogs;
 
 public class UserBlogsSpecification(
     string userId) : Specification<Blog>

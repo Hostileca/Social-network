@@ -24,5 +24,9 @@ public class AttachmentConfig : IEntityTypeConfiguration<Attachment>
         builder
             .Property(x => x.ContentType)
             .IsRequired();
+        
+        builder
+            .Property(x => x.FileName)
+            .IsRequired();
     }
 }

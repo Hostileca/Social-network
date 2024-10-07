@@ -11,12 +11,10 @@ public class ReactionController(
     IMediator mediator) : ControllerBase
 {
     [HttpPost]
-    public async Task<IActionResult> SendReaction(Guid messageId,
-        SendReactionCommand sendReactionCommand,
+    public async Task<IActionResult> SendReaction([FromBody]SendReactionCommand sendReactionCommand,
         CancellationToken cancellationToken = default)
     {
         sendReactionCommand.UserId = UserId;
-        sendReactionCommand.MessageId = messageId;
 
         var chatMember = await mediator.Send(sendReactionCommand, cancellationToken);
 
@@ -24,13 +22,10 @@ public class ReactionController(
     }
     
     [HttpDelete("{reactionId}")]
-    public async Task<IActionResult> RemoveReaction(Guid messageId, Guid reactionId,
-        RemoveReactionCommand removeReactionCommand,
+    public async Task<IActionResult> RemoveReaction(RemoveReactionCommand removeReactionCommand,
         CancellationToken cancellationToken = default)
     {
         removeReactionCommand.UserId = UserId;
-        removeReactionCommand.MessageId = messageId;
-        removeReactionCommand.ReactionId = reactionId;
 
         var chatMember = await mediator.Send(removeReactionCommand, cancellationToken);
 

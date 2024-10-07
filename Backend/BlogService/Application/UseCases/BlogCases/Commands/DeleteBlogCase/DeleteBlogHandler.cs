@@ -35,8 +35,6 @@ public class DeleteBlogHandler(
         
         await cacheRepository.DeleteAsync<BlogReadDto>(blogReadDto.Id.ToString());
         
-        await cacheRepository.DeleteAsync<IEnumerable<PostReadDto>>(blogReadDto.Id.ToString());
-        
         return blogReadDto;
     }
 }

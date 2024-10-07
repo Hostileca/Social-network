@@ -17,9 +17,12 @@ public abstract class RepositoryBase<TEntity>
         _dbSet = context.Set<TEntity>();
     }
     
-    public async Task<IEnumerable<TEntity>> GetAllAsync(CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<TEntity>> GetAllAsync(int pageNumber, int pageSize, CancellationToken cancellationToken = default)
     {
-        return await _dbSet.ToListAsync(cancellationToken);
+        return await _dbSet
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync(cancellationToken);
     }
 
     public async Task<TEntity> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)

@@ -11,12 +11,10 @@ public class ChatMemberController(
     IMediator mediator) : ControllerBase
 {
     [HttpPost]
-    public async Task<IActionResult> AddMemberToChat(Guid chatId, 
-        AddMemberToChatCommand addMemberToChatCommand,
+    public async Task<IActionResult> AddMemberToChat([FromBody]AddMemberToChatCommand addMemberToChatCommand,
         CancellationToken cancellationToken = default)
     {
         addMemberToChatCommand.UserId = UserId;
-        addMemberToChatCommand.ChatId = chatId;
 
         var chatMember = await mediator.Send(addMemberToChatCommand, cancellationToken);
 
@@ -24,13 +22,10 @@ public class ChatMemberController(
     }
     
     [HttpDelete("{memberId}")]
-    public async Task<IActionResult> DeleteMemberFromChat(Guid chatId, Guid memberId,
-        RemoveMemberFromChatCommand removeMemberFromChatCommand,
+    public async Task<IActionResult> DeleteMemberFromChat(RemoveMemberFromChatCommand removeMemberFromChatCommand,
         CancellationToken cancellationToken = default)
     {
         removeMemberFromChatCommand.UserId = UserId;
-        removeMemberFromChatCommand.ChatId = chatId;
-        removeMemberFromChatCommand.ChatMemberId = memberId;
 
         var chatMember = await mediator.Send(removeMemberFromChatCommand, cancellationToken);
 

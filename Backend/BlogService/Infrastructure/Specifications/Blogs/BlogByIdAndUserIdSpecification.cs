@@ -1,8 +1,8 @@
 ﻿using System.Linq.Expressions;
-using Domain.Entities;
 using SharedResources.Specifications;
+using Domain.Entities;
 
-namespace Infrastructure.Specifications;
+namespace Infrastructure.Specifications.Blogs;
 
 public class BlogByIdAndUserIdSpecification(
     string blogId, string userId) 

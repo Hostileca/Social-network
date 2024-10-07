@@ -7,13 +7,11 @@ public class UpdateBlogCommandValidator : AbstractValidator<UpdateBlogCommand>
     public UpdateBlogCommandValidator()
     {
         RuleFor(x => x.Username)
-            .IsUsername();
+            .MaximumLength(20);
 
-        RuleFor(x => x.BIO)
-            .MaximumLength(50);
+        RuleFor(x => x.Bio)
+            .MaximumLength(70);
 
-        RuleFor(x => x.MainImagePath).
-            Must(x => x is null || Uri.TryCreate(x, UriKind.Absolute, out _))
-            .WithMessage("{PropertyName} must be a valid URL");
+        RuleFor(x => x.ImageAttachmentId);
     }
 }
