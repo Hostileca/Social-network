@@ -17,9 +17,7 @@ public class CreatePostCommand : IRequest<PostReadDto>
     [JsonIgnore]
     public string? BlogId { get; set; }
     
-    [FromForm]
     public string? Content { get; set; }
     
-    [FromForm]
     public IEnumerable<IFormFile>? Attachments { get; set; }
 }

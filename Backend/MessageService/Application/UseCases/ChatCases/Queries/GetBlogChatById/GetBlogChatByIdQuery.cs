@@ -11,9 +11,8 @@ public class GetBlogChatByIdQuery : IRequest<ChatReadDto>
     [BindNever]
     public string? UserId { get; set; }
     
-    [FromQuery]
-    public Guid UserBlogId { get; set; }
-    
     [FromRoute]
     public Guid ChatId { get; set; }
+    
+    public Guid UserBlogId { get; set; }
 }

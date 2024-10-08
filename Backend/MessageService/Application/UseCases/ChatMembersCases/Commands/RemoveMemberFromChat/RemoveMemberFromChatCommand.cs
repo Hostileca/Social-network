@@ -17,7 +17,6 @@ public class RemoveMemberFromChatCommand : IRequest<ChatMemberReadDto>
     [FromRoute]
     public Guid MemberId { get; set; }
     
-    [FromQuery]
     public Guid UserBlogId { get; set; }
 
 }

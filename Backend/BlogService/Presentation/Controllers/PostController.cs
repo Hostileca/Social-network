@@ -14,7 +14,7 @@ public class PostController(
     IMediator mediator) : ControllerBase
 {
     [HttpGet]
-    public async Task<IActionResult> GetPosts(GetBlogPostsQuery getBlogPostsQuery, 
+    public async Task<IActionResult> GetPosts([FromQuery]GetBlogPostsQuery getBlogPostsQuery, 
         CancellationToken cancellationToken = default)
     {
         var posts = await mediator.Send(getBlogPostsQuery, cancellationToken);
@@ -23,7 +23,7 @@ public class PostController(
     }
     
     [HttpGet("/blogs/{blogId}/wall")]
-    public async Task<IActionResult> GetWall(GetBlogPostsWallQuery getBlogPostsWallQuery, 
+    public async Task<IActionResult> GetWall([FromQuery]GetBlogPostsWallQuery getBlogPostsWallQuery, 
         CancellationToken cancellationToken = default)
     {
         var posts = await mediator.Send(getBlogPostsWallQuery, cancellationToken);
@@ -32,7 +32,7 @@ public class PostController(
     }
     
     [HttpDelete("{postId}")]
-    public async Task<IActionResult> DeletePost(DeletePostByIdCommand deletePostByIdCommand,
+    public async Task<IActionResult> DeletePost([FromQuery]DeletePostByIdCommand deletePostByIdCommand,
         CancellationToken cancellationToken = default)
     {
         deletePostByIdCommand.UserId = UserId;
@@ -43,7 +43,7 @@ public class PostController(
     }
     
     [HttpPost]
-    public async Task<IActionResult> CreatePost(CreatePostCommand createPostCommand,
+    public async Task<IActionResult> CreatePost([FromForm]CreatePostCommand createPostCommand,
         CancellationToken cancellationToken = default)
     {
         createPostCommand.UserId = UserId;

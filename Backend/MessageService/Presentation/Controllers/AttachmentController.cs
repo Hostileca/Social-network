@@ -11,7 +11,7 @@ public class AttachmentController(
     : ControllerBase
 {
     [HttpGet("{attachmentId}")]
-    public async Task<IActionResult> GetMessageAttachment(GetAttachmentByIdQuery getAttachmentByIdQuery,
+    public async Task<IActionResult> GetMessageAttachment([FromQuery]GetAttachmentByIdQuery getAttachmentByIdQuery,
         CancellationToken cancellationToken = default)
     {
         getAttachmentByIdQuery.UserId = UserId;

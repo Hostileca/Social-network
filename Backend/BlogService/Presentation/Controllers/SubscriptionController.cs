@@ -14,7 +14,7 @@ public class SubscriptionController(
     : ControllerBase
 {
     [HttpPost("subscriptions")]
-    public async Task<IActionResult> AddSubscription(SubscribeToBlogCommand subscribeToBlogCommand,
+    public async Task<IActionResult> AddSubscription([FromBody]SubscribeToBlogCommand subscribeToBlogCommand,
         CancellationToken cancellationToken = default)
     {
         subscribeToBlogCommand.UserId = UserId;
@@ -25,7 +25,7 @@ public class SubscriptionController(
     }
 
     [HttpDelete("subscriptions/{subscriptionId}")]
-    public async Task<IActionResult> RemoveSubscription(UnsubscribeFromBlogCommand unsubscribeFromBlogCommand,
+    public async Task<IActionResult> RemoveSubscription([FromQuery]UnsubscribeFromBlogCommand unsubscribeFromBlogCommand,
         CancellationToken cancellationToken = default)
     {
         unsubscribeFromBlogCommand.UserId = UserId;
@@ -36,7 +36,7 @@ public class SubscriptionController(
     }
     
     [HttpGet("subscriptions")]
-    public async Task<IActionResult> GetBlogSubscriptions(GetBlogSubscriptionsQuery getBlogSubscriptionsQuery, 
+    public async Task<IActionResult> GetBlogSubscriptions([FromQuery]GetBlogSubscriptionsQuery getBlogSubscriptionsQuery, 
         CancellationToken cancellationToken = default)
     {
         var subscriptions = await mediator.Send(getBlogSubscriptionsQuery, cancellationToken);
@@ -45,7 +45,7 @@ public class SubscriptionController(
     }
     
     [HttpGet("subscribers")]
-    public async Task<IActionResult> GetBlogSubscribers(GetBlogSubscribersQuery getBlogSubscribersQuery, 
+    public async Task<IActionResult> GetBlogSubscribers([FromQuery]GetBlogSubscribersQuery getBlogSubscribersQuery, 
         CancellationToken cancellationToken = default)
     {
         var subscribers = await mediator.Send(getBlogSubscribersQuery, cancellationToken);

@@ -22,7 +22,7 @@ public class ChatMemberController(
     }
     
     [HttpDelete("{memberId}")]
-    public async Task<IActionResult> DeleteMemberFromChat(RemoveMemberFromChatCommand removeMemberFromChatCommand,
+    public async Task<IActionResult> DeleteMemberFromChat([FromQuery]RemoveMemberFromChatCommand removeMemberFromChatCommand,
         CancellationToken cancellationToken = default)
     {
         removeMemberFromChatCommand.UserId = UserId;

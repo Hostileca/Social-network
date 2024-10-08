@@ -13,7 +13,7 @@ public class MessageController(
     : ControllerBase
 {
     [HttpGet("messages")]
-    public async Task<IActionResult> GetMessages(GetChatMessagesQuery getChatMessagesQuery,
+    public async Task<IActionResult> GetMessages([FromQuery]GetChatMessagesQuery getChatMessagesQuery,
         CancellationToken cancellationToken = default)
     {
         getChatMessagesQuery.UserId = UserId;
@@ -24,7 +24,7 @@ public class MessageController(
     }
     
     [HttpPost("messages")]
-    public async Task<IActionResult> SendMessage(SendMessageCommand sendMessageCommand, 
+    public async Task<IActionResult> SendMessage([FromForm]SendMessageCommand sendMessageCommand, 
     CancellationToken cancellationToken = default)
     {
         sendMessageCommand.UserId = UserId;
@@ -35,7 +35,7 @@ public class MessageController(
     }
 
     [HttpPost("delayed-messages")]
-    public async Task<IActionResult> SendDelayedMessage(SendDelayedMessageCommand sendDelayedMessageCommand, 
+    public async Task<IActionResult> SendDelayedMessage([FromForm]SendDelayedMessageCommand sendDelayedMessageCommand, 
         CancellationToken cancellationToken = default)
     {
         sendDelayedMessageCommand.UserId = UserId;

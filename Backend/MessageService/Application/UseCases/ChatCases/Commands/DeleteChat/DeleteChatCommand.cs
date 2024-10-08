@@ -14,6 +14,5 @@ public class DeleteChatCommand : IRequest<ChatReadDto>
     [FromRoute]
     public Guid ChatId { get; set; }
     
-    [FromQuery]
     public Guid UserBlogId { get; set; }
 }

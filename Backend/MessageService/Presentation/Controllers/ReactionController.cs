@@ -22,7 +22,7 @@ public class ReactionController(
     }
     
     [HttpDelete("{reactionId}")]
-    public async Task<IActionResult> RemoveReaction(RemoveReactionCommand removeReactionCommand,
+    public async Task<IActionResult> RemoveReaction([FromQuery]RemoveReactionCommand removeReactionCommand,
         CancellationToken cancellationToken = default)
     {
         removeReactionCommand.UserId = UserId;

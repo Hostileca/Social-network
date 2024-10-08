@@ -14,6 +14,5 @@ public class RemoveLikeFromPostCommand : IRequest<PostLikesReadDto>
     [BindNever]
     public string? UserId { get; set; }
     
-    [FromQuery]
     public string BlogId { get; set; }
 }

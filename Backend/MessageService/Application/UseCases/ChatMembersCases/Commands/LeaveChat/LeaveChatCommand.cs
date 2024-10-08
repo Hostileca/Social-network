@@ -14,6 +14,5 @@ public class LeaveChatCommand : IRequest<ChatMemberReadDto>
     [FromRoute]
     public Guid ChatId { get; set; }
     
-    [FromQuery]
     public Guid UserBlogId { get; set; }
 }

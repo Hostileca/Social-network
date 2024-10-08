@@ -11,7 +11,7 @@ public class AttachmentController(
     : ControllerBase
 {
     [HttpGet("{attachmentId}")]
-    public async Task<IActionResult> GetAttachmentById(LoadAttachmentByIdQuery loadAttachmentByIdQuery, 
+    public async Task<IActionResult> GetAttachmentById([FromQuery]LoadAttachmentByIdQuery loadAttachmentByIdQuery, 
         CancellationToken cancellationToken = default)
     {
         var attachment = await mediator.Send(loadAttachmentByIdQuery, cancellationToken);

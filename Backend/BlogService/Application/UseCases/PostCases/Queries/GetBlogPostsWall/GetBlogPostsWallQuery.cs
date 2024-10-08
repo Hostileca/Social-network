@@ -15,5 +15,5 @@ public class GetBlogPostsWallQuery : PagedQuery, IRequest<IEnumerable<PostReadDt
     public string UserId { get; set; }
     
     [FromRoute]
-    public string BlogId { get; set; }
+    public string UserBlogId { get; set; }
 }

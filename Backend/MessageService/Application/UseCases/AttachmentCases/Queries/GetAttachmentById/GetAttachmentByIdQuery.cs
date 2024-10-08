@@ -10,9 +10,6 @@ public class GetAttachmentByIdQuery : IRequest<AttachmentReadDto>
     [BindNever]
     public string UserId { get; set; }
     
-    [FromQuery]
-    public Guid UserBlogId { get; set; }
-    
     [FromRoute]
     public Guid ChatId { get; set; }
     
@@ -21,4 +18,6 @@ public class GetAttachmentByIdQuery : IRequest<AttachmentReadDto>
     
     [FromRoute]
     public Guid AttachmentId { get; set; }
+    
+    public Guid UserBlogId { get; set; }
 }

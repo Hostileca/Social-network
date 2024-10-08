@@ -15,11 +15,11 @@ public class GetBlogPostsWallHandler(
 {
     public async Task<IEnumerable<PostReadDto>> Handle(GetBlogPostsWallQuery request, CancellationToken cancellationToken)
     {
-        var userBlog = await blogRepository.GetByIdAndUserIdAsync(request.BlogId, request.UserId, cancellationToken);
+        var userBlog = await blogRepository.GetByIdAndUserIdAsync(request.UserBlogId, request.UserId, cancellationToken);
 
         if (userBlog is null)
         {
-            throw new NotFoundException(typeof(Blog).ToString(), request.BlogId);
+            throw new NotFoundException(typeof(Blog).ToString(), request.UserBlogId);
         }
         
         var pagedFilter = request.Adapt<PagedFilter>();

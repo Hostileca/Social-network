@@ -17,6 +17,5 @@ public class RemoveReactionCommand : IRequest<ReactionReadDto>
     [FromRoute]
     public Guid ReactionId { get; set; }
     
-    [FromQuery]
     public Guid UserBlogId { get; set; }
 }

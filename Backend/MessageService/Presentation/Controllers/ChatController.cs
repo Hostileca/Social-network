@@ -15,7 +15,7 @@ public class ChatController(
     : ControllerBase
 {
     [HttpGet]
-    public async Task<IActionResult> GetChats(GetBlogChatsQuery getBlogChatsQuery,
+    public async Task<IActionResult> GetChats([FromQuery]GetBlogChatsQuery getBlogChatsQuery,
         CancellationToken cancellationToken = default)
     {
         getBlogChatsQuery.UserId = UserId;
@@ -26,7 +26,7 @@ public class ChatController(
     }
     
     [HttpGet("{chatId}")]
-    public async Task<IActionResult> GetChatById(GetBlogChatByIdQuery getBlogChatByIdQuery, 
+    public async Task<IActionResult> GetChatById([FromQuery]GetBlogChatByIdQuery getBlogChatByIdQuery, 
         CancellationToken cancellationToken = default)
     {
         getBlogChatByIdQuery.UserId = UserId;
@@ -48,7 +48,7 @@ public class ChatController(
     }
     
     [HttpDelete("{chatId}")]
-    public async Task<IActionResult> DeleteChat(DeleteChatCommand deleteChatCommand,
+    public async Task<IActionResult> DeleteChat([FromQuery]DeleteChatCommand deleteChatCommand,
         CancellationToken cancellationToken = default)
     {
         deleteChatCommand.UserId = UserId;
@@ -59,7 +59,7 @@ public class ChatController(
     }
     
     [HttpDelete("{chatId}/leave")]
-    public async Task<IActionResult> LeaveChat(LeaveChatCommand leaveChatCommand,
+    public async Task<IActionResult> LeaveChat([FromQuery]LeaveChatCommand leaveChatCommand,
         CancellationToken cancellationToken = default)
     {
         leaveChatCommand.UserId = UserId;

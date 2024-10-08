@@ -13,7 +13,7 @@ public class LikeController(
     : ControllerBase
 {
     [HttpPost]
-    public async Task<IActionResult> AddLike(AddLikeToPostCommand addLikeToPostCommand,
+    public async Task<IActionResult> AddLike([FromBody]AddLikeToPostCommand addLikeToPostCommand,
         CancellationToken cancellationToken = default)
     {
         addLikeToPostCommand.UserId = UserId;
@@ -24,7 +24,7 @@ public class LikeController(
     }
     
     [HttpDelete]
-    public async Task<IActionResult> RemoveLike(RemoveLikeFromPostCommand removeLikeFromPostCommand,
+    public async Task<IActionResult> RemoveLike([FromQuery]RemoveLikeFromPostCommand removeLikeFromPostCommand,
         CancellationToken cancellationToken = default)
     {
         removeLikeFromPostCommand.UserId = UserId;
@@ -35,7 +35,7 @@ public class LikeController(
     }
     
     [HttpGet]
-    public async Task<IActionResult> GetLikes(GetLikeSendersByPostIdQuery getLikeSendersByPostIdQuery,
+    public async Task<IActionResult> GetLikes([FromQuery]GetLikeSendersByPostIdQuery getLikeSendersByPostIdQuery,
         CancellationToken cancellationToken = default)
     {
         var comment = await mediator.Send(getLikeSendersByPostIdQuery, cancellationToken);

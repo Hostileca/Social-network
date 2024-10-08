@@ -9,7 +9,7 @@ namespace Application.UseCases.BlogCases.Commands.DeleteBlogCase;
 public class DeleteBlogCommand : IRequest<BlogReadDto>
 {
     [FromRoute]
-    public string? BlogId { get; set; }    
+    public string? UserBlogId { get; set; }    
     
     [BindNever]
     public string? UserId { get; set; }

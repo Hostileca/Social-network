@@ -16,6 +16,5 @@ public class GetChatMessagesQuery : PagedQuery, IRequest<IEnumerable<MessageRead
     [FromRoute]
     public Guid ChatId { get; set; }
     
-    [FromQuery]
     public Guid UserBlogId { get; set; }
 }

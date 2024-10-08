@@ -8,17 +8,18 @@ namespace Application.UseCases.MessageCases.Commands;
 public abstract class SendMessageCommandBase
 {
     [BindNever]
+    [JsonIgnore]
     public string? UserId { get; set; }
         
     [FromRoute]
+    [JsonIgnore]
     public Guid ChatId { get; set; }
         
     [FromQuery]
+    [JsonIgnore]
     public Guid UserBlogId { get; set; }
         
-    [FromForm]
     public string Text { get; set; }      
     
-    [FromForm]
     public IEnumerable<IFormFile>? Attachments { get; set; }
 }

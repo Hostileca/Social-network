@@ -18,7 +18,7 @@ public class BlogController(
     : ControllerBase
 {
     [HttpGet]
-    public async Task<IActionResult> GetAllBlogs(GetAllBlogsQuery getAllBlogsQuery,
+    public async Task<IActionResult> GetAllBlogs([FromQuery]GetAllBlogsQuery getAllBlogsQuery,
         CancellationToken cancellationToken = default)
     {
         var blogs = await mediator.Send(getAllBlogsQuery, cancellationToken);
@@ -27,7 +27,7 @@ public class BlogController(
     }
     
     [HttpGet("filter")]
-    public async Task<IActionResult> GetAllBlogs([FromQuery]GetBlogsByFilterQuery getBlogsByFilterQuery,
+    public async Task<IActionResult> GetBlogsByFilter([FromQuery]GetBlogsByFilterQuery getBlogsByFilterQuery,
         CancellationToken cancellationToken = default)
     {
         var blogs = await mediator.Send(getBlogsByFilterQuery, cancellationToken);
@@ -78,7 +78,7 @@ public class BlogController(
     }
     
     [HttpDelete("{blogId}")]
-    public async Task<IActionResult> DeleteBlog(DeleteBlogCommand deleteBlogCommand, 
+    public async Task<IActionResult> DeleteBlog([FromQuery]DeleteBlogCommand deleteBlogCommand, 
         CancellationToken cancellationToken = default)
     {
         deleteBlogCommand.UserId = UserId;
@@ -89,7 +89,7 @@ public class BlogController(
     }
     
     [HttpGet("{blogId}/liked")]
-    public async Task<IActionResult> GetLikedPosts(GetBlogLikesQuery getBlogLikesQuery, 
+    public async Task<IActionResult> GetLikedPosts([FromQuery]GetBlogLikesQuery getBlogLikesQuery, 
         CancellationToken cancellationToken)
     {
         var posts = await mediator.Send(getBlogLikesQuery, cancellationToken);

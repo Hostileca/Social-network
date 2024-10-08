@@ -10,6 +10,5 @@ public class GetBlogChatsQuery : IRequest<IEnumerable<ChatReadDto>>
     [BindNever]
     public string? UserId { get; set; }
     
-    [FromQuery]
     public Guid UserBlogId { get; set; }
 }

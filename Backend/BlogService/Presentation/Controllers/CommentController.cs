@@ -12,7 +12,7 @@ public class CommentController(
     : ControllerBase
 {
     [HttpGet]
-    public async Task<IActionResult> GetPostComments(GetPostCommentsQuery getPostCommentsQuery, 
+    public async Task<IActionResult> GetPostComments([FromQuery]GetPostCommentsQuery getPostCommentsQuery, 
         CancellationToken cancellationToken = default)
     {
         var comments = await mediator.Send(getPostCommentsQuery, cancellationToken);
