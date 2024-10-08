@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Blog} from "../Models/Blog/Blog";
 import {ApiConfig} from "../Consts/ApiConfig";
 import {PageSettings} from "../Requests/PageSettings";
-import {query} from "@angular/animations";
+import {HttpHelper} from "../../Helpers/http-helper";
 
 @Injectable({
   providedIn: 'root'
@@ -13,12 +13,14 @@ export class BlogService {
   constructor(private readonly _httpClient: HttpClient,
   ) { }
 
-  public GetUserBlogs(pageSettings: PageSettings): Observable<Blog[]> {
+  public GetUserBlogs(): Observable<Blog[]> {
     return this._httpClient.get<Blog[]>(`${ApiConfig.BaseUrl}/blogs/me`);
   }
 
-  public GetAllBlogs(): Observable<Blog[]> {
-    return this._httpClient.get<Blog[]>(`${ApiConfig.BaseUrl}/blogs`);
+  public GetAllBlogs(pageSettings: PageSettings): Observable<Blog[]> {
+    let params = new HttpParams()
+    params = HttpHelper.AddPageSettingsToQuery(params, pageSettings)
+    return this._httpClient.get<Blog[]>(`${ApiConfig.BaseUrl}/blogs`, { params });
   }
 
   public GetBlogById(id: string): Observable<Blog> {
