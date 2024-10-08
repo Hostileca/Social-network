@@ -20,13 +20,13 @@ public class CreateBlogHandler(
 {
     public async Task<BlogReadDto> Handle(CreateBlogCommand request, CancellationToken cancellationToken)
     {
-        //var isUserExist = await userGrpcClient.CheckUserAsync(
-        //    new CheckUserRequest { UserId = request.UserId }, cancellationToken: cancellationToken);
+        var isUserExist = await userGrpcClient.CheckUserAsync(
+            new CheckUserRequest { UserId = request.UserId }, cancellationToken: cancellationToken);
 
-       // if (!isUserExist.Exists)
-       // {
-        //    throw new NotFoundException("User", request.UserId);
-      //  }
+        if (!isUserExist.Exists)
+        {
+            throw new NotFoundException("User", request.UserId);
+        }
         
         var newBlog = request.Adapt<Blog>();
         

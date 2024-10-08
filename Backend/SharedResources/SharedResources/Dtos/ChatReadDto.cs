@@ -6,5 +6,5 @@ public class ChatReadDto
 
     public string Name { get; set; }
     
-    public IEnumerable<ChatMemberReadDto> Members { get; set; }
+    public int MembersCount { get; set; }
 }

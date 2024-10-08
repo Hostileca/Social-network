@@ -1,5 +1,6 @@
 ﻿using Application.UseCases.ChatMembersCases.Commands.AddMemberToChat;
 using Application.UseCases.ChatMembersCases.Commands.RemoveMemberFromChat;
+using Application.UseCases.ChatMembersCases.Queries.GetChatMembers;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -30,5 +31,15 @@ public class ChatMemberController(
         var chatMember = await mediator.Send(removeMemberFromChatCommand, cancellationToken);
 
         return Ok(chatMember);
+    }
+
+    public async Task<IActionResult> GetChatMembers([FromQuery]GetChatMembersQuery getChatMembersQuery,
+        CancellationToken cancellationToken = default)
+    {
+        getChatMembersQuery.UserId = UserId;
+
+        var members = await mediator.Send(getChatMembersQuery, cancellationToken);
+
+        return Ok(members);
     }
 }

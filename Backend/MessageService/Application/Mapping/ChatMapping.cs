@@ -12,10 +12,10 @@ public class ChatMapping : IRegister
         config.NewConfig<CreateChatCommand, Chat>()
             .Map(dest => dest.Id, src => Guid.NewGuid())
             .Map(dest => dest.Name, src => src.Name);
-        
+
         config.NewConfig<Chat, ChatReadDto>()
             .Map(dest => dest.Id, src => src.Id)
             .Map(dest => dest.Name, src => src.Name)
-            .Map(dest => dest.Members, src => src.Members.Select(member => member.Adapt<ChatMemberReadDto>()));
+            .Map(dest => dest.MembersCount, src => src.Members != null ? src.Members.Count() : 0);
     }
 }

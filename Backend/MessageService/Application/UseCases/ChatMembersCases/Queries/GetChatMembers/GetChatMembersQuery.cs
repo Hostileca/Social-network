@@ -4,15 +4,16 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using SharedResources.Dtos;
 
-namespace Application.UseCases.MessageCases.Queries.GetChatMessages;
+namespace Application.UseCases.ChatMembersCases.Queries.GetChatMembers;
 
-public class GetChatMessagesQuery : PagedQuery, IRequest<IEnumerable<MessageReadDto>>
+public class GetChatMembersQuery : PagedQuery, IRequest<IEnumerable<ChatMemberReadDto>>
 {
-    [BindNever]
-    public string? UserId { get; set; }
-    
     [FromRoute]
     public Guid ChatId { get; set; }
     
+    [FromQuery]
     public Guid UserBlogId { get; set; }
+    
+    [BindNever]
+    public string UserId { get; set; }
 }
