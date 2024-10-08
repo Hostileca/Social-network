@@ -6,8 +6,6 @@ using Application.UseCases.BlogCases.Queries.GetBlogByIdCase;
 using Application.UseCases.BlogCases.Queries.GetBlogsByFilterCase;
 using Application.UseCases.BlogCases.Queries.GetUserBlogsCase;
 using Application.UseCases.LikeCases.Queries.GetBlogLikesCase;
-using Application.UseCases.PostCases.Commands.CreatePostCase;
-using Application.UseCases.PostCases.Queries.GetBlogPostsCase;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -38,7 +36,7 @@ public class BlogController(
     }
     
     [HttpGet("me")]
-    public async Task<IActionResult> GetUserBlogs(GetUserBlogsQuery getUserBlogsQuery,
+    public async Task<IActionResult> GetUserBlogs([FromQuery]GetUserBlogsQuery getUserBlogsQuery,
         CancellationToken cancellationToken = default)
     {
         getUserBlogsQuery.UserId = UserId;
@@ -49,7 +47,7 @@ public class BlogController(
     }
     
     [HttpGet("{blogId}")]
-    public async Task<IActionResult> GetBlogById(GetBlogByIdQuery getBlogByIdQuery, 
+    public async Task<IActionResult> GetBlogById([FromQuery]GetBlogByIdQuery getBlogByIdQuery, 
         CancellationToken cancellationToken = default)
     {
         var blog = await mediator.Send(getBlogByIdQuery, cancellationToken);
