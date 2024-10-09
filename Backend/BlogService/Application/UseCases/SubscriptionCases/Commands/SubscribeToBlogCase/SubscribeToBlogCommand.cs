@@ -16,6 +16,5 @@ public class SubscribeToBlogCommand : IRequest<SubscriptionReadDto>
     [JsonIgnore]
     public string? UserId { get; set; } 
     
-    [JsonIgnore]
     public string SubscribeAtId { get; set; }
 }
