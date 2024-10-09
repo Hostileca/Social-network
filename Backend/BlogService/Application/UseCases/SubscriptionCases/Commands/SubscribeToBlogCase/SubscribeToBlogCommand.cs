@@ -13,7 +13,7 @@ public class SubscribeToBlogCommand : IRequest<SubscriptionReadDto>
     public string? UserId { get; set; } 
     
     [FromRoute]
-    public string BlogId { get; set; }
+    public string? BlogId { get; set; }
     
     public string SubscribeAtId { get; set; }
 }
