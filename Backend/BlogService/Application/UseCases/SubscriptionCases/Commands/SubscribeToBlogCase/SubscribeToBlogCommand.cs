@@ -8,13 +8,12 @@ namespace Application.UseCases.SubscriptionCases.Commands.SubscribeToBlogCase;
     
 public class SubscribeToBlogCommand : IRequest<SubscriptionReadDto>
 {
-    [FromQuery]
-    [JsonIgnore]
-    public string? UserBlogId { get; set; }
-    
     [BindNever]
     [JsonIgnore]
     public string? UserId { get; set; } 
+    
+    [FromRoute]
+    public string BlogId { get; set; }
     
     public string SubscribeAtId { get; set; }
 }

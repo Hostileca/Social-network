@@ -14,12 +14,12 @@ public class SubscribeToBlogHandler(
 {
     public async Task<SubscriptionReadDto> Handle(SubscribeToBlogCommand request, CancellationToken cancellationToken)
     {
-        var currentBlog = await blogRepository.GetByIdAndUserIdAsync(request.UserBlogId, 
+        var currentBlog = await blogRepository.GetByIdAndUserIdAsync(request.BlogId, 
             request.UserId, cancellationToken);
 
         if (currentBlog is null)
         {
-            throw new NotFoundException(typeof(Blog).ToString(), request.UserBlogId);
+            throw new NotFoundException(typeof(Blog).ToString(), request.BlogId);
         }
         
         var blogToSubscribe = await blogRepository.GetByIdAsync(request.SubscribeAtId, cancellationToken);
