@@ -6,7 +6,6 @@ import {authGuard} from "./Guards/auth.guard";
 import {CreateBlogComponent} from "./components/pages/create-blog/create-blog.component";
 import {MyChatsComponent} from "./components/pages/my-chats/my-chats.component";
 import {blogGuard} from "./Guards/blog.guard";
-import {ChatDetailsComponent} from "./components/Items/chat-details/chat-details.component";
 import {BlogsComponent} from "./components/pages/blogs/blogs.component";
 import {BlogComponent} from "./components/pages/blog/blog.component";
 import {CreateChatComponent} from "./components/pages/create-chat/create-chat.component";

@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import {MyBlogItemComponent} from "../../Items/my-blog-item/my-blog-item.component";
 import {NgForOf, NgIf} from "@angular/common";
 import {ChatItemComponent} from "../../Items/chat-item/chat-item.component";
-import {ChatDetailsComponent} from "../../Items/chat-details/chat-details.component";
 import {ChatsListComponent} from "../../Items/chats-list/chats-list.component";
 import {Chat} from "../../../Data/Models/Chat/Chat";
 import {ChatService} from "../../../Data/Services/chat.service";
+import {ChatDetailsComponent} from "../../Items/chat/chat-details.component";
 
 @Component({
   selector: 'app-my-chats',

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {Blog} from "../Models/Blog/Blog";
 import {CookiesName} from "../Consts/CookiesName";
 import {AppCookieService} from "./app-cookie.service";
+import {BlogService} from "./blog.service";
 
 @Injectable({
   providedIn: 'root'
@@ -11,24 +12,37 @@ export class CurrentBlogService {
 
   public IsBlogSelected(): boolean{
     if(!this.CurrentBlog){
-      this.CurrentBlog = this._appCookieService.Get<Blog>(CookiesName.Blog)
+      this.CurrentBlog = this._appCookieService.Get<Blog>(CookiesName.CurrentBlog)
     }
-    return !!this.CurrentBlog
+    let isBlogSelected = !!this.CurrentBlog
+    if(isBlogSelected){
+      this.UpdateBlog(this.CurrentBlog!.id)
+    }
+    return isBlogSelected
   }
 
   constructor(private readonly _appCookieService: AppCookieService,
-              //private readonly _chatHubService: ChatHubService
+              private readonly _blogService: BlogService
   ) { }
 
   public SelectBlog(blog: Blog){
     this.CurrentBlog = blog
-    this._appCookieService.Save<Blog>(CookiesName.Blog, this.CurrentBlog)
-
-    //this._chatHubService.Connect(this.CurrentBlog)
+    this._appCookieService.Save<Blog>(CookiesName.CurrentBlog, this.CurrentBlog)
   }
 
   public Logout(){
     this.CurrentBlog = null
-    this._appCookieService.Delete(CookiesName.Blog)
+    this._appCookieService.Delete(CookiesName.CurrentBlog)
+  }
+
+  private UpdateBlog(id: string){
+    this._blogService.GetBlogById(id).subscribe({
+      next: blog => {
+        this.CurrentBlog = blog
+      },
+      error: error => {
+        this.Logout()
+      }
+    })
   }
 }

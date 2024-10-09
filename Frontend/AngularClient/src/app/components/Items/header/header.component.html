@@ -3,7 +3,7 @@
   <a class="header-element" href="/blogs">Blogs</a>
   <a class="header-element" href="/my-chats">Chats</a>
   <div class="blog">
-    <div class="header-element" (click)="OnBlogClick()">Blog</div>
+    <div class="header-element" (click)="OnBlogClick()">{{CurrentBlogUsername()}}</div>
 
     <div *ngIf="IsBlogMenuOpen" class="blog-menu">
       <ul>

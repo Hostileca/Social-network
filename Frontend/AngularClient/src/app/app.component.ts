@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import {ChatHubService} from "./Data/Hubs/chat-hub.service";
 import {HeaderComponent} from "./components/Items/header/header.component";
+import {AuthService} from "./Data/Services/auth.service";
+import {CurrentBlogService} from "./Data/Services/current-blog.service";
 
 @Component({
   selector: 'app-root',
@@ -16,7 +18,9 @@ import {HeaderComponent} from "./components/Items/header/header.component";
 export class AppComponent {
   title = 'AngularClient';
 
-  constructor(private _chatHubService: ChatHubService){
+  constructor(private readonly _chatHubService: ChatHubService,
+              private readonly _authService: AuthService,
+              private readonly _currentBlogService: CurrentBlogService){
 
   }
 }

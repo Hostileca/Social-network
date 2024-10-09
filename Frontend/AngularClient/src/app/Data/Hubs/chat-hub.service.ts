@@ -21,13 +21,13 @@ export class ChatHubService{
   constructor(private readonly _authService: AuthService,
               private readonly _eventBusService: EventBusService,
               private readonly _currentBlogService: CurrentBlogService) {
-
-    if(this._authService.IsAuth() && this._currentBlogService.IsBlogSelected()){
-      this.Connect()
-    }
+    this.Connect()
   }
 
-  public Connect() {
+  private Connect() {
+    if(!this._authService.IsAuth() || !this._currentBlogService.IsBlogSelected()){
+      return
+    }
 
     const accessToken = this._authService.Tokens?.accessToken.value;
     const options: IHttpConnectionOptions = {

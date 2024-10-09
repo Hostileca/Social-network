@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Chat} from "../Models/Chat/Chat";
 import { ApiConfig } from '../Consts/ApiConfig';
 import {CurrentBlogService} from "./current-blog.service";
 import { CreateChat } from '../Models/Chat/Create-chat';
+import {HttpHelper} from "../../Helpers/http-helper";
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,9 @@ export class ChatService {
   }
 
   public GetChatById(chatId: string, userBlogId: string): Observable<Chat> {
-    return this._httpClient.get<Chat>(`${ApiConfig.BaseUrl}/chats/${chatId}?userBlogId=${userBlogId}`);
+    let params = new HttpParams()
+    params = HttpHelper.AddUserBlogIdToQuery(params, userBlogId)
+    return this._httpClient.get<Chat>(`${ApiConfig.BaseUrl}/chats/${chatId}`, {params});
   }
 
   public CreateChat(chat: CreateChat): Observable<Chat> {

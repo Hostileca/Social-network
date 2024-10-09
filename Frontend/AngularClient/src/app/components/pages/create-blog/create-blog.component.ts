@@ -19,7 +19,7 @@ export class CreateBlogComponent {
   constructor(private readonly _blogService: BlogService,
               private readonly _router: Router){
     this.Form = new FormGroup({
-      username: new FormControl<string>('', [Validators.required, Validators.minLength(4)])
+      username: new FormControl<string>('', [Validators.required, Validators.minLength(1)])
     });
   }
 

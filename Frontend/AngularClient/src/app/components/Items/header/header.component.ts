@@ -15,21 +15,25 @@ import {NgIf} from "@angular/common";
 export class HeaderComponent {
   public IsBlogMenuOpen = false;
 
-  constructor(private readonly authService: AuthService,
-              private readonly currentBlogService: CurrentBlogService) {
+  constructor(private readonly _authService: AuthService,
+              private readonly _currentBlogService: CurrentBlogService) {
   }
 
   public IsLoggedIn(): boolean {
-    return this.authService.IsAuth() && this.currentBlogService.IsBlogSelected()
+    return this._authService.IsAuth() && this._currentBlogService.IsBlogSelected()
   }
 
   public Logout(): void {
-    this.authService.Logout()
-    this.currentBlogService.Logout()
+    this._authService.Logout()
+    this._currentBlogService.Logout()
   }
 
   public OnBlogClick(){
     this.IsBlogMenuOpen = !this.IsBlogMenuOpen
     console.log("123")
+  }
+
+  public CurrentBlogUsername(): string{
+    return this._currentBlogService.CurrentBlog!.username
   }
 }

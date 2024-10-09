@@ -2,12 +2,14 @@ import {HttpErrorResponse, HttpHandlerFn, HttpInterceptorFn, HttpRequest} from '
 import {inject} from "@angular/core";
 import {AuthService} from "../Data/Services/auth.service";
 import {catchError, switchMap, throwError, of, BehaviorSubject, filter, take} from "rxjs";
+import {CurrentBlogService} from "../Data/Services/current-blog.service";
 
 let isRefreshing = false;
 let refreshTokenSubject: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
 
 export const authInterceptor: HttpInterceptorFn = (httpRequest, next) => {
   const authService = inject(AuthService);
+  const currentBlogService = inject(CurrentBlogService)
   const tokens = authService.Tokens;
 
   if (!tokens) {
@@ -17,7 +19,7 @@ export const authInterceptor: HttpInterceptorFn = (httpRequest, next) => {
   return next(AddAccessToken(httpRequest, tokens.accessToken.value)).pipe(
     catchError((error: HttpErrorResponse) => {
       if (error.status === 403 || error.status === 401) {
-        return HandleTokenRefresh(authService, httpRequest, next);
+        return HandleTokenRefresh(authService, currentBlogService, httpRequest, next);
       }
       return throwError(error);
     })
@@ -26,6 +28,7 @@ export const authInterceptor: HttpInterceptorFn = (httpRequest, next) => {
 
 const HandleTokenRefresh = (
   authService: AuthService,
+  currentBlogService: CurrentBlogService,
   httpRequest: HttpRequest<any>,
   next: HttpHandlerFn
 ) => {
@@ -42,6 +45,8 @@ const HandleTokenRefresh = (
       catchError((error) => {
         isRefreshing = false;
         authService.Logout();
+        currentBlogService.Logout();
+        console.log(error);
         return throwError(error);
       })
     );
