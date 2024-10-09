@@ -6,7 +6,7 @@ using MediatR;
 using SharedResources.Dtos;
 using SharedResources.Exceptions;
 
-namespace Application.UseCases.ReactionCases.SendReaction;
+namespace Application.UseCases.ReactionCases.Commands.SendReaction;
 
 public class SendReactionHandler(
     IBlogRepository blogRepository,

@@ -6,7 +6,7 @@ using MediatR;
 using SharedResources.Dtos;
 using SharedResources.Exceptions;
 
-namespace Application.UseCases.ReactionCases.RemoveReaction;
+namespace Application.UseCases.ReactionCases.Commands.RemoveReaction;
 
 public class RemoveReactionHandler(
     IBlogRepository blogRepository,

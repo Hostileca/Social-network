@@ -1,10 +1,8 @@
-﻿using System.Text.Json.Serialization;
-using MediatR;
-using Microsoft.AspNetCore.Mvc;
+﻿using MediatR;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using SharedResources.Dtos;
 
-namespace Application.UseCases.ReactionCases.RemoveReaction;
+namespace Application.UseCases.ReactionCases.Commands.RemoveReaction;
 
 public class RemoveReactionCommand : IRequest<ReactionReadDto>
 {

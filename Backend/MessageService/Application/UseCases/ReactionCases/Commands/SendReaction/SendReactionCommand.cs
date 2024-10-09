@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using SharedResources.Dtos;
 
-namespace Application.UseCases.ReactionCases.SendReaction;
+namespace Application.UseCases.ReactionCases.Commands.SendReaction;
 
 public class SendReactionCommand : IRequest<ReactionReadDto>
 {

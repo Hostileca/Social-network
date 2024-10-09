@@ -1,14 +1,11 @@
 ﻿using FluentValidation;
 
-namespace Application.UseCases.ReactionCases.RemoveReaction;
+namespace Application.UseCases.ReactionCases.Commands.RemoveReaction;
 
 public class RemoveReactionCommandValidator : AbstractValidator<RemoveReactionCommand>
 {
     public RemoveReactionCommandValidator()
     {
-        RuleFor(x => x.UserBlogId)
-            .IsGuid();
-
         RuleFor(x => x.ReactionId)
             .IsGuid();
     }

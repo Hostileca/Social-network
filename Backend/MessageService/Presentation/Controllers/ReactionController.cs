@@ -1,5 +1,6 @@
-﻿using Application.UseCases.ReactionCases.RemoveReaction;
-using Application.UseCases.ReactionCases.SendReaction;
+﻿using Application.UseCases.ReactionCases.Commands.RemoveReaction;
+using Application.UseCases.ReactionCases.Commands.SendReaction;
+using Application.UseCases.ReactionCases.Queries.GetReactionsByMessageId;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,6 +11,18 @@ namespace Presentation.Controllers;
 public class ReactionController(
     IMediator mediator) : ControllerBase
 {
+    [HttpGet]
+    public async Task<IActionResult> GetReactions(Guid messageId, GetReactionsByMessageIdQuery getReactionsByMessageIdQuery, 
+        CancellationToken cancellationToken = default)
+    {
+        getReactionsByMessageIdQuery.UserId = UserId;
+        getReactionsByMessageIdQuery.MessageId = messageId;
+        
+        var reactions = await mediator.Send(getReactionsByMessageIdQuery, cancellationToken);
+
+        return Ok(reactions);
+    }
+
     [HttpPost]
     public async Task<IActionResult> SendReaction(Guid messageId, [FromBody]SendReactionCommand sendReactionCommand,
         CancellationToken cancellationToken = default)

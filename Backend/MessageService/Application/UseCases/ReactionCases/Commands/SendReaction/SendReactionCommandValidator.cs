@@ -1,14 +1,11 @@
 ﻿using FluentValidation;
 
-namespace Application.UseCases.ReactionCases.SendReaction;
+namespace Application.UseCases.ReactionCases.Commands.SendReaction;
 
 public class SendReactionCommandValidator : AbstractValidator<SendReactionCommand>
 {
     public SendReactionCommandValidator()
     {
-        RuleFor(x => x.UserBlogId)
-            .IsGuid();
-
         RuleFor(x => x.Emoji)
             .IsEmoji();
     }
