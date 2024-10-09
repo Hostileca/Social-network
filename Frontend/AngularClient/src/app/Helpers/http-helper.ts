@@ -8,8 +8,8 @@ export class HttpHelper{
     return httpParams
   }
 
-  static AddBlogIdToQuery(httpParams: HttpParams, blogId: string){
-    httpParams = httpParams.append('blogId', blogId)
+  static AddUserBlogIdToQuery(httpParams: HttpParams, userBlogId: string){
+    httpParams = httpParams.append('userBlogId', userBlogId)
     return httpParams
   }
 }

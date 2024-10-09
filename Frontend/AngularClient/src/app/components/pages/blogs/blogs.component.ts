@@ -19,7 +19,7 @@ import {PageSettings} from "../../../Data/Requests/PageSettings";
 export class BlogsComponent {
   public Blogs: Blog[] = []
   private pageSettings: PageSettings = {
-    pageNumber: 0,
+    pageNumber: 1,
     pageSize: 10
 }
 

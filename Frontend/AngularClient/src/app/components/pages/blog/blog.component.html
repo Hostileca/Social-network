@@ -1,6 +1,6 @@
 <div *ngIf="Blog" class="container">
   <div class="blog-avatar">
-    <img ngSrc="{{this.Blog.mainImagePath ? Blog.mainImagePath : this.BlogConfig.BlogMainImageByDefaultUrl}}"
+    <img ngSrc="{{this.Blog.imageAttachmentId ? Blog.imageAttachmentId : this.BlogConfig.BlogMainImageByDefaultUrl}}"
          class="avatar" width="120" height="120" priority>
   </div>
   <h1>{{ this.Blog.username }}</h1>

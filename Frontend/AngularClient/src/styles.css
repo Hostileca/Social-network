@@ -57,7 +57,6 @@ a {
 }
 
 .container {
-  max-width: 400px;
   margin: 0 auto;
   padding: 1rem 2rem;
   background-color: var(--light-color);
@@ -98,10 +97,6 @@ label {
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 
-.btn-submit:hover {
-  background-color: var(--primary-dark);
-}
-
 .redirect-text {
   margin-top: 1rem;
   text-align: center;
@@ -123,8 +118,10 @@ label {
 }
 
 .blog-avatar {
-  width: 120px;
-  height: 120px;
+  max-width: 120px;
+  max-height: 120px;
+  min-width: 120px;
+  min-height: 120px;
   margin-bottom: 1rem;
 }
 

@@ -2,5 +2,9 @@ export interface Blog {
   id: string
   username: string
   BIO: string
-  mainImagePath: string
+  dateOfBirth: string
+  imageAttachmentId: string
+  postsCount: number
+  subscribersCount: number
+  subscriptionsCount: number
 }

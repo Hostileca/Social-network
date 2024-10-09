@@ -62,34 +62,37 @@ export class BlogComponent {
   }
 
   private LoadSubscribers(blogId: string){
-    this._subscriptionService.GetBlogSubscribers(blogId).subscribe(subscribers => {
-      this.Subscribers = subscribers
-    })
+    // this._subscriptionService.GetBlogSubscribers(blogId).subscribe(subscribers => {
+    //   this.Subscribers = subscribers
+    // })
   }
 
   private LoadSubscriptions(blogId: string){
-    this._subscriptionService.GetBlogSubscriptions(blogId).subscribe(subscriptions => {
-      this.Subscriptions = subscriptions
-    })
+    // this._subscriptionService.GetBlogSubscriptions(blogId).subscribe(subscriptions => {
+    //   this.Subscriptions = subscriptions
+    // })
   }
 
   private LoadPosts(blogId: string){
-    this._postService.GetBlogPosts(blogId).subscribe(posts => {
-      this.Posts = posts
-      console.log(posts)
-    })
+    // this._postService.GetBlogPosts(blogId).subscribe(posts => {
+    //   this.Posts = posts
+    //   console.log(posts)
+    // })
   }
 
   public SubscribeToBlog(){
     const subscribeToBlog: SubscribeToBlog = {
-      SubscribeAtId: this.Blog.id
+      SubscribeAtId: this.Blog.id,
     }
-    this._subscriptionService.SubscribeToBlog(this._currentBlogService.CurrentBlog!.id, subscribeToBlog).subscribe(subscription =>{
-      const mySubscription: Subscriber = {
-        id: subscription.id,
-        blog: this._currentBlogService.CurrentBlog!
-      }
-      this.Subscribers.push(mySubscription)
+    this._subscriptionService.SubscribeToBlog(this._currentBlogService.CurrentBlog!.id, subscribeToBlog).subscribe({
+        next: subscription =>{
+          const mySubscription: Subscriber = {
+            id: subscription.id,
+            blog: this._currentBlogService.CurrentBlog!
+          }
+          this.Subscribers.push(mySubscription)
+        },
+        error: error => console.log(error)
     })
   }
 

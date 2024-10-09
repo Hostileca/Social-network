@@ -6,9 +6,10 @@ import {NgForOf} from "@angular/common";
 import {Blog} from "../../../Data/Models/Blog/Blog";
 import {SubscriptionService} from "../../../Data/Services/subscription.service";
 import {ChatService} from "../../../Data/Services/chat.service";
+import {PageSettings} from "../../../Data/Requests/PageSettings";
 
 @Component({
-  selector: 'app-create-chat',
+  selector: 'app-create-chat-details',
   standalone: true,
   imports: [
     ReactiveFormsModule,
@@ -37,10 +38,17 @@ export class CreateChatComponent {
   }
 
   public LoadMyContacts(){
-    this._subscriptionService.GetBlogSubscribers(this._currentBlogService.CurrentBlog!.id).subscribe(subscribers => {
+    this._currentBlogService.CurrentBlog!.subscribersCount
+
+    let pageSettings: PageSettings = {
+      pageNumber: 1,
+      pageSize: this._currentBlogService.CurrentBlog!.subscribersCount
+    }
+    this._subscriptionService.GetBlogSubscribers(pageSettings, this._currentBlogService.CurrentBlog!.id).subscribe(subscribers => {
       subscribers.forEach(s => {this.MyContacts.push(s.blog)})
     })
-    this._subscriptionService.GetBlogSubscriptions(this._currentBlogService.CurrentBlog!.id).subscribe(subscriptions => {
+    pageSettings.pageSize = this._currentBlogService.CurrentBlog!.subscriptionsCount
+    this._subscriptionService.GetBlogSubscriptions(pageSettings, this._currentBlogService.CurrentBlog!.id).subscribe(subscriptions => {
       subscriptions.forEach(s => {this.MyContacts.push(s.blog)})
     })
   }

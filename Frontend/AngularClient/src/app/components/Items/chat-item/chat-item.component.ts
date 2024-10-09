@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import { Chat } from '../../../Data/Models/Chat/Chat';
 import {Router} from "@angular/router";
 import {NgIf} from "@angular/common";
@@ -14,7 +14,12 @@ import {NgIf} from "@angular/common";
 })
 export class ChatItemComponent {
   @Input() Chat!: Chat
+  @Output() OnSelectChat = new EventEmitter<Chat>();
 
   constructor(private readonly _router: Router) {
+  }
+
+  public SelectChat() {
+    this.OnSelectChat.emit(this.Chat);
   }
 }

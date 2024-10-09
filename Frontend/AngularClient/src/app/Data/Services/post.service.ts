@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import { Observable } from 'rxjs';
 import {Post} from "../Models/Post/Post";
 import {ApiConfig} from "../Consts/ApiConfig";
 import {PostCreate} from "../Models/Post/Post-create";
+import {PageSettings} from "../Requests/PageSettings";
+import {HttpHelper} from "../../Helpers/http-helper";
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +13,10 @@ import {PostCreate} from "../Models/Post/Post-create";
 export class PostService {
   constructor(private readonly _httpClient: HttpClient) { }
 
-  public GetBlogPosts(blogId: string): Observable<Post[]> {
-    return this._httpClient.get<Post[]>(`${ApiConfig.BaseUrl}/blogs/${blogId}/posts`)
+  public GetBlogPosts(pageSettings: PageSettings, blogId: string): Observable<Post[]> {
+    let params = new HttpParams()
+    params = HttpHelper.AddPageSettingsToQuery(params, pageSettings)
+    return this._httpClient.get<Post[]>(`${ApiConfig.BaseUrl}/blogs/${blogId}/posts`, {params})
   }
 
   public CreatePost(blogId: string, postCreate: PostCreate): Observable<Post> {

@@ -1,9 +1,2 @@
-<div *ngIf="Chats.length==0">
-  <p>No chats</p>
-</div>
-
-<div *ngIf="Chats.length>0">
-  <div *ngFor="let chat of Chats">
-    <app-chat-item [Chat]="chat"></app-chat-item>
-  </div>
-</div>
+<app-chats-list [Chats]="Chats" (OnSelectChat)="SelectChat($event)"></app-chats-list>
+<app-chat-details *ngIf="SelectedChat" [Chat]="SelectedChat"></app-chat-details>

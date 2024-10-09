@@ -1,0 +1,11 @@
+<div *ngIf="Chats.length==0">
+  <p>No chats</p>
+</div>
+
+<div *ngIf="Chats.length>0">
+  <div *ngFor="let chat of Chats">
+    <app-chat-item [Chat]="chat" (OnSelectChat)="SelectChat($event)"></app-chat-item>
+  </div>
+</div>
+
+<a href="my-chats/create" class="btn">Create chat</a>
