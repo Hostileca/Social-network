@@ -14,28 +14,34 @@ public class PostController(
     IMediator mediator) : ControllerBase
 {
     [HttpGet]
-    public async Task<IActionResult> GetPosts([FromQuery]GetBlogPostsQuery getBlogPostsQuery, 
+    public async Task<IActionResult> GetPosts(string blogId, [FromQuery]GetBlogPostsQuery getBlogPostsQuery, 
         CancellationToken cancellationToken = default)
     {
+        getBlogPostsQuery.BlogId = blogId;
+        
         var posts = await mediator.Send(getBlogPostsQuery, cancellationToken);
         
         return Ok(posts);
     }
     
     [HttpGet("/blogs/{blogId}/wall")]
-    public async Task<IActionResult> GetWall([FromQuery]GetBlogPostsWallQuery getBlogPostsWallQuery, 
+    public async Task<IActionResult> GetWall(string blogId, [FromQuery]GetBlogPostsWallQuery getBlogPostsWallQuery, 
         CancellationToken cancellationToken = default)
     {
+        getBlogPostsWallQuery.UserBlogId = blogId;
+        
         var posts = await mediator.Send(getBlogPostsWallQuery, cancellationToken);
         
         return Ok(posts);
     }
     
     [HttpDelete("{postId}")]
-    public async Task<IActionResult> DeletePost([FromQuery]DeletePostByIdCommand deletePostByIdCommand,
+    public async Task<IActionResult> DeletePost(string blogId, string postId, [FromQuery]DeletePostByIdCommand deletePostByIdCommand,
         CancellationToken cancellationToken = default)
     {
         deletePostByIdCommand.UserId = UserId;
+        deletePostByIdCommand.PostId = postId;
+        deletePostByIdCommand.BlogId = blogId;
         
         var post = await mediator.Send(deletePostByIdCommand, cancellationToken);
         
@@ -43,10 +49,12 @@ public class PostController(
     }
     
     [HttpPost]
-    public async Task<IActionResult> CreatePost([FromForm]CreatePostCommand createPostCommand,
+    public async Task<IActionResult> CreatePost(string blogId, [FromForm]CreatePostCommand createPostCommand,
         CancellationToken cancellationToken = default)
     {
         createPostCommand.UserId = UserId;
+        createPostCommand.BlogId = blogId;
+        
         var post = await mediator.Send(createPostCommand, cancellationToken);
         
         return Ok(post);

@@ -13,10 +13,11 @@ public class LikeController(
     : ControllerBase
 {
     [HttpPost]
-    public async Task<IActionResult> AddLike([FromBody]AddLikeToPostCommand addLikeToPostCommand,
+    public async Task<IActionResult> AddLike(string postId, [FromBody]AddLikeToPostCommand addLikeToPostCommand,
         CancellationToken cancellationToken = default)
     {
         addLikeToPostCommand.UserId = UserId;
+        addLikeToPostCommand.PostId = postId;
         
         var comment = await mediator.Send(addLikeToPostCommand, cancellationToken);
         
@@ -24,10 +25,11 @@ public class LikeController(
     }
     
     [HttpDelete]
-    public async Task<IActionResult> RemoveLike([FromQuery]RemoveLikeFromPostCommand removeLikeFromPostCommand,
+    public async Task<IActionResult> RemoveLike(string postId, [FromQuery]RemoveLikeFromPostCommand removeLikeFromPostCommand,
         CancellationToken cancellationToken = default)
     {
         removeLikeFromPostCommand.UserId = UserId;
+        removeLikeFromPostCommand.PostId = postId;
         
         var comment = await mediator.Send(removeLikeFromPostCommand, cancellationToken);
         
@@ -35,9 +37,11 @@ public class LikeController(
     }
     
     [HttpGet]
-    public async Task<IActionResult> GetLikes([FromQuery]GetLikeSendersByPostIdQuery getLikeSendersByPostIdQuery,
+    public async Task<IActionResult> GetLikes(string postId, [FromQuery]GetLikeSendersByPostIdQuery getLikeSendersByPostIdQuery,
         CancellationToken cancellationToken = default)
     {
+        getLikeSendersByPostIdQuery.PostId = postId;
+        
         var comment = await mediator.Send(getLikeSendersByPostIdQuery, cancellationToken);
         
         return Ok(comment);

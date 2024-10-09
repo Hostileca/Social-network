@@ -47,9 +47,11 @@ public class BlogController(
     }
     
     [HttpGet("{blogId}")]
-    public async Task<IActionResult> GetBlogById([FromQuery]GetBlogByIdQuery getBlogByIdQuery, 
+    public async Task<IActionResult> GetBlogById(string blogId, [FromQuery]GetBlogByIdQuery getBlogByIdQuery, 
         CancellationToken cancellationToken = default)
     {
+        getBlogByIdQuery.BlogId = blogId;
+        
         var blog = await mediator.Send(getBlogByIdQuery, cancellationToken);
         
         return Ok(blog);
@@ -67,10 +69,11 @@ public class BlogController(
     }
 
     [HttpPatch("{blogId}")]
-    public async Task<IActionResult> UpdateBlog([FromBody]UpdateBlogCommand updateBlogCommand,
+    public async Task<IActionResult> UpdateBlog(string blogId, [FromBody]UpdateBlogCommand updateBlogCommand,
         CancellationToken cancellationToken = default)
     {
         updateBlogCommand.UserId = UserId;
+        updateBlogCommand.BlogId = blogId;
         
         var blog = await mediator.Send(updateBlogCommand, cancellationToken);
         
@@ -78,10 +81,11 @@ public class BlogController(
     }
     
     [HttpDelete("{blogId}")]
-    public async Task<IActionResult> DeleteBlog([FromQuery]DeleteBlogCommand deleteBlogCommand, 
+    public async Task<IActionResult> DeleteBlog(string blogId, [FromQuery]DeleteBlogCommand deleteBlogCommand, 
         CancellationToken cancellationToken = default)
     {
         deleteBlogCommand.UserId = UserId;
+        deleteBlogCommand.UserBlogId = blogId;
         
         var blog = await mediator.Send(deleteBlogCommand, cancellationToken);
         
@@ -89,9 +93,11 @@ public class BlogController(
     }
     
     [HttpGet("{blogId}/liked")]
-    public async Task<IActionResult> GetLikedPosts([FromQuery]GetBlogLikesQuery getBlogLikesQuery, 
+    public async Task<IActionResult> GetLikedPosts(string blogId, [FromQuery]GetBlogLikesQuery getBlogLikesQuery, 
         CancellationToken cancellationToken)
     {
+        getBlogLikesQuery.BlogId = blogId;
+        
         var posts = await mediator.Send(getBlogLikesQuery, cancellationToken);
         
         return Ok(posts);

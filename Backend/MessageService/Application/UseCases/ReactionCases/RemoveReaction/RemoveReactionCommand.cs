@@ -11,10 +11,10 @@ public class RemoveReactionCommand : IRequest<ReactionReadDto>
     [BindNever]
     public string? UserId { get; set; }
     
-    [FromRoute]
+    [BindNever]
     public Guid MessageId { get; set; }
         
-    [FromRoute]
+    [BindNever]
     public Guid ReactionId { get; set; }
     
     public Guid UserBlogId { get; set; }

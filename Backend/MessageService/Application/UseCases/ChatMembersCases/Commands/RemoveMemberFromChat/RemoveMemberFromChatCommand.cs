@@ -11,10 +11,10 @@ public class RemoveMemberFromChatCommand : IRequest<ChatMemberReadDto>
     [BindNever]
     public string? UserId { get; set; }
     
-    [FromRoute]
+    [BindNever]
     public Guid ChatId { get; set; }
     
-    [FromRoute]
+    [BindNever]
     public Guid MemberId { get; set; }
     
     public Guid UserBlogId { get; set; }

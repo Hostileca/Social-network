@@ -12,10 +12,11 @@ public class ChatMemberController(
     IMediator mediator) : ControllerBase
 {
     [HttpPost]
-    public async Task<IActionResult> AddMemberToChat([FromBody]AddMemberToChatCommand addMemberToChatCommand,
+    public async Task<IActionResult> AddMemberToChat(Guid chatId, [FromBody]AddMemberToChatCommand addMemberToChatCommand,
         CancellationToken cancellationToken = default)
     {
         addMemberToChatCommand.UserId = UserId;
+        addMemberToChatCommand.ChatId = chatId;
 
         var chatMember = await mediator.Send(addMemberToChatCommand, cancellationToken);
 
@@ -23,20 +24,24 @@ public class ChatMemberController(
     }
     
     [HttpDelete("{memberId}")]
-    public async Task<IActionResult> DeleteMemberFromChat([FromQuery]RemoveMemberFromChatCommand removeMemberFromChatCommand,
-        CancellationToken cancellationToken = default)
+    public async Task<IActionResult> DeleteMemberFromChat(Guid chatId, Guid memberId, 
+        [FromQuery]RemoveMemberFromChatCommand removeMemberFromChatCommand, CancellationToken cancellationToken = default)
     {
         removeMemberFromChatCommand.UserId = UserId;
+        removeMemberFromChatCommand.ChatId = chatId;
+        removeMemberFromChatCommand.MemberId = memberId;
 
         var chatMember = await mediator.Send(removeMemberFromChatCommand, cancellationToken);
 
         return Ok(chatMember);
     }
 
-    public async Task<IActionResult> GetChatMembers([FromQuery]GetChatMembersQuery getChatMembersQuery,
+    [HttpGet]
+    public async Task<IActionResult> GetChatMembers(Guid chatId, [FromQuery]GetChatMembersQuery getChatMembersQuery,
         CancellationToken cancellationToken = default)
     {
         getChatMembersQuery.UserId = UserId;
+        getChatMembersQuery.ChatId = chatId;
 
         var members = await mediator.Send(getChatMembersQuery, cancellationToken);
 

@@ -8,7 +8,7 @@ namespace Application.UseCases.LikeCases.Commands.AddLikeToPostCase;
 
 public class AddLikeToPostCommand : IRequest<PostLikesReadDto>
 {
-    [FromRoute]
+    [BindNever]
     [JsonIgnore]
     public string? PostId { get; set; }
     
@@ -16,7 +16,5 @@ public class AddLikeToPostCommand : IRequest<PostLikesReadDto>
     [JsonIgnore]
     public string? UserId { get; set; }
     
-    [FromQuery]
-    [JsonIgnore]
     public string BlogId { get; set; }
 }

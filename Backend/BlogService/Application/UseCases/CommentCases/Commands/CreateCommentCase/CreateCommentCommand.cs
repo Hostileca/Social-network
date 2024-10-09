@@ -8,7 +8,6 @@ namespace Application.UseCases.CommentCases.Commands.CreateCommentCase;
 
 public class CreateCommentCommand : IRequest<CommentReadDto>
 {
-    [FromRoute]
     [JsonIgnore]
     public string? PostId { get; set; }
     

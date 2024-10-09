@@ -11,9 +11,11 @@ public class AttachmentController(
     : ControllerBase
 {
     [HttpGet("{attachmentId}")]
-    public async Task<IActionResult> GetAttachmentById([FromQuery]LoadAttachmentByIdQuery loadAttachmentByIdQuery, 
+    public async Task<IActionResult> GetAttachmentById(string attachmentId, [FromQuery]LoadAttachmentByIdQuery loadAttachmentByIdQuery, 
         CancellationToken cancellationToken = default)
     {
+        loadAttachmentByIdQuery.AttachmentId = attachmentId;
+        
         var attachment = await mediator.Send(loadAttachmentByIdQuery, cancellationToken);
         
         return File(attachment.File, attachment.ContentType, attachment.FileName);

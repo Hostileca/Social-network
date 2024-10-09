@@ -10,10 +10,9 @@ namespace Application.UseCases.PostCases.Queries.GetBlogPostsWall;
 
 public class GetBlogPostsWallQuery : PagedQuery, IRequest<IEnumerable<PostReadDto>>
 {
-    [JsonIgnore]
     [BindNever]
     public string UserId { get; set; }
     
-    [FromRoute]
+    [BindNever]
     public string UserBlogId { get; set; }
 }

@@ -11,7 +11,7 @@ public abstract class SendMessageCommandBase
     [JsonIgnore]
     public string? UserId { get; set; }
         
-    [FromRoute]
+    [BindNever]
     [JsonIgnore]
     public Guid ChatId { get; set; }
         

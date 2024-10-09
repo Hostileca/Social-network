@@ -8,7 +8,6 @@ namespace Application.UseCases.BlogCases.Commands.UpdateBlogCase;
 
 public class UpdateBlogCommand : IRequest<BlogReadDto>
 {
-    [FromRoute]
     [JsonIgnore]
     public string? BlogId { get; set; }
     

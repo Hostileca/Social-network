@@ -13,7 +13,7 @@ public class SetRoleToMemberCommand : IRequest<ChatMemberReadDto>
     [JsonIgnore]
     public string? UserId { get; set; }
     
-    [FromRoute]
+    [BindNever]
     [JsonIgnore]
     public Guid MemberId { get; set; }
     

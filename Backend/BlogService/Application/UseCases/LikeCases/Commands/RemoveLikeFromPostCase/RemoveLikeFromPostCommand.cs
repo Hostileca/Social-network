@@ -8,10 +8,12 @@ namespace Application.UseCases.LikeCases.Commands.RemoveLikeFromPostCase;
 
 public class RemoveLikeFromPostCommand : IRequest<PostLikesReadDto>
 {
-    [FromRoute]
+    [BindNever]
+    [JsonIgnore]
     public string? PostId { get; set; }
     
     [BindNever]
+    [JsonIgnore]
     public string? UserId { get; set; }
     
     public string BlogId { get; set; }

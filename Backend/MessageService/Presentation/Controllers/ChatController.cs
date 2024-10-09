@@ -26,10 +26,11 @@ public class ChatController(
     }
     
     [HttpGet("{chatId}")]
-    public async Task<IActionResult> GetChatById([FromQuery]GetBlogChatByIdQuery getBlogChatByIdQuery, 
+    public async Task<IActionResult> GetChatById(Guid chatId, [FromQuery]GetBlogChatByIdQuery getBlogChatByIdQuery, 
         CancellationToken cancellationToken = default)
     {
         getBlogChatByIdQuery.UserId = UserId;
+        getBlogChatByIdQuery.ChatId = chatId;
             
         var chats = await mediator.Send(getBlogChatByIdQuery, cancellationToken);
 
@@ -48,10 +49,11 @@ public class ChatController(
     }
     
     [HttpDelete("{chatId}")]
-    public async Task<IActionResult> DeleteChat([FromQuery]DeleteChatCommand deleteChatCommand,
+    public async Task<IActionResult> DeleteChat(Guid chatId, [FromQuery]DeleteChatCommand deleteChatCommand,
         CancellationToken cancellationToken = default)
     {
         deleteChatCommand.UserId = UserId;
+        deleteChatCommand.ChatId = chatId;
 
         var chat = await mediator.Send(deleteChatCommand, cancellationToken);
 
@@ -59,10 +61,11 @@ public class ChatController(
     }
     
     [HttpDelete("{chatId}/leave")]
-    public async Task<IActionResult> LeaveChat([FromQuery]LeaveChatCommand leaveChatCommand,
+    public async Task<IActionResult> LeaveChat(Guid chatId, [FromQuery]LeaveChatCommand leaveChatCommand,
         CancellationToken cancellationToken = default)
     {
         leaveChatCommand.UserId = UserId;
+        leaveChatCommand.ChatId = chatId;
 
         var chat = await mediator.Send(leaveChatCommand, cancellationToken);
 

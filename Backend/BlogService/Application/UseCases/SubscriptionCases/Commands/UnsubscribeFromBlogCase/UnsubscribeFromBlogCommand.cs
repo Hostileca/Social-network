@@ -8,12 +8,12 @@ namespace Application.UseCases.SubscriptionCases.Commands.UnsubscribeFromBlogCas
 
 public class UnsubscribeFromBlogCommand : IRequest<SubscriptionReadDto>
 {
-    [FromRoute]
+    [BindNever]
     public string? UserBlogId { get; set; }
     
     [BindNever]
     public string? UserId { get; set; }
     
-    [FromRoute]
+    [BindNever]
     public string SubscriptionId { get; set; }
 }

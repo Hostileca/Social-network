@@ -8,10 +8,9 @@ namespace Application.UseCases.ChatMembersCases.Queries.GetChatMembers;
 
 public class GetChatMembersQuery : PagedQuery, IRequest<IEnumerable<ChatMemberReadDto>>
 {
-    [FromRoute]
+    [BindNever]
     public Guid ChatId { get; set; }
     
-    [FromQuery]
     public Guid UserBlogId { get; set; }
     
     [BindNever]

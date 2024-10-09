@@ -12,7 +12,7 @@ public class SendReactionCommand : IRequest<ReactionReadDto>
     [JsonIgnore]
     public string? UserId { get; set; }
     
-    [FromRoute]
+    [BindNever]
     [JsonIgnore]
     public Guid MessageId { get; set; }
     

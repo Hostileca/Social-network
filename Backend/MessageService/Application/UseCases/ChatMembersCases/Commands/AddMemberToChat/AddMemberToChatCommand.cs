@@ -8,7 +8,7 @@ namespace Application.UseCases.ChatMembersCases.Commands.AddMemberToChat;
 
 public class AddMemberToChatCommand : IRequest<ChatMemberReadDto>
 {
-    [FromRoute]
+    [BindNever]
     [JsonIgnore]
     public Guid ChatId { get; set; }
     

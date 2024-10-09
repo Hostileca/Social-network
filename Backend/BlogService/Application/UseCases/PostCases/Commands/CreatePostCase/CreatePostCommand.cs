@@ -13,7 +13,7 @@ public class CreatePostCommand : IRequest<PostReadDto>
     [JsonIgnore]
     public string? UserId { get; set; }   
     
-    [FromRoute]
+    [BindNever]
     [JsonIgnore]
     public string? BlogId { get; set; }
     
