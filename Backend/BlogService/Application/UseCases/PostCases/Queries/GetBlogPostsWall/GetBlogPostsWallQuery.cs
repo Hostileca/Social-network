@@ -11,8 +11,8 @@ namespace Application.UseCases.PostCases.Queries.GetBlogPostsWall;
 public class GetBlogPostsWallQuery : PagedQuery, IRequest<IEnumerable<PostReadDto>>
 {
     [BindNever]
-    public string UserId { get; set; }
+    public string? UserId { get; set; }
     
     [BindNever]
-    public string UserBlogId { get; set; }
+    public string? UserBlogId { get; set; }
 }

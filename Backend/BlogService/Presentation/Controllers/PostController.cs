@@ -29,6 +29,7 @@ public class PostController(
         CancellationToken cancellationToken = default)
     {
         getBlogPostsWallQuery.UserBlogId = blogId;
+        getBlogPostsWallQuery.UserId = UserId;
         
         var posts = await mediator.Send(getBlogPostsWallQuery, cancellationToken);
         
