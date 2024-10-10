@@ -6,6 +6,7 @@ import {ChatsListComponent} from "../../Items/chats-list/chats-list.component";
 import {Chat} from "../../../Data/Models/Chat/Chat";
 import {ChatService} from "../../../Data/Services/chat.service";
 import {ChatDetailsComponent} from "../../Items/chat/chat-details.component";
+import {CurrentBlogService} from "../../../Data/Services/current-blog.service";
 
 @Component({
   selector: 'app-my-chats',
@@ -25,8 +26,9 @@ export class MyChatsComponent {
   public Chats: Chat[] = []
   public SelectedChat: Chat | null = null
 
-  constructor(private readonly _chatService: ChatService) {
-    this._chatService.GetMyChats().subscribe(
+  constructor(private readonly _chatService: ChatService,
+              private readonly _currentBlogService: CurrentBlogService) {
+    this._chatService.GetMyChats(this._currentBlogService.CurrentBlog!.id).subscribe(
       value => {
         this.Chats = value
       }

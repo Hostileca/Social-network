@@ -6,7 +6,7 @@ import {NgForOf} from "@angular/common";
 import {Blog} from "../../../Data/Models/Blog/Blog";
 import {SubscriptionService} from "../../../Data/Services/subscription.service";
 import {ChatService} from "../../../Data/Services/chat.service";
-import {PageSettings} from "../../../Data/Requests/PageSettings";
+import {PageSettings} from "../../../Data/Queries/PageSettings";
 
 @Component({
   selector: 'app-create-chat-details',

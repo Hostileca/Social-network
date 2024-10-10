@@ -5,7 +5,7 @@ import {ApiConfig} from "../Consts/ApiConfig";
 import {SubscribeToBlog} from "../Models/Subscription/Subscribe-to-blog";
 import {Subscriber} from "../Models/Subscription/Subscriber";
 import {Subscription} from "../Models/Subscription/Subscription";
-import {PageSettings} from "../Requests/PageSettings";
+import {PageSettings} from "../Queries/PageSettings";
 import {HttpHelper} from "../../Helpers/http-helper";
 
 @Injectable({

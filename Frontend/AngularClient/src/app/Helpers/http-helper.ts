@@ -1,4 +1,4 @@
-﻿import {PageSettings} from "../Data/Requests/PageSettings";
+﻿import {PageSettings} from "../Data/Queries/PageSettings";
 import {HttpParams} from "@angular/common/http";
 
 export class HttpHelper{

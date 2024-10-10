@@ -5,9 +5,7 @@ import { CookieService } from "ngx-cookie-service";
   providedIn: 'root'
 })
 export class AppCookieService {
-  constructor(
-    private readonly _cookieService: CookieService) {
-  }
+  constructor(private readonly _cookieService: CookieService) {}
 
   public Save<TItem>(name: string, item: TItem){
     const serializedObject = JSON.stringify(item)

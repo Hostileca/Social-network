@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import {Post} from "../Models/Post/Post";
 import {ApiConfig} from "../Consts/ApiConfig";
 import {PostCreate} from "../Models/Post/Post-create";
-import {PageSettings} from "../Requests/PageSettings";
+import {PageSettings} from "../Queries/PageSettings";
 import {HttpHelper} from "../../Helpers/http-helper";
 
 @Injectable({
@@ -12,6 +12,12 @@ import {HttpHelper} from "../../Helpers/http-helper";
 })
 export class PostService {
   constructor(private readonly _httpClient: HttpClient) { }
+
+  public GetWall(blogId: string, pageSettings: PageSettings): Observable<Post[]> {
+    let params = new HttpParams()
+    params = HttpHelper.AddPageSettingsToQuery(params, pageSettings)
+    return this._httpClient.get<Post[]>(`${ApiConfig.BaseUrl}/blogs/${blogId}/wall`, {params})
+  }
 
   public GetBlogPosts(pageSettings: PageSettings, blogId: string): Observable<Post[]> {
     let params = new HttpParams()

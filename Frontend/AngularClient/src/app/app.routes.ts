@@ -10,17 +10,19 @@ import {BlogsComponent} from "./components/pages/blogs/blogs.component";
 import {BlogComponent} from "./components/pages/blog/blog.component";
 import {CreateChatComponent} from "./components/pages/create-chat/create-chat.component";
 import {CreatePostComponent} from "./components/pages/create-post/create-post.component";
+import {WallComponent} from "./components/pages/wall/wall.component";
 
 export const routes: Routes = [
     { path: "sign-in", component: SignInComponent, canActivate: [] },
     { path: "sign-up", component: SignUpComponent, canActivate: [] },
     { path: "my-blogs", component: MyBlogsComponent, canActivate: [authGuard] },
     { path: "my-blogs/create", component: CreateBlogComponent, canActivate: [authGuard] },
+    { path: "wall", component: WallComponent, canActivate: [authGuard, blogGuard] },
     { path: "my-chats", component: MyChatsComponent, canActivate: [authGuard, blogGuard] },
     { path: "my-chats/create", component: CreateChatComponent, canActivate: [authGuard, blogGuard] },
     //{ path: "my-chats/:chatId", component: ChatDetailsComponent, canActivate: [authGuard, blogGuard] },
     { path: "blogs", component: BlogsComponent, canActivate: [authGuard, blogGuard] },
     { path: "blogs/:blogId", component: BlogComponent, canActivate: [authGuard, blogGuard] },
     { path: "blogs/:blogId/posts/create", component: CreatePostComponent, canActivate: [authGuard, blogGuard] },
-    { path: "**", redirectTo: "my-chats" }
+    { path: "**", redirectTo: "wall" }
 ];

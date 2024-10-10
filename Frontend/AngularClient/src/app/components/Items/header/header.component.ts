@@ -30,7 +30,6 @@ export class HeaderComponent {
 
   public OnBlogClick(){
     this.IsBlogMenuOpen = !this.IsBlogMenuOpen
-    console.log("123")
   }
 
   public CurrentBlogUsername(): string{

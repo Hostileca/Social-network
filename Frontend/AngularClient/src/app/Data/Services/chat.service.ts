@@ -11,12 +11,12 @@ import {HttpHelper} from "../../Helpers/http-helper";
   providedIn: 'root'
 })
 export class ChatService {
-  constructor(private readonly _httpClient: HttpClient,
-              private readonly currentBlogService: CurrentBlogService
-  ) { }
+  constructor(private readonly _httpClient: HttpClient) { }
 
-  public GetMyChats(): Observable<Chat[]> {
-    return this._httpClient.get<Chat[]>(`${ApiConfig.BaseUrl}/chats?userBlogId=${this.currentBlogService.CurrentBlog?.id}`);
+  public GetMyChats(userBlogId: string): Observable<Chat[]> {
+    let params = new HttpParams()
+    params = HttpHelper.AddUserBlogIdToQuery(params, userBlogId)
+    return this._httpClient.get<Chat[]>(`${ApiConfig.BaseUrl}/chats`, {params});
   }
 
   public GetChatById(chatId: string, userBlogId: string): Observable<Chat> {

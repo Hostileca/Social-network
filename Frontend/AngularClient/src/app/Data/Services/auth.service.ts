@@ -18,15 +18,15 @@ export class AuthService {
   public Tokens: Tokens | null = null
 
   public IsAuth(): boolean{
-    if(!this.Tokens){
-      this.Tokens = this._appCookieService.Get<Tokens>(CookiesName.Tokens)
-    }
     return !!this.Tokens
   }
 
   constructor(private readonly _router: Router,
               private readonly _httpClient: HttpClient,
               private readonly _appCookieService: AppCookieService) {
+    if(!this.Tokens){
+      this.Tokens = this._appCookieService.Get<Tokens>(CookiesName.Tokens)
+    }
   }
 
   public Login(userLogin: UserLogin): Observable<any>{
@@ -49,7 +49,7 @@ export class AuthService {
       refreshToken: this.Tokens.refreshToken.value
     };
 
-    return this._httpClient.post<Tokens>(`${ApiConfig.BaseUrl}/tokens/refresh`, tokenRefreshRequest)
+    return this._httpClient.post<Tokens>(`${ApiConfig.BaseUrl}/users/tokens/refresh`, tokenRefreshRequest)
       .pipe(
         tap(tokenResponse => { this.SaveTokens(tokenResponse) }),
         catchError(error => {

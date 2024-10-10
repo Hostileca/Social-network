@@ -3,15 +3,14 @@ import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Blog} from "../Models/Blog/Blog";
 import {ApiConfig} from "../Consts/ApiConfig";
-import {PageSettings} from "../Requests/PageSettings";
+import {PageSettings} from "../Queries/PageSettings";
 import {HttpHelper} from "../../Helpers/http-helper";
 
 @Injectable({
   providedIn: 'root'
 })
 export class BlogService {
-  constructor(private readonly _httpClient: HttpClient,
-  ) { }
+  constructor(private readonly _httpClient: HttpClient) { }
 
   public GetUserBlogs(): Observable<Blog[]> {
     return this._httpClient.get<Blog[]>(`${ApiConfig.BaseUrl}/blogs/me`);
