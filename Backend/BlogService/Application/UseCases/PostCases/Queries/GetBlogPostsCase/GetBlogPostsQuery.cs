@@ -10,5 +10,5 @@ namespace Application.UseCases.PostCases.Queries.GetBlogPostsCase;
 public class GetBlogPostsQuery : PagedQuery, IRequest<IEnumerable<PostReadDto>>
 {
     [BindNever]
-    public string BlogId { get; set; }
+    public string? BlogId { get; set; }
 }

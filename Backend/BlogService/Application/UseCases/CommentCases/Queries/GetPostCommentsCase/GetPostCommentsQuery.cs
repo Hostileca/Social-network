@@ -9,5 +9,5 @@ namespace Application.UseCases.CommentCases.Queries.GetPostCommentsCase;
 public class GetPostCommentsQuery : PagedQuery, IRequest<IEnumerable<CommentReadDto>>
 {
     [BindNever]
-    public string PostId { get; set; }
+    public string? PostId { get; set; }
 }

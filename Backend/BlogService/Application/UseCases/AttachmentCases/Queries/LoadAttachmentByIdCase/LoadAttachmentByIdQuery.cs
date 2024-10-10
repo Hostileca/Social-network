@@ -8,5 +8,5 @@ namespace Application.UseCases.AttachmentCases.Queries.LoadAttachmentByIdCase;
 public class LoadAttachmentByIdQuery : IRequest<AttachmentReadDto>
 {
     [BindNever]
-    public string AttachmentId { get; set; }
+    public string? AttachmentId { get; set; }
 }

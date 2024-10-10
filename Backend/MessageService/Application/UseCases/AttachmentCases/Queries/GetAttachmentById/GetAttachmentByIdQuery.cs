@@ -8,7 +8,7 @@ namespace Application.UseCases.AttachmentCases.Queries.GetAttachmentById;
 public class GetAttachmentByIdQuery : IRequest<AttachmentReadDto>
 {
     [BindNever]
-    public string UserId { get; set; }
+    public string? UserId { get; set; }
     
     [BindNever]
     public Guid ChatId { get; set; }

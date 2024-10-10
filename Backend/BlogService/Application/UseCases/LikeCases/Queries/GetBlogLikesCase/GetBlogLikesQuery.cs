@@ -9,5 +9,5 @@ namespace Application.UseCases.LikeCases.Queries.GetBlogLikesCase;
 public class GetBlogLikesQuery : PagedQuery, IRequest<IEnumerable<PostReadDto>>
 {
     [BindNever]
-    public string BlogId { get; set; }
+    public string? BlogId { get; set; }
 }

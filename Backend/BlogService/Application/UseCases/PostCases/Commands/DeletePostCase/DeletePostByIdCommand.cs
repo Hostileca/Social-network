@@ -15,5 +15,5 @@ public class DeletePostByIdCommand : IRequest<PostReadDto>
     public string? BlogId { get; set; }
     
     [BindNever]
-    public string PostId { get; set; }
+    public string? PostId { get; set; }
 }

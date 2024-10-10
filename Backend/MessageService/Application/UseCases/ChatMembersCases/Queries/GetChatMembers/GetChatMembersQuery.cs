@@ -14,5 +14,5 @@ public class GetChatMembersQuery : PagedQuery, IRequest<IEnumerable<ChatMemberRe
     public Guid UserBlogId { get; set; }
     
     [BindNever]
-    public string UserId { get; set; }
+    public string? UserId { get; set; }
 }

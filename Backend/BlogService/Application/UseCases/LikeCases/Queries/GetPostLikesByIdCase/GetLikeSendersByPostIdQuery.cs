@@ -9,5 +9,5 @@ namespace Application.UseCases.LikeCases.Queries.GetPostLikesByIdCase;
 public class GetLikeSendersByPostIdQuery : PagedQuery, IRequest<IEnumerable<LikeSenderReadDto>>
 {
     [BindNever]
-    public string PostId { get; set; }
+    public string? PostId { get; set; }
 }
