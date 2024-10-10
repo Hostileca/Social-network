@@ -23,7 +23,7 @@ export class MessageInputComponent {
               private readonly _currentBlogService: CurrentBlogService) {
     this.Form = new FormGroup({
       text: new FormControl<string>('', [Validators.required, Validators.minLength(1)]),
-      userBlogId: new FormControl<string>(this._currentBlogService.CurrentBlog!.id, [Validators.required])
+      userBlogId: new FormControl<string>(this._currentBlogService.GetCurrentBlog().id, [Validators.required])
     });
   }
 

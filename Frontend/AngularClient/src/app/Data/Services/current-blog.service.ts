@@ -8,25 +8,51 @@ import {BlogService} from "./blog.service";
   providedIn: 'root'
 })
 export class CurrentBlogService {
-  public CurrentBlog: Blog | null = null
+  private _currentBlog: Blog | null = null
+  private _isUpdating: boolean = false
 
   constructor(private readonly _appCookieService: AppCookieService,
               private readonly _blogService: BlogService) {
-    if(!this.CurrentBlog){
-      this.CurrentBlog = this._appCookieService.Get<Blog>(CookiesName.CurrentBlog)
+    if(!this._currentBlog){
+      this._currentBlog = this._appCookieService.Get<Blog>(CookiesName.CurrentBlog)
     }
   }
+
   public IsBlogSelected(): boolean{
-    return !!this.CurrentBlog
+    return !!this._currentBlog
+  }
+
+  public GetCurrentBlog(): Blog{
+    return this._currentBlog!
   }
 
   public SelectBlog(blog: Blog){
-    this.CurrentBlog = blog
-    this._appCookieService.Save<Blog>(CookiesName.CurrentBlog, this.CurrentBlog)
+    this._currentBlog = blog
+    this._appCookieService.Save<Blog>(CookiesName.CurrentBlog, this._currentBlog)
   }
 
   public Logout(){
-    this.CurrentBlog = null
+    this._currentBlog = null
     this._appCookieService.Delete(CookiesName.CurrentBlog)
+  }
+
+  private UpdateBlog(){
+    if(this._isUpdating){
+      return
+    }
+    this._isUpdating = true
+    this._blogService.GetBlogById(this._currentBlog!.id).subscribe({
+      next: blog => {
+        this.SaveBlog(blog)
+      },
+      complete: () => {
+        this._isUpdating = false
+      }
+    })
+  }
+
+  private SaveBlog(blog: Blog){
+    this._currentBlog = blog
+    this._appCookieService.Save<Blog>(CookiesName.CurrentBlog, this._currentBlog)
   }
 }

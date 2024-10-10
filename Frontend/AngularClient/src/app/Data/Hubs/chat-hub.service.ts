@@ -37,7 +37,7 @@ export class ChatHubService{
     };
 
     this._hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl(`${ApiConfig.BaseUrl}/chats/hub?userBlogId=${this._currentBlogService.CurrentBlog!.id}`, options)
+      .withUrl(`${ApiConfig.BaseUrl}/chats/hub?userBlogId=${this._currentBlogService.GetCurrentBlog().id}`, options)
       .build()
 
     this.startConnection();

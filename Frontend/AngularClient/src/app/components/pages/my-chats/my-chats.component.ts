@@ -28,7 +28,7 @@ export class MyChatsComponent {
 
   constructor(private readonly _chatService: ChatService,
               private readonly _currentBlogService: CurrentBlogService) {
-    this._chatService.GetMyChats(this._currentBlogService.CurrentBlog!.id).subscribe(
+    this._chatService.GetMyChats(this._currentBlogService.GetCurrentBlog().id).subscribe(
       value => {
         this.Chats = value
       }

@@ -29,7 +29,7 @@ export class CreateChatComponent {
               private readonly _currentBlogService: CurrentBlogService,
               private readonly _subscriptionService: SubscriptionService) {
     this.Form = new FormGroup({
-      userBlogId: new FormControl<string>(this._currentBlogService.CurrentBlog!.id, Validators.required),
+      userBlogId: new FormControl<string>(this._currentBlogService.GetCurrentBlog().id, Validators.required),
       name: new FormControl<string>('', [Validators.required, Validators.minLength(1)]),
       otherMembers: new FormControl<string[]>([], Validators.minLength(1))
     })
@@ -38,17 +38,17 @@ export class CreateChatComponent {
   }
 
   public LoadMyContacts(){
-    this._currentBlogService.CurrentBlog!.subscribersCount
+    this._currentBlogService.GetCurrentBlog().subscribersCount
 
     let pageSettings: PageSettings = {
       pageNumber: 1,
-      pageSize: this._currentBlogService.CurrentBlog!.subscribersCount
+      pageSize: this._currentBlogService.GetCurrentBlog().subscribersCount
     }
-    this._subscriptionService.GetBlogSubscribers(pageSettings, this._currentBlogService.CurrentBlog!.id).subscribe(subscribers => {
+    this._subscriptionService.GetBlogSubscribers(pageSettings, this._currentBlogService.GetCurrentBlog().id).subscribe(subscribers => {
       subscribers.forEach(s => {this.MyContacts.push(s.blog)})
     })
-    pageSettings.pageSize = this._currentBlogService.CurrentBlog!.subscriptionsCount
-    this._subscriptionService.GetBlogSubscriptions(pageSettings, this._currentBlogService.CurrentBlog!.id).subscribe(subscriptions => {
+    pageSettings.pageSize = this._currentBlogService.GetCurrentBlog().subscriptionsCount
+    this._subscriptionService.GetBlogSubscriptions(pageSettings, this._currentBlogService.GetCurrentBlog().id).subscribe(subscriptions => {
       subscriptions.forEach(s => {this.MyContacts.push(s.blog)})
     })
   }

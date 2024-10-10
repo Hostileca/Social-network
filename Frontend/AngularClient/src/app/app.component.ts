@@ -18,7 +18,8 @@ import {CurrentBlogService} from "./Data/Services/current-blog.service";
 export class AppComponent {
   title = 'AngularClient';
 
-  constructor(private readonly _chatHubService: ChatHubService){
+  constructor(private readonly _chatHubService: ChatHubService,
+              private readonly _currentBlogService: CurrentBlogService){
 
   }
 }

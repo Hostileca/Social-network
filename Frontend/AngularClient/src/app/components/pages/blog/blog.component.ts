@@ -13,6 +13,7 @@ import {Post} from "../../../Data/Models/Post/Post";
 import {PostService} from "../../../Data/Services/post.service";
 import {PostItemComponent} from "../../Items/post-item/post-item.component";
 import {BlogConfig} from "../../../Data/Consts/BlogConfig";
+import {PageSettings} from "../../../Data/Queries/PageSettings";
 
 @Component({
   selector: 'app-blog',
@@ -42,35 +43,43 @@ export class BlogComponent {
     const blogId = _route.snapshot.params['blogId'];
 
     this.LoadBlog(blogId)
-    this.LoadSubscribers(blogId)
-    this.LoadSubscriptions(blogId)
     this.LoadPosts(blogId)
   }
 
   public AmISubscribed(): boolean{
-    return this.Subscribers.some(x => x.blog.id === this._currentBlogService.CurrentBlog!.id)
+    return this.Subscribers.some(x => x.blog.id === this._currentBlogService.GetCurrentBlog().id)
   }
 
   public IsMe(): boolean{
-    return this.Blog.id === this._currentBlogService.CurrentBlog!.id
+    return this.Blog.id === this._currentBlogService.GetCurrentBlog().id
   }
 
   private LoadBlog(blogId: string){
     this._blogService.GetBlogById(blogId).subscribe(blog => {
       this.Blog = blog
+      this.LoadSubscribers()
+      this.LoadSubscriptions()
     })
   }
 
-  private LoadSubscribers(blogId: string){
-    // this._subscriptionService.GetBlogSubscribers(blogId).subscribe(subscribers => {
-    //   this.Subscribers = subscribers
-    // })
+  private LoadSubscribers(){
+    const pageSettings: PageSettings = {
+      pageNumber: 1,
+      pageSize: this.Blog.subscribersCount
+    }
+     this._subscriptionService.GetBlogSubscribers(pageSettings, this.Blog.id).subscribe(subscribers => {
+       this.Subscribers = subscribers
+     })
   }
 
-  private LoadSubscriptions(blogId: string){
-    // this._subscriptionService.GetBlogSubscriptions(blogId).subscribe(subscriptions => {
-    //   this.Subscriptions = subscriptions
-    // })
+  private LoadSubscriptions(){
+    const pageSettings: PageSettings = {
+      pageNumber: 1,
+      pageSize: this.Blog.subscriptionsCount
+    }
+     this._subscriptionService.GetBlogSubscriptions(pageSettings, this.Blog.id).subscribe(subscriptions => {
+       this.Subscriptions = subscriptions
+     })
   }
 
   private LoadPosts(blogId: string){
@@ -84,24 +93,24 @@ export class BlogComponent {
     const subscribeToBlog: SubscribeToBlog = {
       SubscribeAtId: this.Blog.id,
     }
-    this._subscriptionService.SubscribeToBlog(this._currentBlogService.CurrentBlog!.id, subscribeToBlog).subscribe({
+    this._subscriptionService.SubscribeToBlog(this._currentBlogService.GetCurrentBlog().id, subscribeToBlog).subscribe({
         next: subscription =>{
           const mySubscription: Subscriber = {
             id: subscription.id,
-            blog: this._currentBlogService.CurrentBlog!
+            blog: this._currentBlogService.GetCurrentBlog()
           }
           this.Subscribers.push(mySubscription)
-          this._currentBlogService.CurrentBlog!.subscribersCount += 1
+          this._currentBlogService.GetCurrentBlog().subscribersCount += 1
         },
         error: error => console.log(error)
     })
   }
 
   public UnsubscribeFromBlog(){
-    const mySubscription = this.Subscribers.find(x => x.blog.id === this._currentBlogService.CurrentBlog!.id)!
-    this._subscriptionService.UnsubscribeFromBlog(this._currentBlogService.CurrentBlog!.id, mySubscription.id).subscribe(subscription =>{
+    const mySubscription = this.Subscribers.find(x => x.blog.id === this._currentBlogService.GetCurrentBlog().id)!
+    this._subscriptionService.UnsubscribeFromBlog(this._currentBlogService.GetCurrentBlog().id, mySubscription.id).subscribe(subscription =>{
       this.Subscribers = this.Subscribers.filter(x => x.id !== subscription.id)
-      this._currentBlogService.CurrentBlog!.subscribersCount -= 1
+      this._currentBlogService.GetCurrentBlog().subscribersCount -= 1
     })
   }
 }

@@ -36,7 +36,7 @@ export class ChatDetailsComponent {
   }
 
   private LoadChat(chatId: string) {
-    this._chatService.GetChatById(chatId, this._currentBlogService.CurrentBlog!.id).subscribe(chat => {
+    this._chatService.GetChatById(chatId, this._currentBlogService.GetCurrentBlog().id).subscribe(chat => {
       this.Chat = chat
       this.LoadMessages()
       this.StartListening()
@@ -44,7 +44,7 @@ export class ChatDetailsComponent {
   }
 
   private LoadMessages() {
-    this._messageService.GetChatMessages(this.Chat.id, this._currentBlogService.CurrentBlog!.id).subscribe(messages => {
+    this._messageService.GetChatMessages(this.Chat.id, this._currentBlogService.GetCurrentBlog().id).subscribe(messages => {
       this.Messages = messages
     })
   }

@@ -33,6 +33,6 @@ export class HeaderComponent {
   }
 
   public CurrentBlogUsername(): string{
-    return this._currentBlogService.CurrentBlog!.username
+    return this._currentBlogService.GetCurrentBlog().username
   }
 }
