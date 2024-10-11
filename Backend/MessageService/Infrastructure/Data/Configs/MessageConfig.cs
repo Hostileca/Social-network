@@ -16,7 +16,8 @@ public class MessageConfig : IEntityTypeConfiguration<Message>
             .IsRequired();
 
         builder
-            .HasIndex(x => x.Date);
+            .HasIndex(x => x.Date)
+            .IsDescending();
 
         builder
             .HasOne(x => x.Chat)

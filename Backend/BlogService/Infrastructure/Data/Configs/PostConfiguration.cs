@@ -15,7 +15,8 @@ public class PostConfiguration : IEntityTypeConfiguration<Post>
             .Property(x => x.Content);
 
         builder
-            .HasIndex(x => x.CreatedAt);
+            .HasIndex(x => x.CreatedAt)
+            .IsDescending();
         
         builder
             .HasOne(x => x.Owner)

@@ -35,7 +35,8 @@ public class BlogMappingConfigurations : IRegister
             .Ignore(dest => dest.Id)
             .Ignore(dest => dest.UserId)
             .Ignore(dest => dest.ImageAttachmentId)
-            .Map(dest => dest.DateOfBirth, src => src.DateOfBirth != DateTime.MinValue)
+            .Map(dest => dest.DateOfBirth, src => src.DateOfBirth, 
+                src=> src.DateOfBirth != DateTime.MinValue)
             .Map(dest => dest.Username, src => src.Username, 
                 src => src.Username != null)
             .Map(dest => dest.Bio, src => src.Bio, 
