@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import { BlogService } from '../../../Data/Services/blog.service';
 import { Blog } from '../../../Data/Models/Blog/Blog';
-import {NgForOf, NgIf, NgOptimizedImage} from "@angular/common";
+import {DatePipe, NgForOf, NgIf, NgOptimizedImage} from "@angular/common";
 import {SubscriptionService} from "../../../Data/Services/subscription.service";
 import {CurrentBlogService} from "../../../Data/Services/current-blog.service";
 import {SubscribeToBlog} from "../../../Data/Models/Subscription/Subscribe-to-blog";
@@ -14,6 +14,10 @@ import {PostService} from "../../../Data/Services/post.service";
 import {PostItemComponent} from "../../Items/post-item/post-item.component";
 import {BlogConfig} from "../../../Data/Consts/BlogConfig";
 import {PageSettings} from "../../../Data/Queries/PageSettings";
+import {PostsListComponent} from "../../Items/posts-list/posts-list.component";
+import {Observable} from "rxjs";
+import {AgePipe} from "../../../Data/Pipes/age.pipe";
+import {isFunction} from "rxjs/internal/util/isFunction";
 
 @Component({
   selector: 'app-blog',
@@ -23,7 +27,10 @@ import {PageSettings} from "../../../Data/Queries/PageSettings";
     BlogItemComponent,
     NgForOf,
     PostItemComponent,
-    NgOptimizedImage
+    NgOptimizedImage,
+    PostsListComponent,
+    DatePipe,
+    AgePipe
   ],
   templateUrl: './blog.component.html',
   styleUrl: './blog.component.css'
@@ -32,7 +39,7 @@ export class BlogComponent {
   public Blog!: Blog;
   public Subscribers: Subscriber[] = [];
   public Subscriptions: Subscription[] = [];
-  public Posts: Post[] = [];
+  public PostsSource: (pageSettings: PageSettings) => Observable<Post[]>
   protected BlogConfig = BlogConfig;
 
   constructor(private readonly _route: ActivatedRoute,
@@ -42,8 +49,10 @@ export class BlogComponent {
               private readonly _postService: PostService) {
     const blogId = _route.snapshot.params['blogId'];
 
+    this.PostsSource = (pageSettings: PageSettings) =>
+      this._postService.GetBlogPosts(blogId, pageSettings)
+
     this.LoadBlog(blogId)
-    this.LoadPosts(blogId)
   }
 
   public AmISubscribed(): boolean{
@@ -82,13 +91,6 @@ export class BlogComponent {
      })
   }
 
-  private LoadPosts(blogId: string){
-    // this._postService.GetBlogPosts(blogId).subscribe(posts => {
-    //   this.Posts = posts
-    //   console.log(posts)
-    // })
-  }
-
   public SubscribeToBlog(){
     const subscribeToBlog: SubscribeToBlog = {
       SubscribeAtId: this.Blog.id,
@@ -113,4 +115,6 @@ export class BlogComponent {
       this._currentBlogService.GetCurrentBlog().subscribersCount -= 1
     })
   }
+
+  protected readonly isFunction = isFunction;
 }

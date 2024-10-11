@@ -1,3 +1,46 @@
-.container{
-  margin: 0 0px;
+.blog{
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
+
+.container{
+  width: 56%;
+}
+
+.blog-header{
+  margin: 0 0px;
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.blog-header .blog-info{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0px 20px;
+}
+
+.subscriptions-info{
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px 20px;
+}
+
+.other{
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  flex: 1;
+}
+
+.posts-list{
+  flex: 1;
+}
+

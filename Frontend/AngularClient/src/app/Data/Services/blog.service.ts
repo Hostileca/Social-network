@@ -5,6 +5,7 @@ import {Blog} from "../Models/Blog/Blog";
 import {ApiConfig} from "../Consts/ApiConfig";
 import {PageSettings} from "../Queries/PageSettings";
 import {HttpHelper} from "../../Helpers/http-helper";
+import {BlogUpdate} from "../Models/Blog/Blog-update";
 
 @Injectable({
   providedIn: 'root'
@@ -28,5 +29,9 @@ export class BlogService {
 
   public CreateBlog(blog: Blog): Observable<Blog> {
     return this._httpClient.post<Blog>(`${ApiConfig.BaseUrl}/blogs`, blog);
+  }
+
+  public PatchBlog(blogId: string, blogUpdate: BlogUpdate): Observable<Blog> {
+    return this._httpClient.patch<Blog>(`${ApiConfig.BaseUrl}/blogs/${blogId}`, blogUpdate);
   }
 }

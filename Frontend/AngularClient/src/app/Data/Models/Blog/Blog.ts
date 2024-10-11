@@ -1,8 +1,8 @@
 export interface Blog {
   id: string
   username: string
-  BIO: string
-  dateOfBirth: string
+  bio: string
+  dateOfBirth: Date
   imageAttachmentId: string
   postsCount: number
   subscribersCount: number

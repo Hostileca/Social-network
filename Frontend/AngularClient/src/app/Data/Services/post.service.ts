@@ -19,7 +19,7 @@ export class PostService {
     return this._httpClient.get<Post[]>(`${ApiConfig.BaseUrl}/blogs/${blogId}/wall`, {params})
   }
 
-  public GetBlogPosts(pageSettings: PageSettings, blogId: string): Observable<Post[]> {
+  public GetBlogPosts(blogId: string, pageSettings: PageSettings): Observable<Post[]> {
     let params = new HttpParams()
     params = HttpHelper.AddPageSettingsToQuery(params, pageSettings)
     return this._httpClient.get<Post[]>(`${ApiConfig.BaseUrl}/blogs/${blogId}/posts`, {params})
