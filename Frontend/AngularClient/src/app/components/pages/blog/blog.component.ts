@@ -102,7 +102,6 @@ export class BlogComponent {
             blog: this._currentBlogService.GetCurrentBlog()
           }
           this.Subscribers.push(mySubscription)
-          this._currentBlogService.GetCurrentBlog().subscribersCount += 1
         },
         error: error => console.log(error)
     })
@@ -112,7 +111,6 @@ export class BlogComponent {
     const mySubscription = this.Subscribers.find(x => x.blog.id === this._currentBlogService.GetCurrentBlog().id)!
     this._subscriptionService.UnsubscribeFromBlog(this._currentBlogService.GetCurrentBlog().id, mySubscription.id).subscribe(subscription =>{
       this.Subscribers = this.Subscribers.filter(x => x.id !== subscription.id)
-      this._currentBlogService.GetCurrentBlog().subscribersCount -= 1
     })
   }
 
