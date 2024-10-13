@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using Application.Configs;
+using Domain.Entities;
 using Domain.Repositories;
 using Mapster;
 using MediatR;
@@ -9,7 +10,8 @@ namespace Application.UseCases.SubscriptionCases.Commands.UnsubscribeFromBlogCas
 
 public class UnsubscribeFromBlogHandler(
     IBlogRepository blogRepository,
-    ISubscriberRepository subscriberRepository) 
+    ISubscriberRepository subscriberRepository,
+    ICacheRepository cacheRepository) 
     : IRequestHandler<UnsubscribeFromBlogCommand, SubscriptionReadDto>
 {
     public async Task<SubscriptionReadDto> Handle(UnsubscribeFromBlogCommand request, CancellationToken cancellationToken)
@@ -33,6 +35,12 @@ public class UnsubscribeFromBlogHandler(
         subscriberRepository.Delete(subscribtion);
 
         await subscriberRepository.SaveChangesAsync(cancellationToken);
+
+        await cacheRepository.SetAsync(subscribtion.SubscribedById, subscribtion.SubscribedBy,
+            CacheConfig.BlogCacheTime);
+        
+        await cacheRepository.SetAsync(subscribtion.SubscribedAtId, subscribtion.SubscribedAt,
+            CacheConfig.BlogCacheTime);
         
         return subscribtion.Adapt<SubscriptionReadDto>();
     }

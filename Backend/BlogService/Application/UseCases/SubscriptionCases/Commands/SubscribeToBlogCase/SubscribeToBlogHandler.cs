@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using Application.Configs;
+using Domain.Entities;
 using Domain.Repositories;
 using Mapster;
 using MediatR;
@@ -9,7 +10,8 @@ namespace Application.UseCases.SubscriptionCases.Commands.SubscribeToBlogCase;
 
 public class SubscribeToBlogHandler(
     IBlogRepository blogRepository,
-    ISubscriberRepository subscriberRepository) 
+    ISubscriberRepository subscriberRepository,
+    ICacheRepository cacheRepository) 
     : IRequestHandler<SubscribeToBlogCommand, SubscriptionReadDto>
 {
     public async Task<SubscriptionReadDto> Handle(SubscribeToBlogCommand request, CancellationToken cancellationToken)
@@ -40,6 +42,12 @@ public class SubscribeToBlogHandler(
         await subscriberRepository.AddAsync(newSubscriber, cancellationToken);
 
         await subscriberRepository.SaveChangesAsync(cancellationToken);
+        
+        await cacheRepository.SetAsync(newSubscriber.SubscribedById, newSubscriber.SubscribedBy,
+            CacheConfig.BlogCacheTime);
+        
+        await cacheRepository.SetAsync(newSubscriber.SubscribedAtId, newSubscriber.SubscribedAt,
+            CacheConfig.BlogCacheTime);
         
         return newSubscriber.Adapt<SubscriptionReadDto>();
     }
