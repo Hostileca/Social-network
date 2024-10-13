@@ -8,15 +8,17 @@ namespace Application.UseCases.CommentCases.Commands.CreateCommentCase;
 
 public class CreateCommentCommand : IRequest<CommentReadDto>
 {
+    [BindNever]
     [JsonIgnore]
     public string? PostId { get; set; }
     
+    [BindNever]
     [JsonIgnore]
     public string? UserId { get; set; }
     
-    [FromQuery]
+    [BindNever]
     [JsonIgnore]
-    public string BlogId { get; set; }
+    public string UserBlogId { get; set; }
 
     public string Content { get; set; }
 }

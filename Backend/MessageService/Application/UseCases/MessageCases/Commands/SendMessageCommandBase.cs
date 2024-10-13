@@ -15,7 +15,7 @@ public abstract class SendMessageCommandBase
     [JsonIgnore]
     public Guid ChatId { get; set; }
         
-    [FromQuery]
+    [BindNever]
     [JsonIgnore]
     public Guid UserBlogId { get; set; }
         

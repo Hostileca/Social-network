@@ -12,11 +12,12 @@ public class ChatMemberController(
     IMediator mediator) : ControllerBase
 {
     [HttpPost]
-    public async Task<IActionResult> AddMemberToChat(Guid chatId, [FromBody]AddMemberToChatCommand addMemberToChatCommand,
+    public async Task<IActionResult> AddMemberToChat(Guid chatId, [FromQuery]Guid userBlogId, [FromBody]AddMemberToChatCommand addMemberToChatCommand,
         CancellationToken cancellationToken = default)
     {
         addMemberToChatCommand.UserId = UserId;
         addMemberToChatCommand.ChatId = chatId;
+        addMemberToChatCommand.UserBlogId = userBlogId;
 
         var chatMember = await mediator.Send(addMemberToChatCommand, cancellationToken);
 

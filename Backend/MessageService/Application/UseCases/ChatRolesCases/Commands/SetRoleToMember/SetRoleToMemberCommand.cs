@@ -17,7 +17,7 @@ public class SetRoleToMemberCommand : IRequest<ChatMemberReadDto>
     [JsonIgnore]
     public Guid MemberId { get; set; }
     
-    [FromQuery]
+    [BindNever]
     [JsonIgnore]
     public Guid UserBlogId { get; set; }
     

@@ -16,5 +16,7 @@ public class AddLikeToPostCommand : IRequest<PostLikesReadDto>
     [JsonIgnore]
     public string? UserId { get; set; }
     
-    public string BlogId { get; set; }
+    [BindNever]
+    [JsonIgnore]
+    public string UserBlogId { get; set; }
 }

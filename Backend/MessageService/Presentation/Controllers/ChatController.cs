@@ -38,10 +38,11 @@ public class ChatController(
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateChat([FromBody]CreateChatCommand createChatCommand, 
+    public async Task<IActionResult> CreateChat([FromQuery]Guid userBlogId, [FromBody]CreateChatCommand createChatCommand, 
         CancellationToken cancellationToken = default)
     {
         createChatCommand.UserId = UserId;
+        createChatCommand.UserBlogId = userBlogId;
 
         var chat = await mediator.Send(createChatCommand, cancellationToken);
 

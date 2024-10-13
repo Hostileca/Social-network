@@ -16,6 +16,7 @@ public class PostRepository(
         
         return await GetPaged(pagedFilter)
             .Where(spec.ToExpression())
+            .OrderByDescending(x => x.CreatedAt)
             .ToListAsync(cancellationToken);
     }
 
@@ -26,6 +27,7 @@ public class PostRepository(
 
         return await GetPaged(pagedFilter)
             .Where(spec.ToExpression())
+            .OrderByDescending(x => x.CreatedAt)
             .ToListAsync(cancellationToken);
     }
 }

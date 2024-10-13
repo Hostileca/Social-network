@@ -13,11 +13,12 @@ public class LikeController(
     : ControllerBase
 {
     [HttpPost]
-    public async Task<IActionResult> AddLike(string postId, [FromBody]AddLikeToPostCommand addLikeToPostCommand,
+    public async Task<IActionResult> AddLike(string postId, [FromQuery]string userBlogId, [FromBody]AddLikeToPostCommand addLikeToPostCommand,
         CancellationToken cancellationToken = default)
     {
         addLikeToPostCommand.UserId = UserId;
         addLikeToPostCommand.PostId = postId;
+        addLikeToPostCommand.UserBlogId = userBlogId;
         
         var comment = await mediator.Send(addLikeToPostCommand, cancellationToken);
         

@@ -23,11 +23,12 @@ public class CommentController(
     }
     
     [HttpPost]
-    public async Task<IActionResult> CreateComment(string postId, [FromBody]CreateCommentCommand createCommentCommand,
+    public async Task<IActionResult> CreateComment(string postId, [FromQuery]string UserBlogId, [FromBody]CreateCommentCommand createCommentCommand,
         CancellationToken cancellationToken)
     {
         createCommentCommand.UserId = UserId;
         createCommentCommand.PostId = postId;
+        createCommentCommand.UserBlogId = UserBlogId;
         
         var comment = await mediator.Send(createCommentCommand, cancellationToken);
         

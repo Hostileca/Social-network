@@ -17,7 +17,8 @@ public class MessageConfig : IEntityTypeConfiguration<Message>
 
         builder
             .HasIndex(x => x.Date)
-            .IsDescending();
+            .IsDescending()
+            .IsClustered();
 
         builder
             .HasOne(x => x.Chat)

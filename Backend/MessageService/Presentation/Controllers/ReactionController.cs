@@ -12,7 +12,7 @@ public class ReactionController(
     IMediator mediator) : ControllerBase
 {
     [HttpGet]
-    public async Task<IActionResult> GetReactions(Guid messageId, GetReactionsByMessageIdQuery getReactionsByMessageIdQuery, 
+    public async Task<IActionResult> GetReactions(Guid messageId, [FromQuery]GetReactionsByMessageIdQuery getReactionsByMessageIdQuery, 
         CancellationToken cancellationToken = default)
     {
         getReactionsByMessageIdQuery.UserId = UserId;
@@ -24,11 +24,12 @@ public class ReactionController(
     }
 
     [HttpPost]
-    public async Task<IActionResult> SendReaction(Guid messageId, [FromBody]SendReactionCommand sendReactionCommand,
+    public async Task<IActionResult> SendReaction(Guid messageId, [FromQuery]Guid userBlogId, [FromBody]SendReactionCommand sendReactionCommand,
         CancellationToken cancellationToken = default)
     {
         sendReactionCommand.UserId = UserId;
         sendReactionCommand.MessageId = messageId;
+        sendReactionCommand.UserBlogId = userBlogId;
 
         var chatMember = await mediator.Send(sendReactionCommand, cancellationToken);
 

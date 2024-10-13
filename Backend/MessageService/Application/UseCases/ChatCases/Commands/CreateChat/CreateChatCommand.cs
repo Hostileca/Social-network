@@ -12,8 +12,8 @@ public class CreateChatCommand : IRequest<ChatReadDto>
     [JsonIgnore]
     public string? UserId { get; set; }
     
-    [FromQuery]
     [JsonIgnore]
+    [BindNever]
     public Guid UserBlogId { get; set; }
     
     public string Name { get; set; }

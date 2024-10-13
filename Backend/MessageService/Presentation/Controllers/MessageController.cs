@@ -25,11 +25,12 @@ public class MessageController(
     }
     
     [HttpPost("messages")]
-    public async Task<IActionResult> SendMessage(Guid chatId, [FromForm]SendMessageCommand sendMessageCommand, 
+    public async Task<IActionResult> SendMessage(Guid chatId, [FromQuery]Guid userBlogId, [FromForm]SendMessageCommand sendMessageCommand, 
     CancellationToken cancellationToken = default)
     {
         sendMessageCommand.UserId = UserId;
         sendMessageCommand.ChatId = chatId;
+        sendMessageCommand.UserBlogId = userBlogId;
         
         var message = await mediator.Send(sendMessageCommand, cancellationToken);
 
@@ -37,11 +38,12 @@ public class MessageController(
     }
 
     [HttpPost("delayed-messages")]
-    public async Task<IActionResult> SendDelayedMessage(Guid chatId, [FromForm]SendDelayedMessageCommand sendDelayedMessageCommand, 
+    public async Task<IActionResult> SendDelayedMessage(Guid chatId, [FromQuery]Guid userBlogId, [FromForm]SendDelayedMessageCommand sendDelayedMessageCommand, 
         CancellationToken cancellationToken = default)
     {
         sendDelayedMessageCommand.UserId = UserId;
         sendDelayedMessageCommand.ChatId = chatId;
+        sendDelayedMessageCommand.UserBlogId = userBlogId;
         
         var message = await mediator.Send(sendDelayedMessageCommand, cancellationToken);
 

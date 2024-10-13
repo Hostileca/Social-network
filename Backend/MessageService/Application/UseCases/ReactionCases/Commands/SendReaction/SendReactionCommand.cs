@@ -16,7 +16,7 @@ public class SendReactionCommand : IRequest<ReactionReadDto>
     [JsonIgnore]
     public Guid MessageId { get; set; }
     
-    [FromQuery]
+    [BindNever]
     [JsonIgnore]
     public Guid UserBlogId { get; set; }
     
