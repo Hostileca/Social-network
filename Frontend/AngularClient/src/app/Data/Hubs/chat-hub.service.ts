@@ -75,7 +75,6 @@ export class ChatHubService{
       this._eventBusService.Emit(Events.ChatMemberLeft, chatMember)
     })
     this._hubConnection.on(Events.MessageSent, (message: Message) => {
-      console.log("hub:" + message)
       this._eventBusService.Emit(Events.MessageSent, message)
     })
     this._hubConnection.on(Events.ReactionSent, (reaction: Reaction) => {

@@ -25,6 +25,5 @@ export class MessageItemComponent implements OnInit {
     this._blogService.GetBlogById(this.Message.senderId).subscribe(blog => {
       this.Sender = blog
     })
-    console.log(this.Message)
   }
 }

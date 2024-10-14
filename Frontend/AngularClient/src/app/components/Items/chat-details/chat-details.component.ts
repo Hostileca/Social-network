@@ -48,10 +48,10 @@ export class ChatDetailsComponent {
 
   private LoadChat(chatId: string) {
     this._chatService.GetChatById(chatId, this._currentBlogService.GetCurrentBlog().id).subscribe(chat => {
-      this.Chat = chat
-
       this.MessagesSource = (pageSettings: PageSettings) =>
         this._messageService.GetChatMessages(chatId, this._currentBlogService.GetCurrentBlog().id, pageSettings)
+
+      this.Chat = chat
     })
   }
 
