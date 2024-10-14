@@ -9,9 +9,6 @@ public class SendMessageCommandValidator : AbstractValidator<SendMessageCommand>
     
     public SendMessageCommandValidator()
     {
-        RuleFor(x => x.UserBlogId)
-            .IsGuid();
-
         RuleFor(x => x.Text)
             .NotEmptyAndNotNull()
             .MaximumLength(MaxTextLength);
