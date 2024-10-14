@@ -1,2 +1,13 @@
-<app-chats-list [Chats]="Chats" (OnSelectChat)="SelectChat($event)"></app-chats-list>
-<app-chat-details *ngIf="SelectedChat" [Chat]="SelectedChat"></app-chat-details>
+<div class="chats-layout">
+    <div class="chats-list">
+        <app-chats-list
+                [EntitySource]="ChatsSource"
+                [PageSize]="PaginationConfig.ChatsLoadingSize"
+                (OnSelectChat)="SelectChat($event)">
+        </app-chats-list>
+    </div>
+
+    <div class="chat-details" *ngIf="SelectedChat">
+        <app-chat-details [SelectedChat]="SelectedChat"></app-chat-details>
+    </div>
+</div>

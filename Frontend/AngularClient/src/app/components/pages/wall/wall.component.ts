@@ -4,7 +4,7 @@ import {PostService} from "../../../Data/Services/post.service";
 import {NgForOf} from "@angular/common";
 import {PostItemComponent} from "../../Items/post-item/post-item.component";
 import {PageSettings} from "../../../Data/Queries/PageSettings";
-import {PostConfig} from "../../../Data/Consts/PostConfig";
+import {PaginationConfig} from "../../../Data/Consts/PaginationConfig";
 import {CurrentBlogService} from "../../../Data/Services/current-blog.service";
 import {PostsListComponent} from "../../Items/posts-list/posts-list.component";
 import {Observable} from "rxjs";
@@ -28,4 +28,6 @@ export class WallComponent {
     this.PostsSource = (pageSettings: PageSettings) =>
       this._postService.GetWall(_currentBlogService.GetCurrentBlog().id, pageSettings);
   }
+
+  protected readonly PaginationConfig = PaginationConfig;
 }

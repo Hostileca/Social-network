@@ -6,6 +6,7 @@ import { ApiConfig } from '../Consts/ApiConfig';
 import {CurrentBlogService} from "./current-blog.service";
 import { CreateChat } from '../Models/Chat/Create-chat';
 import {HttpHelper} from "../../Helpers/http-helper";
+import {PageSettings} from "../Queries/PageSettings";
 
 @Injectable({
   providedIn: 'root'
@@ -13,9 +14,10 @@ import {HttpHelper} from "../../Helpers/http-helper";
 export class ChatService {
   constructor(private readonly _httpClient: HttpClient) { }
 
-  public GetMyChats(userBlogId: string): Observable<Chat[]> {
+  public GetBlogChats(userBlogId: string, pageSettings: PageSettings): Observable<Chat[]> {
     let params = new HttpParams()
     params = HttpHelper.AddUserBlogIdToQuery(params, userBlogId)
+    params = HttpHelper.AddPageSettingsToQuery(params, pageSettings)
     return this._httpClient.get<Chat[]>(`${ApiConfig.BaseUrl}/chats`, {params});
   }
 

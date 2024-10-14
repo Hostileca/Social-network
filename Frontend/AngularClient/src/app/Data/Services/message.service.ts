@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Message} from "../Models/Message/Message";
 import {ApiConfig} from "../Consts/ApiConfig";
 import { SendMessage } from '../Models/Message/Send-message';
+import {HttpHelper} from "../../Helpers/http-helper";
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +26,8 @@ export class MessageService {
         formData.append('attachments', file);
       }
     }
-    return this._httpClient.post<Message>(`${ApiConfig.BaseUrl}/chats/${chatId}/messages`, formData)
+    let params = new HttpParams()
+    params = HttpHelper.AddUserBlogIdToQuery(params, sendMessage.userBlogId)
+    return this._httpClient.post<Message>(`${ApiConfig.BaseUrl}/chats/${chatId}/messages`, formData, {params})
   }
 }

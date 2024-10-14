@@ -1,4 +1,4 @@
 
 <div *ngIf="this.Chat">
-  <a href="/my-chats/{{this.Chat.id}}">{{this.Chat.name}}</a>
+  <button class="btn" (click)="SelectChat()">{{this.Chat.name}}</button>
 </div>

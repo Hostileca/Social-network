@@ -18,6 +18,7 @@ import {PostsListComponent} from "../../Items/posts-list/posts-list.component";
 import {Observable} from "rxjs";
 import {AgePipe} from "../../../Data/Pipes/age.pipe";
 import {isFunction} from "rxjs/internal/util/isFunction";
+import {PaginationConfig} from "../../../Data/Consts/PaginationConfig";
 
 @Component({
   selector: 'app-blog',
@@ -117,4 +118,5 @@ export class BlogComponent {
   }
 
   protected readonly isFunction = isFunction;
+    protected readonly PaginationConfig = PaginationConfig;
 }

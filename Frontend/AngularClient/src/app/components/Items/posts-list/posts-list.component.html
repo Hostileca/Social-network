@@ -1,11 +1,11 @@
 <div class="posts-container">
-  <div *ngFor="let post of Posts" (scroll)="onScroll($event)">
+  <div *ngFor="let post of Entities">
     <app-post-item [Post]="post"></app-post-item>
   </div>
 
   <div>
-    <p *ngIf="IsLoading">Loading more posts...</p>
-    <p *ngIf="IsEnded">No more posts</p>
+    <p *ngIf="IsLoading()">Loading more posts...</p>
+    <p *ngIf="IsEnded()">No more posts</p>
   </div>
 </div>
 

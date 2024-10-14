@@ -25,7 +25,13 @@ import {HttpErrorResponse} from "@angular/common/http";
   styleUrl: './chat-details.component.css'
 })
 export class ChatDetailsComponent {
-  @Input() public Chat!: Chat;
+  @Input() set SelectedChat(chat: Chat) {
+    if (chat) {
+      this.LoadChat(chat.id.toString())
+    }
+  }
+
+  public Chat!: Chat;
   public Messages: Message[] = [];
 
   constructor(private readonly _route: ActivatedRoute,
