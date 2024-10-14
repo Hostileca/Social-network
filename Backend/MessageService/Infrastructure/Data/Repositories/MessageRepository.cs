@@ -16,6 +16,7 @@ public class MessageRepository(
         
         return await GetPaged(pagedFilter)
             .Where(spec.ToExpression())
+            .OrderByDescending(x => x.Date)
             .ToListAsync(cancellationToken);
     }
 }
