@@ -15,5 +15,5 @@ public class UnsubscribeFromBlogCommand : IRequest<SubscriptionReadDto>
     public string? UserId { get; set; }
     
     [BindNever]
-    public string SubscriptionId { get; set; }
+    public string? SubscriptionId { get; set; }
 }

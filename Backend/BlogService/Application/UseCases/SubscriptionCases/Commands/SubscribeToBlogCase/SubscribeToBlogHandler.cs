@@ -44,7 +44,7 @@ public class SubscribeToBlogHandler(
         await subscriberRepository.SaveChangesAsync(cancellationToken);
 
         var subscriberBlog = newSubscriber.SubscribedBy.Adapt<BlogReadDto>();
-        var subscriptionAtBlog = newSubscriber.SubscribedAtId.Adapt<BlogReadDto>();
+        var subscriptionAtBlog = newSubscriber.SubscribedAt.Adapt<BlogReadDto>();
         
         await cacheRepository.SetAsync(newSubscriber.SubscribedById, subscriberBlog,
             CacheConfig.BlogCacheTime);
