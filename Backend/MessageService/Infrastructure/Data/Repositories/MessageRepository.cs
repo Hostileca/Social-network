@@ -1,6 +1,7 @@
 ﻿using Domain.Entities;
 using Domain.Filters;
 using Domain.Repositories;
+using Infrastructure.Specifications;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data.Repositories;
@@ -11,7 +12,10 @@ public class MessageRepository(
 {
     public async Task<IEnumerable<Message>> GetChatMessages(PagedFilter pagedFilter, Guid chatId, CancellationToken cancellationToken)
     {
+        var spec = new MessagesByChatIdSpecification(chatId);
+        
         return await GetPaged(pagedFilter)
+            .Where(spec.ToExpression())
             .ToListAsync(cancellationToken);
     }
 }
