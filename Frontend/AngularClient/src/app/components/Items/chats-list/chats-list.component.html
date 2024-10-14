@@ -1,4 +1,4 @@
-<div *ngIf="Entities.length > 0">
+<div *ngIf="Entities.length > 0" class="chats-list">
   <div *ngFor="let chat of Entities">
     <app-chat-item
       [Chat]="chat"
@@ -7,5 +7,5 @@
   </div>
 </div>
 
-<div *ngIf="IsLoading()">Loading more chats...</div>
-<div *ngIf="IsEnded()">No more chats</div>
+<div *ngIf="IsLoading()" class="status">Loading more chats...</div>
+<div *ngIf="IsEnded()" class="status">No more chats</div>

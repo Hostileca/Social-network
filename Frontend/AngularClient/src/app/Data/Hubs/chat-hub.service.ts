@@ -47,7 +47,7 @@ export class ChatHubService{
     this._hubConnection
       .start()
       .then(() => {
-        console.log("Connected to chat hub")
+        console.log("Connected to chat-details hub")
         this.StartEmit()
       })
       .catch(err => console.error('Error while starting connection: ' + err));

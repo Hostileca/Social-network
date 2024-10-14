@@ -1,0 +1,26 @@
+.chat-info{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  cursor: pointer;
+  background-color: var(--primary-dark);
+  color: var(--secondary-color);
+  border-radius: 3%;
+  margin: 5px;
+  padding: 10px;
+}
+
+.chat-info:hover{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  cursor: pointer;
+  background-color: var(--primary-color);
+}
+
+h3{
+  color: var(--secondary-color);
+  margin: 0;
+  padding: 0;
+}
+

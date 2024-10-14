@@ -4,7 +4,7 @@
   justify-content: flex-start;
   padding: 5px 50px;
   align-items: center;
-  background-color: var(--primary-color);
+  background-color: var(--primary-dark);
 }
 
 .header .logo{
@@ -16,7 +16,7 @@
 }
 
 .header .header-element{
-  color: var(--light-color);
+  color: var(--secondary-color);
   text-decoration: none;
   margin: 0 30px;
   cursor: pointer;

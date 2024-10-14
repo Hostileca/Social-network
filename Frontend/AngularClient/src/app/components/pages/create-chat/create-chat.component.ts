@@ -10,7 +10,7 @@ import {PageSettings} from "../../../Data/Queries/PageSettings";
 import {BlogService} from "../../../Data/Services/blog.service";
 
 @Component({
-  selector: 'app-create-chat-details',
+  selector: 'app-create-chat-details-details',
   standalone: true,
   imports: [
     ReactiveFormsModule,

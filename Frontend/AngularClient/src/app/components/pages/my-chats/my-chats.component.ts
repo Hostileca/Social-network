@@ -5,7 +5,7 @@ import {ChatItemComponent} from "../../Items/chat-item/chat-item.component";
 import {ChatsListComponent} from "../../Items/chats-list/chats-list.component";
 import {Chat} from "../../../Data/Models/Chat/Chat";
 import {ChatService} from "../../../Data/Services/chat.service";
-import {ChatDetailsComponent} from "../../Items/chat/chat-details.component";
+import {ChatDetailsComponent} from "../../Items/chat-details/chat-details.component";
 import {CurrentBlogService} from "../../../Data/Services/current-blog.service";
 import {PageSettings} from "../../../Data/Queries/PageSettings";
 import {Observable} from "rxjs";

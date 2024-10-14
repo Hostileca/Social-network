@@ -3,8 +3,9 @@ import {ChatItemComponent} from "../chat-item/chat-item.component";
 import {Chat} from "../../../Data/Models/Chat/Chat";
 import {NgForOf, NgIf} from "@angular/common";
 import {
-  PaginationComponentBaseComponent
-} from "../../base/pagination-component-base/pagination-component-base.component";
+  PaginationBaseComponent
+} from "../../base/pagination-component-base/pagination-base.component";
+import {ChatDetailsComponent} from "../chat-details/chat-details.component";
 
 @Component({
   selector: 'app-chats-list',
@@ -12,12 +13,13 @@ import {
   imports: [
     ChatItemComponent,
     NgIf,
-    NgForOf
+    NgForOf,
+    ChatDetailsComponent
   ],
   templateUrl: './chats-list.component.html',
   styleUrl: './chats-list.component.css'
 })
-export class ChatsListComponent extends PaginationComponentBaseComponent<Chat>{
+export class ChatsListComponent extends PaginationBaseComponent<Chat>{
   @Output() OnSelectChat = new EventEmitter<Chat>();
 
   constructor() {

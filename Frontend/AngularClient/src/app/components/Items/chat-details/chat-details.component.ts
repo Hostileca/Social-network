@@ -11,6 +11,10 @@ import {CurrentBlogService} from "../../../Data/Services/current-blog.service";
 import {EventBusService} from "../../../Data/Services/event-bus.service";
 import {Events} from "../../../Data/Hubs/Events";
 import {HttpErrorResponse} from "@angular/common/http";
+import {MessagesListComponent} from "../messages-list/messages-list.component";
+import {PageSettings} from "../../../Data/Queries/PageSettings";
+import {Observable} from "rxjs";
+import {PaginationConfig} from "../../../Data/Consts/PaginationConfig";
 
 @Component({
   selector: 'app-chat-details',
@@ -19,12 +23,14 @@ import {HttpErrorResponse} from "@angular/common/http";
     MessageItemComponent,
     NgForOf,
     MessageInputComponent,
-    NgIf
+    NgIf,
+    MessagesListComponent
   ],
   templateUrl: './chat-details.component.html',
   styleUrl: './chat-details.component.css'
 })
 export class ChatDetailsComponent {
+
   @Input() set SelectedChat(chat: Chat) {
     if (chat) {
       this.LoadChat(chat.id.toString())
@@ -32,38 +38,22 @@ export class ChatDetailsComponent {
   }
 
   public Chat!: Chat;
-  public Messages: Message[] = [];
+  public MessagesSource!: (pageSettings: PageSettings) => Observable<Message[]>
 
   constructor(private readonly _route: ActivatedRoute,
               private readonly _chatService: ChatService,
               private readonly _messageService: MessageService,
-              private readonly _currentBlogService: CurrentBlogService,
-              private readonly _eventBusService: EventBusService) {
+              private readonly _currentBlogService: CurrentBlogService) {
   }
 
   private LoadChat(chatId: string) {
     this._chatService.GetChatById(chatId, this._currentBlogService.GetCurrentBlog().id).subscribe(chat => {
       this.Chat = chat
-      this.LoadMessages()
-      this.StartListening()
+
+      this.MessagesSource = (pageSettings: PageSettings) =>
+        this._messageService.GetChatMessages(chatId, this._currentBlogService.GetCurrentBlog().id, pageSettings)
     })
   }
 
-  private LoadMessages() {
-    this._messageService.GetChatMessages(this.Chat.id, this._currentBlogService.GetCurrentBlog().id).subscribe(messages => {
-      this.Messages = messages
-    })
-  }
-
-  private StartListening(){
-    this._eventBusService.On<Message>(Events.MessageSent).subscribe(message => {
-      this.OnMessageReceive(message, this.Chat.id)
-    })
-  }
-
-  private OnMessageReceive(message: Message, chatId: string){
-    if(message.chatId == chatId){
-      this.Messages.push(message)
-    }
-  }
+  protected readonly PaginationConfig = PaginationConfig;
 }
