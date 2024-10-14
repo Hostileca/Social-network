@@ -31,7 +31,6 @@ export class CreateChatComponent {
               private readonly _subscriptionService: SubscriptionService,
               private readonly _blogService: BlogService) {
     this.Form = new FormGroup({
-      userBlogId: new FormControl<string>(this._currentBlogService.GetCurrentBlog().id, Validators.required),
       name: new FormControl<string>('', [Validators.required, Validators.minLength(1)]),
       otherMembers: new FormControl<string[]>([], Validators.minLength(1))
     })
@@ -43,7 +42,6 @@ export class CreateChatComponent {
     const blogId = this._currentBlogService.GetCurrentBlog().id
 
     this._blogService.GetBlogById(blogId).subscribe(blog => {
-      console.log(blog)
       let pageSettings: PageSettings = {
         pageNumber: 1,
         pageSize: blog.subscribersCount
@@ -70,9 +68,9 @@ export class CreateChatComponent {
 
   public OnCreateChat(){
     if(this.Form.valid){
-      this._chatService.CreateChat(this.Form.value).subscribe({
+      this._chatService.CreateChat(this._currentBlogService.GetCurrentBlog().id, this.Form.value).subscribe({
         next: (chat) => {
-          this._router.navigate([`/chat${chat.id}`])
+          this._router.navigate([`/my-chats/${chat.id}`])
         }
       })
     }

@@ -25,7 +25,9 @@ export class ChatService {
     return this._httpClient.get<Chat>(`${ApiConfig.BaseUrl}/chats/${chatId}`, {params});
   }
 
-  public CreateChat(chat: CreateChat): Observable<Chat> {
-    return this._httpClient.post<Chat>(`${ApiConfig.BaseUrl}/chats`, chat);
+  public CreateChat(blogId: string, chat: CreateChat): Observable<Chat> {
+    let params = new HttpParams()
+    params = HttpHelper.AddUserBlogIdToQuery(params, blogId)
+    return this._httpClient.post<Chat>(`${ApiConfig.BaseUrl}/chats`, chat, {params});
   }
 }

@@ -31,6 +31,7 @@ export class MyChatsComponent {
     this._chatService.GetMyChats(this._currentBlogService.GetCurrentBlog().id).subscribe(
       value => {
         this.Chats = value
+        console.log(value)
       }
     )
   }
