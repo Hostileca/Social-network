@@ -42,11 +42,14 @@ public class SubscribeToBlogHandler(
         await subscriberRepository.AddAsync(newSubscriber, cancellationToken);
 
         await subscriberRepository.SaveChangesAsync(cancellationToken);
+
+        var subscriberBlog = newSubscriber.SubscribedBy.Adapt<BlogReadDto>();
+        var subscriptionAtBlog = newSubscriber.SubscribedAtId.Adapt<BlogReadDto>();
         
-        await cacheRepository.SetAsync(newSubscriber.SubscribedById, newSubscriber.SubscribedBy,
+        await cacheRepository.SetAsync(newSubscriber.SubscribedById, subscriberBlog,
             CacheConfig.BlogCacheTime);
         
-        await cacheRepository.SetAsync(newSubscriber.SubscribedAtId, newSubscriber.SubscribedAt,
+        await cacheRepository.SetAsync(newSubscriber.SubscribedAtId, subscriptionAtBlog,
             CacheConfig.BlogCacheTime);
         
         return newSubscriber.Adapt<SubscriptionReadDto>();

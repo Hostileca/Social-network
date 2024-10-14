@@ -24,25 +24,28 @@ public class UnsubscribeFromBlogHandler(
             throw new NotFoundException(typeof(Blog).ToString(), request.UserBlogId);
         }
         
-        var subscribtion = currentBlog.Subscriptions
+        var subscription = currentBlog.Subscriptions
             .FirstOrDefault(x => x.Id == request.SubscriptionId);
 
-        if (subscribtion is null)
+        if (subscription is null)
         {
             throw new NotFoundException(typeof(Subscription).ToString(), request.SubscriptionId);
         }
         
-        subscriberRepository.Delete(subscribtion);
+        subscriberRepository.Delete(subscription);
 
         await subscriberRepository.SaveChangesAsync(cancellationToken);
 
-        await cacheRepository.SetAsync(subscribtion.SubscribedById, subscribtion.SubscribedBy,
+        var subscriberBlog = subscription.SubscribedBy.Adapt<BlogReadDto>();
+        var subscriptionAtBlog = subscription.SubscribedAtId.Adapt<BlogReadDto>();
+        
+        await cacheRepository.SetAsync(subscription.SubscribedById, subscriberBlog,
             CacheConfig.BlogCacheTime);
         
-        await cacheRepository.SetAsync(subscribtion.SubscribedAtId, subscribtion.SubscribedAt,
+        await cacheRepository.SetAsync(subscription.SubscribedAtId, subscriptionAtBlog,
             CacheConfig.BlogCacheTime);
         
-        return subscribtion.Adapt<SubscriptionReadDto>();
+        return subscription.Adapt<SubscriptionReadDto>();
     }
     
 }
