@@ -1,5 +1,6 @@
 ﻿using System.Security.Claims;
 using Application.UseCases.BlogConnectionCases.Commands.Connect;
+using Application.UseCases.BlogConnectionCases.Commands.Disconnect;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
@@ -39,4 +40,18 @@ public class ChatHub(
     
         return blogId;
     } 
+    
+    public override async Task OnDisconnectedAsync(Exception? exception)
+    {
+        var disconnectCommand = new DisconnectCommand
+        {
+            BlogId = BlogId,
+            UserId = UserId,
+            ConnectionId = Context.ConnectionId
+        };
+        
+        await mediator.Send(disconnectCommand);
+        
+        await base.OnDisconnectedAsync(exception);
+    }
 }

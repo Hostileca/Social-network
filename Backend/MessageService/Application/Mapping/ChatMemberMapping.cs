@@ -19,5 +19,9 @@ public class ChatMemberMapping : IRegister
         config.NewConfig<ChatMember, ChatMemberReadDto>()
             .Map(dest => dest.Id, src => src.Id)
             .Map(dest => dest.Blog, src => src.Blog);
+
+        config.NewConfig<ChatMember, ChatReadDto>()
+            .Map(dest => dest.Id, src => src.ChatId)
+            .Map(dest => dest, src => src.Chat);
     }
 }
