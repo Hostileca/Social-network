@@ -80,7 +80,7 @@ public class BlogController(
         return Ok(blog);
     }
 
-    [HttpPatch("{blogId}")]
+    [HttpPut("{blogId}")]
     public async Task<IActionResult> UpdateBlog(string blogId, [FromForm]UpdateBlogCommand updateBlogCommand,
         CancellationToken cancellationToken = default)
     {

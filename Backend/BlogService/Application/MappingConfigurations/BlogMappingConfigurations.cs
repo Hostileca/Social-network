@@ -35,14 +35,12 @@ public class BlogMappingConfigurations : IRegister
         config.NewConfig<UpdateBlogCommand, Blog>()
             .Ignore(dest => dest.Id)
             .Ignore(dest => dest.UserId)
-            .Map(dest => dest.MainImage, src => Base64Converter.ConvertToBase64(src.MainImage), 
-                    src => src.MainImage != null && 
-                           MimeTypes.GetMimeType(src.MainImage.FileName).Contains(AttachmentSimpleTypes.Image))
-            .Map(dest => dest.DateOfBirth, src => src.DateOfBirth, 
-                src=> src.DateOfBirth != DateTime.MinValue)
-            .Map(dest => dest.Username, src => src.Username, 
-                src => src.Username != null)
-            .Map(dest => dest.Bio, src => src.Bio, 
-                src => src.Bio != null);
+            .Map(dest => dest.MainImage, 
+                src => src.MainImage != null && 
+                       MimeTypes.GetMimeType(src.MainImage.FileName).Contains(AttachmentSimpleTypes.Image) 
+                    ? Base64Converter.ConvertToBase64(src.MainImage) : null)
+            .Map(dest => dest.DateOfBirth, src => src.DateOfBirth)
+            .Map(dest => dest.Username, src => src.Username)
+            .Map(dest => dest.Bio, src => src.Bio);
     }
 }

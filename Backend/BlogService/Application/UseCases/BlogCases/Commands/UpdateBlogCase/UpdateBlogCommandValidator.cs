@@ -7,7 +7,7 @@ public class UpdateBlogCommandValidator : AbstractValidator<UpdateBlogCommand>
     public UpdateBlogCommandValidator()
     {
         RuleFor(x => x.Username)
-            .MaximumLength(20);
+            .IsUsername();
 
         RuleFor(x => x.Bio)
             .MaximumLength(70);
