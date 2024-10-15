@@ -38,6 +38,7 @@ import {PaginationConfig} from "../../../Data/Consts/PaginationConfig";
 })
 export class BlogComponent {
   public Blog!: Blog;
+  public MainImageUrl?: string
   public Subscribers: Subscriber[] = [];
   public Subscriptions: Subscription[] = [];
   public PostsSource: (pageSettings: PageSettings) => Observable<Post[]>
@@ -90,6 +91,14 @@ export class BlogComponent {
      this._subscriptionService.GetBlogSubscriptions(pageSettings, this.Blog.id).subscribe(subscriptions => {
        this.Subscriptions = subscriptions
      })
+  }
+
+  private LoadMainImage(){
+    this._blogService.GetBlogImageById(this.Blog.id).subscribe({
+      next: blob => {
+        this.MainImageUrl = URL.createObjectURL(blob);
+      }
+    })
   }
 
   public SubscribeToBlog(){

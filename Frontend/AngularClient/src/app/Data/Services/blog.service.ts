@@ -27,11 +27,22 @@ export class BlogService {
     return this._httpClient.get<Blog>(`${ApiConfig.BaseUrl}/blogs/${id}`);
   }
 
+  public GetBlogImageById(blogId: string): Observable<Blob> {
+    return this._httpClient.get(`${ApiConfig.BaseUrl}/blogs/${blogId}/main-image`, { responseType: 'blob' });
+  }
+
   public CreateBlog(blog: Blog): Observable<Blog> {
     return this._httpClient.post<Blog>(`${ApiConfig.BaseUrl}/blogs`, blog);
   }
 
   public PatchBlog(blogId: string, blogUpdate: BlogUpdate): Observable<Blog> {
-    return this._httpClient.patch<Blog>(`${ApiConfig.BaseUrl}/blogs/${blogId}`, blogUpdate);
+    let form = new FormData();
+    form.append('username', blogUpdate.username);
+
+    if(blogUpdate.bio) {
+      form.append('bio', blogUpdate.bio);
+    }
+
+    return this._httpClient.patch<Blog>(`${ApiConfig.BaseUrl}/blogs/${blogId}`, form);
   }
 }

@@ -22,7 +22,7 @@ export class BlogEditComponent {
   public Form: FormGroup = new FormGroup({
     username: new FormControl<string>('', [Validators.required, Validators.minLength(1)]),
     bio: new FormControl<string>(''),
-    imageAttachmentId: new FormControl<string>(''),
+    mainImage: new FormControl<File | null>(null, [SimpleValidators.ImageFileValidator]),
     dateOfBirth: new FormControl<Date>(new Date())
   })
 
@@ -39,7 +39,6 @@ export class BlogEditComponent {
 
       this.Form.controls['username'].setValue(this.Blog.username)
       this.Form.controls['bio'].setValue(this.Blog.bio)
-      this.Form.controls['imageAttachmentId'].setValue(this.Blog.imageAttachmentId)
       this.Form.controls['dateOfBirth'].setValue(this.Blog.dateOfBirth)
     })
   }

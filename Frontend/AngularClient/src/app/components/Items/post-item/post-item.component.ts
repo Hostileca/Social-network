@@ -24,7 +24,7 @@ import {BlogConfig} from "../../../Data/Consts/BlogConfig";
 export class PostItemComponent implements OnInit{
   @Input() Post!: Post;
   public Owner!: Blog
-  public OwnerAvatar: string = ''
+  public OwnerAvatarUrl: string = ''
   public AttachmentsUrls: string[] = [];
 
   constructor(private readonly _attachmentService: AttachmentService,
@@ -55,15 +55,12 @@ export class PostItemComponent implements OnInit{
   }
 
   private LoadOwnerImage(){
-    if(!this.Owner.imageAttachmentId){
-      return
-    }
-    this._attachmentService.GetPostAttachment(this.Owner.imageAttachmentId).subscribe(attachmentBlob => {
-      const attachmentUrl = window.URL.createObjectURL(attachmentBlob)
-      this.OwnerAvatar = attachmentUrl
+    this._blogService.GetBlogImageById(this.Owner.id).subscribe({
+      next: blob => {
+        this.OwnerAvatarUrl = URL.createObjectURL(blob);
+      }
     })
   }
 
-  protected readonly ApiConfig = ApiConfig;
   protected readonly BlogConfig = BlogConfig;
 }

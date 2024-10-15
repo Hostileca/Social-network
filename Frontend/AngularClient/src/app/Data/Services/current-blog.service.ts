@@ -26,7 +26,10 @@ export class CurrentBlogService {
     return this._currentBlog!
   }
 
-  public SelectBlog(blog: Blog){
+  public SelectBlog(blog?: Blog){
+    if(!blog){
+      return
+    }
     this._currentBlog = blog
     this._appCookieService.Save<Blog>(CookiesName.CurrentBlog, this._currentBlog)
   }

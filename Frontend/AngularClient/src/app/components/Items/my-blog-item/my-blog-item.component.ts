@@ -4,6 +4,7 @@ import { Blog } from '../../../Data/Models/Blog/Blog';
 import {Router} from "@angular/router";
 import {NgIf, NgOptimizedImage} from "@angular/common";
 import {BlogConfig} from "../../../Data/Consts/BlogConfig";
+import {BlogService} from "../../../Data/Services/blog.service";
 
 @Component({
   selector: 'app-my-blog-item',
@@ -16,10 +17,21 @@ import {BlogConfig} from "../../../Data/Consts/BlogConfig";
   styleUrl: './my-blog-item.component.css'
 })
 export class MyBlogItemComponent {
-  @Input() Blog!: Blog;
+  @Input() set blog(blog: Blog){
+    this.Blog = blog
+    this._blogService.GetBlogImageById(blog.id).subscribe({
+      next: blob => {
+        this.MainImageUrl = URL.createObjectURL(blob);
+      }
+    })
+  }
+
+  public Blog?: Blog
+  public MainImageUrl?: string
 
   constructor(private readonly _router: Router,
-              private readonly _currentBlogService: CurrentBlogService) {
+              private readonly _currentBlogService: CurrentBlogService,
+              private readonly _blogService: BlogService) {
   }
 
   public SelectBlog(){

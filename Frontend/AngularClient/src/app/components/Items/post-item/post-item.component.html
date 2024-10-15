@@ -1,6 +1,6 @@
 <div *ngIf="Post" class="container">
   <div *ngIf="Owner" class="owner-info">
-    <img ngSrc="{{this.OwnerAvatar ? this.OwnerAvatar : BlogConfig.BlogMainImageByDefaultUrl}}"
+    <img ngSrc="{{this.OwnerAvatarUrl ? this.OwnerAvatarUrl : BlogConfig.BlogMainImageByDefaultUrl}}"
          class="avatar" alt="avatar" width="40" height="40">
     <h3>{{Owner.username}}</h3>
   </div>

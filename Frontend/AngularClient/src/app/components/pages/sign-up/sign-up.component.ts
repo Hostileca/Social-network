@@ -22,7 +22,7 @@ export class SignUpComponent {
     username: new FormControl<string>('', [Validators.required, Validators.minLength(4)]),
     email: new FormControl<string>('', [Validators.required, Validators.email]),
     password: new FormControl<string>('', [Validators.required, Validators.minLength(4)]),
-    confirmPassword: new FormControl<string>('', [Validators.required, SimpleValidators.equalTo('password')])
+    confirmPassword: new FormControl<string>('', [Validators.required, SimpleValidators.EqualTo('password')])
   })
 
   public Username(){

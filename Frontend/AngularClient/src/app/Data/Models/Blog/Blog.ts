@@ -3,7 +3,6 @@ export interface Blog {
   username: string
   bio: string
   dateOfBirth: Date
-  imageAttachmentId: string
   postsCount: number
   subscribersCount: number
   subscriptionsCount: number

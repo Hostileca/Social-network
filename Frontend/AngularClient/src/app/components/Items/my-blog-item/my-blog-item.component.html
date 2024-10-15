@@ -1,6 +1,6 @@
-<div class="container" (click)="SelectBlog()">
+<div *ngIf="Blog" class="container" (click)="SelectBlog()">
   <div class="blog-avatar">
-    <img ngSrc="{{this.Blog.imageAttachmentId ? Blog.imageAttachmentId : this.BlogConfig.BlogMainImageByDefaultUrl}}"
+    <img ngSrc="{{this.MainImageUrl ? this.MainImageUrl : this.BlogConfig.BlogMainImageByDefaultUrl}}"
          class="avatar" width="120" height="120" priority>
   </div>
   <div class="blog-info">
