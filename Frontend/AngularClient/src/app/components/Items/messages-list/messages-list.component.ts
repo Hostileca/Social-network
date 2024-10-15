@@ -21,11 +21,11 @@ import {EventBusService} from "../../../Data/Services/event-bus.service";
 export class MessagesListComponent extends PaginationBaseComponent<Message>{
   constructor(private readonly _eventBusService: EventBusService) {
     super();
+    this.StartListening()
   }
 
   @Input() set ChatId(chatId: string) {
     this._chatId = chatId
-    this.StartListening()
   }
 
   private _chatId!: string
@@ -37,15 +37,12 @@ export class MessagesListComponent extends PaginationBaseComponent<Message>{
   }
 
   private OnMessageReceive(message: Message){
-    console.log(message)
-    console.log(this._chatId)
-    if(message.chatId == message.chatId){
+    if(this._chatId && message.chatId == this._chatId){
       this.Entities.push(message)
     }
   }
 
   override ngOnChanges() {
-    this.StartListening()
     super.ngOnChanges();
   }
 }

@@ -1,2 +1,9 @@
-<div class="container">{{ this.Sender? this.Sender.username : 'unknown kitty' }} :
-  {{ this.Message.text }}</div>
+<div [class]="IsMe() ? 'container my-message' : 'container'">
+  <img *ngIf="!IsMe()" ngSrc="{{this.BlogConfig.BlogMainImageByDefaultUrl}}"
+       alt="avatar" class="avatar" width="40" height="40" priority/>
+
+  <div class="message-content">
+    <p *ngIf="!IsMe()" class="sender-name">{{ this.Sender? this.Sender.username : 'unknown kitty' }}</p>
+    <p>{{ this.Message.text }}</p>
+  </div>
+</div>
