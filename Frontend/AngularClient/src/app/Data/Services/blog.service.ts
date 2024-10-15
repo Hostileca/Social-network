@@ -43,6 +43,10 @@ export class BlogService {
       form.append('bio', blogUpdate.bio);
     }
 
+    if(blogUpdate.mainImage){
+      form.append('mainImage', blogUpdate.mainImage);
+    }
+
     return this._httpClient.patch<Blog>(`${ApiConfig.BaseUrl}/blogs/${blogId}`, form);
   }
 }

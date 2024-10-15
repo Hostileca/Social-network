@@ -9,7 +9,6 @@ import {BlogService} from "./blog.service";
 })
 export class CurrentBlogService {
   private _currentBlog: Blog | null = null
-  private _isUpdating: boolean = false
 
   constructor(private readonly _appCookieService: AppCookieService,
               private readonly _blogService: BlogService) {
@@ -37,25 +36,5 @@ export class CurrentBlogService {
   public Logout(){
     this._currentBlog = null
     this._appCookieService.Delete(CookiesName.CurrentBlog)
-  }
-
-  private UpdateBlog(){
-    if(this._isUpdating){
-      return
-    }
-    this._isUpdating = true
-    this._blogService.GetBlogById(this._currentBlog!.id).subscribe({
-      next: blog => {
-        this.SaveBlog(blog)
-      },
-      complete: () => {
-        this._isUpdating = false
-      }
-    })
-  }
-
-  private SaveBlog(blog: Blog){
-    this._currentBlog = blog
-    this._appCookieService.Save<Blog>(CookiesName.CurrentBlog, this._currentBlog)
   }
 }

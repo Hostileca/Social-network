@@ -21,16 +21,4 @@ export class SimpleValidators{
       return  { notEqual: true };
     };
   }
-
-  static ImageFileValidator(control: AbstractControl): ValidationErrors | null {
-    const file: File = control.value;
-
-    if (file) {
-      if (!file.type.startsWith('image/')) {
-        return { invalidFileType: true };
-      }
-    }
-
-    return null;
-  }
 }

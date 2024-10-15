@@ -11,7 +11,7 @@ import {BlogComponent} from "./components/pages/blog/blog.component";
 import {CreateChatComponent} from "./components/pages/create-chat/create-chat.component";
 import {CreatePostComponent} from "./components/pages/create-post/create-post.component";
 import {WallComponent} from "./components/pages/wall/wall.component";
-import {BlogEditComponent} from "./components/pages/blog-edit/blog-edit.component";
+import {EditBlogComponent} from "./components/pages/edit-blog/edit-blog.component";
 
 export const routes: Routes = [
     { path: "sign-in", component: SignInComponent, canActivate: [] },
@@ -24,7 +24,7 @@ export const routes: Routes = [
     //{ path: "my-chats/:chatId", component: ChatDetailsComponent, canActivate: [authGuard, blogGuard] },
     { path: "blogs", component: BlogsComponent, canActivate: [authGuard, blogGuard] },
     { path: "blogs/:blogId", component: BlogComponent, canActivate: [authGuard, blogGuard] },
-    { path: "blogs/:blogId/edit", component: BlogEditComponent, canActivate: [authGuard, blogGuard] },
+    { path: "blogs/:blogId/edit", component: EditBlogComponent, canActivate: [authGuard, blogGuard] },
     { path: "blogs/:blogId/posts/create", component: CreatePostComponent, canActivate: [authGuard, blogGuard] },
     { path: "**", redirectTo: "wall" }
 ];
