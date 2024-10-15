@@ -10,8 +10,6 @@ public class BlogReadDto
     
     public DateTime DateOfBirth { get; set; }
         
-    public string? ImageAttachmentId { get; set; }
-    
     public int PostsCount { get; set; }
     
     public int SubscribersCount { get; set; }

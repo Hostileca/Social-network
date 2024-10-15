@@ -28,16 +28,6 @@ public class UpdateBlogHandler(
         }
         
         existingBlog = request.Adapt<Blog>();
-        
-        var existingImageAttachment = await attachmentRepository.GetAttachmentByIdAndType(
-            request.ImageAttachmentId, AttachmentSimpleTypes.Image, cancellationToken);
-
-        if (existingImageAttachment is null)
-        {
-            throw new NotFoundException(typeof(Attachment).ToString(), request.ImageAttachmentId);
-        }
-        
-        existingBlog.ImageAttachmentId = existingImageAttachment.Id;
 
         await blogRepository.SaveChangesAsync(cancellationToken);
 

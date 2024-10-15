@@ -1,7 +1,9 @@
-﻿using Application.UseCases.BlogCases.Commands.CreateBlogCase;
+﻿using Application.Helpers;
+using Application.UseCases.BlogCases.Commands.CreateBlogCase;
 using Application.UseCases.BlogCases.Commands.UpdateBlogCase;
 using Domain.Entities;
 using Mapster;
+using SharedResources.Consts;
 using SharedResources.Dtos;
 using SharedResources.MessageBroker.Events;
 
@@ -21,7 +23,6 @@ public class BlogMappingConfigurations : IRegister
             .Map(dest => dest.Username, src => src.Username)
             .Map(dest => dest.Bio, src => src.Bio ?? "")
             .Map(dest=> dest.DateOfBirth, src => src.DateOfBirth)
-            .Map(dest => dest.ImageAttachmentId, src => src.ImageAttachmentId ?? "")
             .Map(dest => dest.PostsCount, src => src.Posts != null? src.Posts.Count() : 0)
             .Map(dest => dest.SubscribersCount, src => src.Subscribers != null? src.Subscribers.Count() : 0)
             .Map(dest => dest.SubscriptionsCount, src => src.Subscriptions != null ? src.Subscriptions.Count() : 0);
@@ -34,7 +35,9 @@ public class BlogMappingConfigurations : IRegister
         config.NewConfig<UpdateBlogCommand, Blog>()
             .Ignore(dest => dest.Id)
             .Ignore(dest => dest.UserId)
-            .Ignore(dest => dest.ImageAttachmentId)
+            .Map(dest => dest.MainImage, src => Base64Converter.ConvertToBase64(src.MainImage), 
+                    src => src.MainImage != null && 
+                           MimeTypes.GetMimeType(src.MainImage.FileName).Contains(AttachmentSimpleTypes.Image))
             .Map(dest => dest.DateOfBirth, src => src.DateOfBirth, 
                 src=> src.DateOfBirth != DateTime.MinValue)
             .Map(dest => dest.Username, src => src.Username, 

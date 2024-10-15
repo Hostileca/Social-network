@@ -3,6 +3,7 @@ using Application.UseCases.BlogCases.Commands.DeleteBlogCase;
 using Application.UseCases.BlogCases.Commands.UpdateBlogCase;
 using Application.UseCases.BlogCases.Queries.GetAllBlogsCase;
 using Application.UseCases.BlogCases.Queries.GetBlogByIdCase;
+using Application.UseCases.BlogCases.Queries.GetBlogMainImageById;
 using Application.UseCases.BlogCases.Queries.GetBlogsByFilterCase;
 using Application.UseCases.BlogCases.Queries.GetUserBlogsCase;
 using Application.UseCases.LikeCases.Queries.GetBlogLikesCase;
@@ -56,6 +57,17 @@ public class BlogController(
         
         return Ok(blog);
     }
+    
+    [HttpGet("{blogId}/main-image")]
+    public async Task<IActionResult> GetBlogMainImageById(string blogId, [FromQuery]GetBlogMainImageByIdQuery getBlogMainImageByIdQuery, 
+        CancellationToken cancellationToken = default)
+    {
+        getBlogMainImageByIdQuery.BlogId = blogId;
+        
+        var image = await mediator.Send(getBlogMainImageByIdQuery, cancellationToken);
+        
+        return File(image, "image/png");
+    }
 
     [HttpPost]
     public async Task<IActionResult> CreateBlog([FromBody]CreateBlogCommand createBlogCommand, 
@@ -69,7 +81,7 @@ public class BlogController(
     }
 
     [HttpPatch("{blogId}")]
-    public async Task<IActionResult> UpdateBlog(string blogId, [FromBody]UpdateBlogCommand updateBlogCommand,
+    public async Task<IActionResult> UpdateBlog(string blogId, [FromForm]UpdateBlogCommand updateBlogCommand,
         CancellationToken cancellationToken = default)
     {
         updateBlogCommand.UserId = UserId;

@@ -23,6 +23,7 @@ public class PostMappingConfiguration : IRegister
             .Map(dest => dest.CreatedAt, src => DateTime.UtcNow)
             .Map(dest => dest.OwnerId, src => src.BlogId)
             .Map(dest => dest.Attachments,
-                src => src.Attachments ?? new List<IFormFile>());
+                src => src.Attachments.Adapt<IEnumerable<Attachment>>(), 
+                src => src.Attachments != null);
     }
 }

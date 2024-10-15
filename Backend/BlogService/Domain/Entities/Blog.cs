@@ -13,7 +13,7 @@ public class Blog : EntityBase
     
     public DateTime DateOfBirth { get; set; }
     
-    public string? ImageAttachmentId { get; set; }
+    public string? MainImage { get; set; }
     
     public virtual IEnumerable<Subscription> Subscribers { get; set; }
     

@@ -12,6 +12,6 @@ public class UpdateBlogCommandValidator : AbstractValidator<UpdateBlogCommand>
         RuleFor(x => x.Bio)
             .MaximumLength(70);
 
-        RuleFor(x => x.ImageAttachmentId);
+        RuleFor(x => x.MainImage);
     }
 }

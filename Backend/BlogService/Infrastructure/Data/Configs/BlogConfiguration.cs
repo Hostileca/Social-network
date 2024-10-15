@@ -26,7 +26,7 @@ public class BlogConfiguration : IEntityTypeConfiguration<Blog>
             .Property(x => x.DateOfBirth);
         
         builder
-            .Property(x => x.ImageAttachmentId);
+            .Property(x => x.MainImage);
         
         builder
             .HasMany(x => x.Subscribers)
