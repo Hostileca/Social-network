@@ -13,7 +13,6 @@ namespace Application.UseCases.BlogCases.Commands.UpdateBlogCase;
 
 public class UpdateBlogHandler(
     IBlogRepository blogRepository,
-    IAttachmentRepository attachmentRepository,
     ICacheRepository cacheRepository,
     IPublishEndpoint publishEndpoint)
     : IRequestHandler<UpdateBlogCommand, BlogReadDto>
@@ -27,7 +26,7 @@ public class UpdateBlogHandler(
             throw new NotFoundException(typeof(Blog).ToString(), request.BlogId);
         }
         
-        existingBlog = request.Adapt<Blog>();
+        request.Adapt(existingBlog);
 
         await blogRepository.SaveChangesAsync(cancellationToken);
 
