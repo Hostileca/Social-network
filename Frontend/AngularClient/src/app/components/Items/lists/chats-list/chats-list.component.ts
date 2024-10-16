@@ -1,11 +1,11 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {ChatItemComponent} from "../chat-item/chat-item.component";
-import {Chat} from "../../../Data/Models/Chat/Chat";
+import {ChatItemComponent} from "../../chat-item/chat-item.component";
+import {Chat} from "../../../../Data/Models/Chat/Chat";
 import {NgForOf, NgIf} from "@angular/common";
 import {
   PaginationBaseComponent
-} from "../../base/pagination-component-base/pagination-base.component";
-import {ChatDetailsComponent} from "../chat-details/chat-details.component";
+} from "../pagination-component-base/pagination-base.component";
+import {ChatDetailsComponent} from "../../chat-details/chat-details.component";
 
 @Component({
   selector: 'app-chats-list',

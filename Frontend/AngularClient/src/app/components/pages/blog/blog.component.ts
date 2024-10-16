@@ -14,7 +14,7 @@ import {PostService} from "../../../Data/Services/post.service";
 import {PostItemComponent} from "../../Items/post-item/post-item.component";
 import {BlogConfig} from "../../../Data/Consts/BlogConfig";
 import {PageSettings} from "../../../Data/Queries/PageSettings";
-import {PostsListComponent} from "../../Items/posts-list/posts-list.component";
+import {PostsListComponent} from "../../Items/lists/posts-list/posts-list.component";
 import {Observable} from "rxjs";
 import {AgePipe} from "../../../Data/Pipes/age.pipe";
 import {isFunction} from "rxjs/internal/util/isFunction";

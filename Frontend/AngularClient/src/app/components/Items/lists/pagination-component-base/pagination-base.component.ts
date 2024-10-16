@@ -1,5 +1,5 @@
 import {Component, Directive, Input, OnChanges, OnInit} from '@angular/core';
-import {PageSettings} from "../../../Data/Queries/PageSettings";
+import {PageSettings} from "../../../../Data/Queries/PageSettings";
 import {fromEvent, Observable, tap} from "rxjs";
 
 @Component({template: ``})

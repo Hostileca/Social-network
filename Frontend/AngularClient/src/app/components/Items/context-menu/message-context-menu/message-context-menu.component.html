@@ -1,0 +1,9 @@
+<div class="container" *ngIf="Visible && Message" [style.top.px]="YPos" [style.left.px]="XPos">
+  <ul>
+    <li (mouseenter)="ShowReactions()">Reactions</li>
+    <li (click)="CopyMessage()">Copy</li>
+    <li>Delete</li>
+  </ul>
+</div>
+
+<app-reactions-context-menu [OnReactionSelect]="OnReactionSelect"></app-reactions-context-menu>

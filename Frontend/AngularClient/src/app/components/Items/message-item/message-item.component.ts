@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, HostListener, Input, OnInit, ViewChild} from '@angular/core';
 import {Message} from "../../../Data/Models/Message/Message";
 import {ChatMember} from "../../../Data/Models/ChatMember/Chat-member";
 import {BlogService} from "../../../Data/Services/blog.service";
@@ -6,6 +6,7 @@ import {Blog} from "../../../Data/Models/Blog/Blog";
 import {DatePipe, NgIf, NgOptimizedImage} from "@angular/common";
 import {CurrentBlogService} from "../../../Data/Services/current-blog.service";
 import {BlogConfig} from "../../../Data/Consts/BlogConfig";
+import {MessageContextMenuComponent} from "../context-menu/message-context-menu/message-context-menu.component";
 
 @Component({
   selector: 'app-message-item',
@@ -13,12 +14,15 @@ import {BlogConfig} from "../../../Data/Consts/BlogConfig";
   imports: [
     DatePipe,
     NgIf,
-    NgOptimizedImage
+    NgOptimizedImage,
+    MessageContextMenuComponent
   ],
   templateUrl: './message-item.component.html',
   styleUrl: './message-item.component.css'
 })
 export class MessageItemComponent implements OnInit {
+  @ViewChild(MessageContextMenuComponent) ContextMenu!: MessageContextMenuComponent;
+
   @Input() Message!: Message
   public Sender!: Blog
 
@@ -34,6 +38,13 @@ export class MessageItemComponent implements OnInit {
 
   public IsMe() : boolean{
     return this._currentBlogService.GetCurrentBlog().id == this.Message.senderId
+  }
+
+  onRightClick(event: MouseEvent) {
+    event.preventDefault();
+    if(this.ContextMenu){
+      this.ContextMenu.ShowMenu(event.clientX, event.clientY);
+    }
   }
 
   protected readonly BlogConfig = BlogConfig;

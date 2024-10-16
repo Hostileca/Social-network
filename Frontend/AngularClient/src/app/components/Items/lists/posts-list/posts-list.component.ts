@@ -1,10 +1,10 @@
 import {Component} from '@angular/core';
-import {Post} from "../../../Data/Models/Post/Post";
-import {PostItemComponent} from "../post-item/post-item.component";
+import {Post} from "../../../../Data/Models/Post/Post";
+import {PostItemComponent} from "../../post-item/post-item.component";
 import {NgForOf, NgIf} from "@angular/common";
 import {
   PaginationBaseComponent
-} from "../../base/pagination-component-base/pagination-base.component";
+} from "../pagination-component-base/pagination-base.component";
 
 @Component({
   selector: 'app-posts-list',

@@ -1,12 +1,12 @@
 import {Component, Input} from '@angular/core';
 import {
   PaginationBaseComponent
-} from "../../base/pagination-component-base/pagination-base.component";
-import {Message} from "../../../Data/Models/Message/Message";
+} from "../pagination-component-base/pagination-base.component";
+import {Message} from "../../../../Data/Models/Message/Message";
 import {NgForOf} from "@angular/common";
-import {MessageItemComponent} from "../message-item/message-item.component";
-import {Events} from "../../../Data/Hubs/Events";
-import {EventBusService} from "../../../Data/Services/event-bus.service";
+import {MessageItemComponent} from "../../message-item/message-item.component";
+import {Events} from "../../../../Data/Hubs/Events";
+import {EventBusService} from "../../../../Data/Services/event-bus.service";
 
 @Component({
   selector: 'app-messages-list',

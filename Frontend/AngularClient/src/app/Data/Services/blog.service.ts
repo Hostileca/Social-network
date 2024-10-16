@@ -6,6 +6,7 @@ import {ApiConfig} from "../Consts/ApiConfig";
 import {PageSettings} from "../Queries/PageSettings";
 import {HttpHelper} from "../../Helpers/http-helper";
 import {BlogUpdate} from "../Models/Blog/Blog-update";
+import {isFunction} from "rxjs/internal/util/isFunction";
 
 @Injectable({
   providedIn: 'root'
@@ -35,7 +36,7 @@ export class BlogService {
     return this._httpClient.post<Blog>(`${ApiConfig.BaseUrl}/blogs`, blog);
   }
 
-  public PatchBlog(blogId: string, blogUpdate: BlogUpdate): Observable<Blog> {
+  public PutBlog(blogId: string, blogUpdate: BlogUpdate): Observable<Blog> {
     let form = new FormData();
     form.append('username', blogUpdate.username);
 
@@ -47,6 +48,14 @@ export class BlogService {
       form.append('mainImage', blogUpdate.mainImage);
     }
 
-    return this._httpClient.patch<Blog>(`${ApiConfig.BaseUrl}/blogs/${blogId}`, form);
+    if(blogUpdate.mainImage){
+      form.append('mainImage', blogUpdate.mainImage);
+    }
+
+    if(isFunction(blogUpdate.dateOfBirth?.getDate())){
+      form.append('dateOfBirth', blogUpdate.dateOfBirth?.toISOString());
+    }
+
+    return this._httpClient.put<Blog>(`${ApiConfig.BaseUrl}/blogs/${blogId}`, form);
   }
 }

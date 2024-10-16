@@ -47,7 +47,7 @@ export class EditBlogComponent {
 
   public OnSubmit(){
     if(this.Form.valid){
-      this._blogService.PatchBlog(this.Blog.id, this.Form.value).subscribe({
+      this._blogService.PutBlog(this.Blog.id, this.Form.value).subscribe({
         next: blog => {
           this.Blog = blog
           this._currentBlogService.SelectBlog(blog)
