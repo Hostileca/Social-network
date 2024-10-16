@@ -3,6 +3,7 @@ import {inject} from "@angular/core";
 import {AuthService} from "../Data/Services/auth.service";
 import {catchError, switchMap, throwError, of, BehaviorSubject, filter, take} from "rxjs";
 import {CurrentBlogService} from "../Data/Services/current-blog.service";
+import {Router} from "@angular/router";
 
 let isRefreshing = false;
 let refreshTokenSubject: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
@@ -46,7 +47,7 @@ const HandleTokenRefresh = (
         isRefreshing = false;
         authService.Logout();
         currentBlogService.Logout();
-        console.log(error);
+        inject(Router).navigateByUrl("/")
         return throwError(error);
       })
     );

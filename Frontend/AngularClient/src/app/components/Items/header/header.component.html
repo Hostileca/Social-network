@@ -8,9 +8,8 @@
 
     <div *ngIf="IsBlogMenuOpen" class="blog-menu">
       <ul>
-        <li>
-          <button class="btn" (click)="Logout()">Logout</button>
-        </li>
+        <li (click)="ChangeCurrentBlog()">Change blog</li>
+        <li (click)="Logout()">Logout</li>
       </ul>
     </div>
   </div>

@@ -6,6 +6,10 @@
     <p *ngIf="!IsMe()" class="sender-name">{{ this.Sender? this.Sender.username : 'unknown kitty' }}</p>
     <p>{{ this.Message.text }}</p>
   </div>
+
+  <div class="reactions" *ngFor="let reaction of Reactions">
+      <p>{{reaction.emoji}}</p>
+  </div>
 </div>
 
-<app-message-context-menu [Message]="this.Message"></app-message-context-menu>
+<app-message-context-menu [MessageComponent]="this"></app-message-context-menu>

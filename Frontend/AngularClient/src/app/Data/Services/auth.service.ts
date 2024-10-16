@@ -67,6 +67,5 @@ export class AuthService {
   public Logout(){
     this.Tokens = null
     this._appCookieService.Delete(CookiesName.Tokens)
-    this._router.navigateByUrl("/sign-in")
   }
 }

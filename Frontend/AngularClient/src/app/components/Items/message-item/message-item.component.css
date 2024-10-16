@@ -32,3 +32,11 @@
   border-radius: 50%;
   margin-right: 10px;
 }
+
+.reactions{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+}

@@ -6,6 +6,7 @@ import {ReactionsContextMenuComponent} from "../reactions-context-menu/reactions
 import {ReactionService} from "../../../../Data/Services/reaction.service";
 import {CurrentBlogService} from "../../../../Data/Services/current-blog.service";
 import { SendReaction } from '../../../../Data/Models/Reaction/Send-reaction';
+import {MessageItemComponent} from "../../message-item/message-item.component";
 
 @Component({
   selector: 'app-message-context-menu',
@@ -18,7 +19,7 @@ import { SendReaction } from '../../../../Data/Models/Reaction/Send-reaction';
   styleUrl: './message-context-menu.component.css'
 })
 export class MessageContextMenuComponent extends ContextMenuBaseComponent {
-  @Input({required: true}) Message?: Message
+  @Input({required: true}) MessageComponent?: MessageItemComponent
   @ViewChild(ReactionsContextMenuComponent) ReactionsContextMenu?: ReactionsContextMenuComponent
   protected OnReactionSelect!: (emoji: string) => void
 
@@ -29,8 +30,8 @@ export class MessageContextMenuComponent extends ContextMenuBaseComponent {
   }
 
   protected CopyMessage() {
-    if (this.Message) {
-      navigator.clipboard.writeText(this.Message.text)
+    if (this.MessageComponent) {
+      navigator.clipboard.writeText(this.MessageComponent.Message.text)
     }
   }
 
@@ -38,7 +39,7 @@ export class MessageContextMenuComponent extends ContextMenuBaseComponent {
     const sendReaction: SendReaction = {
       emoji: emoji
     }
-    this._reactionService.SendReaction(this.Message!.id, this._currentBlogService.GetCurrentBlog().id, sendReaction).subscribe({
+    this._reactionService.SendReaction(this.MessageComponent!.Message.id, this._currentBlogService.GetCurrentBlog().id, sendReaction).subscribe({
       next: (reaction) => console.log(reaction),
       error: (error) => console.log(error)
     })
