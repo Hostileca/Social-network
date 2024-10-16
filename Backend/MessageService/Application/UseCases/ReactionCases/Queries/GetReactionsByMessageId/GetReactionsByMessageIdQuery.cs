@@ -10,8 +10,7 @@ public class GetReactionsByMessageIdQuery : IRequest<IEnumerable<ReactionReadDto
     public string? UserId { get; set; } 
     
     [BindNever]
-    public Guid UserBlogId { get; set; }
-    
-    [BindNever]
     public Guid MessageId { get; set; }
+    
+    public Guid UserBlogId { get; set; }
 }
