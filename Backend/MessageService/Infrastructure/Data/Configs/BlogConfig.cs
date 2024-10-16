@@ -37,7 +37,7 @@ public class BlogConfig : IEntityTypeConfiguration<Blog>
         builder
             .HasMany(x => x.SendedReactions)
             .WithOne(x => x.Sender)
-            .OnDelete(DeleteBehavior.SetNull);
+            .OnDelete(DeleteBehavior.Cascade);
 
         builder
             .HasMany(x => x.Connections)
