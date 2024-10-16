@@ -45,4 +45,9 @@ export class MessagesListComponent extends PaginationBaseComponent<Message>{
   override ngOnChanges() {
     super.ngOnChanges();
   }
+
+  override OnLoadEntities(entities: Message[]) {
+    entities = entities.reverse()
+    this.Entities = [...entities, ...this.Entities]
+  }
 }

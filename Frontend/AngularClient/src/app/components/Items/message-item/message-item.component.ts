@@ -9,6 +9,9 @@ import {BlogConfig} from "../../../Data/Consts/BlogConfig";
 import {MessageContextMenuComponent} from "../context-menu/message-context-menu/message-context-menu.component";
 import {Reaction} from "../../../Data/Models/Reaction/Reaction";
 import {ReactionService} from "../../../Data/Services/reaction.service";
+import {EventBusService} from "../../../Data/Services/event-bus.service";
+import {Events} from "../../../Data/Hubs/Events";
+import {ReactionsFooterComponent} from "../reactions-footer/reactions-footer.component";
 
 @Component({
   selector: 'app-message-item',
@@ -18,7 +21,8 @@ import {ReactionService} from "../../../Data/Services/reaction.service";
     NgIf,
     NgOptimizedImage,
     MessageContextMenuComponent,
-    NgForOf
+    NgForOf,
+    ReactionsFooterComponent
   ],
   templateUrl: './message-item.component.html',
   styleUrl: './message-item.component.css'
@@ -29,23 +33,20 @@ export class MessageItemComponent{
   @Input() set MessageInput(message: Message){
     this.Message = message
     this.LoadSender()
-    this.LoadReactions()
   }
 
   public Message!: Message
   public Sender!: Blog
-  public Reactions: Reaction[] = []
 
   constructor(private readonly _blogService: BlogService,
-              private readonly _currentBlogService: CurrentBlogService,
-              private readonly _reactionService: ReactionService) {
+              private readonly _currentBlogService: CurrentBlogService) {
   }
 
   public IsMe() : boolean{
     return this._currentBlogService.GetCurrentBlog().id == this.Message.senderId
   }
 
-  onRightClick(event: MouseEvent) {
+  public OnRightClick(event: MouseEvent) {
     event.preventDefault();
     if(this.ContextMenu){
       this.ContextMenu.ShowMenu(event.clientX, event.clientY);
@@ -55,12 +56,6 @@ export class MessageItemComponent{
   private LoadSender(){
     this._blogService.GetBlogById(this.Message.senderId).subscribe(blog => {
       this.Sender = blog
-    })
-  }
-
-  private LoadReactions(){
-    this._reactionService.GetReactions(this.Message.id, this._currentBlogService.GetCurrentBlog().id).subscribe(reactions => {
-        this.Reactions = reactions
     })
   }
 

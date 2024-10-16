@@ -20,7 +20,7 @@ export abstract class PaginationBaseComponent<TEntity> implements OnInit, OnChan
     this._entitySource = entitySource
   }
 
-  private _entitySource!: (pageSettings: PageSettings) => Observable<TEntity[]>
+  protected _entitySource!: (pageSettings: PageSettings) => Observable<TEntity[]>
   private _isLoading: boolean = false
   private _isEnded: boolean = false
 
@@ -71,8 +71,8 @@ export abstract class PaginationBaseComponent<TEntity> implements OnInit, OnChan
     this._isLoading = true
     this._entitySource(this._pageSettings).subscribe({
       next: entities => {
-        this.Entities = [...this.Entities, ...entities]
-        this.CheckIsPostsEnded(entities)
+        this.OnLoadEntities(entities)
+        this.UpdateIsPostsEnded(entities)
         this._pageSettings.pageNumber += 1
       },
       error: err => {
@@ -84,7 +84,11 @@ export abstract class PaginationBaseComponent<TEntity> implements OnInit, OnChan
     })
   }
 
-  private CheckIsPostsEnded(entities: TEntity[]) {
+  protected OnLoadEntities(entities: TEntity[]){
+    this.Entities = [...this.Entities, ...entities]
+  }
+
+  private UpdateIsPostsEnded(entities: TEntity[]) {
     this._isEnded = entities.length < this._pageSettings.pageSize
   }
 

@@ -1,0 +1,5 @@
+<div class="reactions" *ngIf="Reactions.length">
+  <div *ngFor="let reaction of Reactions">
+    <p [class]="IsMyReaction(reaction) ? 'my-reaction' : ''" (click)="RemoveReaction(reaction)">{{ reaction.emoji }}</p>
+  </div>
+</div>

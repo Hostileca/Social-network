@@ -3,40 +3,58 @@
   width: fit-content;
   word-break: break-word;
   margin-left: 10px;
-  padding: 0 10px;
-  margin-top: 10px;
-  margin-bottom: 10px;
   display: flex;
-  flex-direction: row;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 5px 20px;
+  margin-top: 20px;
 }
 
-.my-message{
+.my-message {
   margin-left: auto;
   margin-right: 10px;
   background-color: var(--primary-color);
   color: var(--secondary-color);
 }
 
-.sender-name{
+.sender-name {
   color: var(--primary-dark);
   font-weight: bold;
 }
 
-.message-content {
-}
-
-.container .avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  margin-right: 10px;
-}
-
-.reactions{
+.message {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
-  margin-right: 10px;
+  justify-content: flex-start;
+  flex: 1;
+  position: relative;
+  padding-bottom: 20px;
 }
+
+.message-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.message-content p {
+  margin: 0;
+}
+
+.avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+  margin-top: 0;
+}
+
+.date{
+  position: absolute;
+  font-size: 13px;
+  margin-top: 5px;
+  right: 0;
+  bottom: 0;
+}
+
