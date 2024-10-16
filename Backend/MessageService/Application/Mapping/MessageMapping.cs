@@ -28,7 +28,7 @@ public class MessageMapping : IRegister
             .Map(dest => dest.Delay, src => src.Delay);
         
         config.NewConfig<Message, MessageReadDto>()
-            .Map(dest =>  dest.Id, src => Guid.NewGuid())
+            .Map(dest =>  dest.Id, src => src.Id)
             .Map(dest => dest.SenderId, src => src.SenderId)
             .Map(dest => dest.Date, src => src.Date)
             .Map(dest => dest.Text, src => src.Text)
@@ -36,7 +36,7 @@ public class MessageMapping : IRegister
                 src => src.Attachments != null ? src.Attachments.Select(x => x.Id) : new List<Guid>());
 
         config.NewConfig<Message, DelayedMessageReadDto>()
-            .Map(dest => dest.Id, src => Guid.NewGuid())
+            .Map(dest => dest.Id, src => src.Id)
             .Map(dest => dest.SenderId, src => src.SenderId)
             .Map(dest => dest.Date, src => src.Date)
             .Map(dest => dest.Text, src => src.Text)
