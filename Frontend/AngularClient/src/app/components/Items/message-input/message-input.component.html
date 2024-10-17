@@ -1,5 +1,5 @@
 <div class="message-input-container">
-  <form [formGroup]="Form" (ngSubmit)="SendMessage()">
+  <form [formGroup]="Form">
     <input
       formControlName="text"
       type="text"
@@ -7,11 +7,11 @@
       aria-label="Message input"
     />
 
-    <input  *ngIf="MessageType == MessageTypes.delayed"
-            formControlName="schedule" type="datetime-local" min="{{ Today }}">
+    <input *ngIf="MessageType == MessageTypes.delayed"
+           formControlName="date" type="datetime-local" min="{{ Today }}">
 
     <button (click)="MessageType == MessageTypes.simple ? SendMessage()
-    : MessageType == MessageTypes.delayed ? SendDelayedMessage() : SendMessage()"
+    : MessageType == MessageTypes.delayed ? SendDelayedMessage() : null"
       aria-label="Send message" (contextmenu)="OpenContextMenu($event)">
       <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M2 21L23 12L2 3V10L17 12L2 14V21Z" fill="white"/>

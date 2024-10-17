@@ -31,7 +31,7 @@ export class MessageInputComponent {
               protected readonly _currentBlogService: CurrentBlogService) {
     this.Form = new FormGroup({
       text: new FormControl<string>('', [Validators.required, Validators.minLength(1)]),
-      schedule: new FormControl<Date | null>(null, [SimpleValidators.IsFutureDate])
+      date: new FormControl<Date | null>(null, [SimpleValidators.IsFutureDate])
     });
   }
 
@@ -39,7 +39,7 @@ export class MessageInputComponent {
     if(this.SendMessageContextMenu){
       return this.SendMessageContextMenu.MessageType
     }
-    return MessageTypes.simple
+    return null
   }
 
   public SendMessage() {
@@ -60,7 +60,7 @@ export class MessageInputComponent {
   }
 
   public SendDelayedMessage(){
-    if(this.Form.invalid || !this.Form.value.schedule){
+    if(this.Form.invalid || !this.Form.value.date){
       return
     }
 

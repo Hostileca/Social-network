@@ -56,12 +56,14 @@ export class ReactionsFooterComponent {
   }
 
   private OnReactionRemoved(reaction: Reaction){
-    console.log("check")
     this.Reactions = this.Reactions.filter(r => r.id != reaction.id)
   }
 
   public RemoveReaction(reaction: Reaction){
-    if(!this.IsMyReaction(reaction)) return
+    if(!this.IsMyReaction(reaction)) {
+      return
+    }
+
     this._reactionService.RemoveReaction(this.Message.id, this._currentBlogService.GetCurrentBlog().id,
       reaction.id).subscribe()
   }

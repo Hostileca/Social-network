@@ -34,10 +34,10 @@ export class MessageService {
   public SendDelayedMessage(chatId: string, userBlogId: string, sendDelayedMessage: SendDelayedMessage): Observable<Message> {
     let formData = new FormData();
     formData = this.FillSendMessageForm(formData, sendDelayedMessage)
-    const now = new Date(Date.now());
-
-    const dateTimeOffset = new Date(now.getTime() - sendDelayedMessage.Date.getTime())
-    formData.append('delay', dateTimeOffset.toString())
+    const now = new Date();
+    sendDelayedMessage.date = new Date(sendDelayedMessage.date)
+    const dateTimeOffset = new Date(now.getTime() - sendDelayedMessage.date.getTime())
+    formData.append('delay', dateTimeOffset.toISOString())
 
     let params = new HttpParams()
     params = HttpHelper.AddUserBlogIdToQuery(params, userBlogId)
