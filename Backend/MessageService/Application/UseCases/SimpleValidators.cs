@@ -25,7 +25,7 @@ public static class SimpleValidators
     {
         return ruleBuilder
             .NotEmptyAndNotNull()
-            .Matches($"^(?:{EmojiPattern})+{1}$")
+            .Matches($"^(?:{EmojiPattern})$")
             .WithMessage("{PropertyName} must be an emoji and the only one");
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Domain.Filters;
 using Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,9 +19,10 @@ public class RepositoryBase<TEntity>
         _dbSet = context.Set<TEntity>();
     }
 
-    public async Task<IEnumerable<TEntity>> GetAllAsync(CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<TEntity>> GetAllAsync(PagedFilter pagedFilter, CancellationToken cancellationToken = default)
     {
-        return await _dbSet.ToListAsync(cancellationToken);
+        return await GetPaged(pagedFilter)
+            .ToListAsync(cancellationToken);
     }
 
     public async Task<TEntity> GetByIdAsync(string id, CancellationToken cancellationToken = default)
@@ -41,5 +43,12 @@ public class RepositoryBase<TEntity>
     public async Task SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         await _context.SaveChangesAsync(cancellationToken);
+    }
+    
+    protected IQueryable<TEntity> GetPaged(PagedFilter pagedFilter)
+    {
+        return _dbSet
+            .Skip((pagedFilter.PageNumber - 1) * pagedFilter.PageSize)
+            .Take(pagedFilter.PageSize);
     }
 }

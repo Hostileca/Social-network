@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Domain.Filters;
 using Domain.Repositories;
 using Mapster;
 using MediatR;
@@ -9,7 +10,8 @@ using SharedResources.Exceptions;
 namespace Application.UseCases.SubscriptionCases.Queries.GetBlogSubscribersCase;
 
 public class GetBlogSubscribersHandler(
-    IBlogRepository blogRepository) 
+    IBlogRepository blogRepository,
+    ISubscriberRepository subscriberRepository) 
     : IRequestHandler<GetBlogSubscribersQuery, IEnumerable<SubscriberReadDto>>
 {
     public async Task<IEnumerable<SubscriberReadDto>> Handle(GetBlogSubscribersQuery request, CancellationToken cancellationToken)
@@ -21,6 +23,11 @@ public class GetBlogSubscribersHandler(
             throw new NotFoundException(typeof(Blog).ToString(), request.BlogId);
         }
         
-        return blog.Subscribers.Adapt<IEnumerable<SubscriberReadDto>>();
+        var pagedFilter = request.Adapt<PagedFilter>();
+        
+        var subscribers = await subscriberRepository.GetBlogSubscribers(pagedFilter, 
+            request.BlogId, cancellationToken);
+        
+        return subscribers.Adapt<IEnumerable<SubscriberReadDto>>();
     }
 }

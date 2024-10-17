@@ -20,7 +20,7 @@ public class SetRoleToMemberHandler(
         
         if (chatMember is null)
         {
-            throw new NotFoundException(typeof(ChatMember).ToString(), request.ChatMemberId.ToString());
+            throw new NotFoundException(typeof(ChatMember).ToString(), request.MemberId.ToString());
         }
         
         var userBlogMember = chatMember.Chat.Members.FirstOrDefault(m => m.BlogId == request.UserBlogId &&

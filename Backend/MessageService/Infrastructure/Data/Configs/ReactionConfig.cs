@@ -23,6 +23,7 @@ public class ReactionConfig : IEntityTypeConfiguration<Reaction>
         builder
             .HasOne(x => x.Sender)
             .WithMany(x => x.SendedReactions)
-            .HasForeignKey(x => x.SenderId);
+            .HasForeignKey(x => x.SenderId)
+            .IsRequired();
     }
 }

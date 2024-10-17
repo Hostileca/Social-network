@@ -15,36 +15,34 @@ public class ChatController(
     : ControllerBase
 {
     [HttpGet]
-    public async Task<IActionResult> GetChats([FromQuery]Guid userBlogId, CancellationToken cancellationToken = default)
+    public async Task<IActionResult> GetChats([FromQuery]GetBlogChatsQuery getBlogChatsQuery,
+        CancellationToken cancellationToken = default)
     {
-        var chats = await mediator.Send(new GetBlogChatsQuery
-        {
-            UserId = UserId,
-            UserBlogId = userBlogId
-        }, cancellationToken);
+        getBlogChatsQuery.UserId = UserId;
+        
+        var chats = await mediator.Send(getBlogChatsQuery, cancellationToken);
 
         return Ok(chats);
     }
     
     [HttpGet("{chatId}")]
-    public async Task<IActionResult> GetChatById(Guid chatId, [FromQuery]Guid userBlogId, 
+    public async Task<IActionResult> GetChatById(Guid chatId, [FromQuery]GetBlogChatByIdQuery getBlogChatByIdQuery, 
         CancellationToken cancellationToken = default)
     {
-        var chats = await mediator.Send(new GetBlogChatByIdQuery
-        {
-            UserId = UserId,
-            ChatId = chatId,
-            UserBlogId = userBlogId
-        }, cancellationToken);
+        getBlogChatByIdQuery.UserId = UserId;
+        getBlogChatByIdQuery.ChatId = chatId;
+            
+        var chats = await mediator.Send(getBlogChatByIdQuery, cancellationToken);
 
         return Ok(chats);
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateChat(CreateChatCommand createChatCommand, 
+    public async Task<IActionResult> CreateChat([FromQuery]Guid userBlogId, [FromBody]CreateChatCommand createChatCommand, 
         CancellationToken cancellationToken = default)
     {
         createChatCommand.UserId = UserId;
+        createChatCommand.UserBlogId = userBlogId;
 
         var chat = await mediator.Send(createChatCommand, cancellationToken);
 
@@ -52,11 +50,11 @@ public class ChatController(
     }
     
     [HttpDelete("{chatId}")]
-    public async Task<IActionResult> DeleteChat(Guid chatId, DeleteChatCommand deleteChatCommand,
+    public async Task<IActionResult> DeleteChat(Guid chatId, [FromQuery]DeleteChatCommand deleteChatCommand,
         CancellationToken cancellationToken = default)
     {
-        deleteChatCommand.ChatId = chatId;
         deleteChatCommand.UserId = UserId;
+        deleteChatCommand.ChatId = chatId;
 
         var chat = await mediator.Send(deleteChatCommand, cancellationToken);
 
@@ -64,11 +62,11 @@ public class ChatController(
     }
     
     [HttpDelete("{chatId}/leave")]
-    public async Task<IActionResult> LeaveChat(Guid chatId, LeaveChatCommand leaveChatCommand,
+    public async Task<IActionResult> LeaveChat(Guid chatId, [FromQuery]LeaveChatCommand leaveChatCommand,
         CancellationToken cancellationToken = default)
     {
-        leaveChatCommand.ChatId = chatId;
         leaveChatCommand.UserId = UserId;
+        leaveChatCommand.ChatId = chatId;
 
         var chat = await mediator.Send(leaveChatCommand, cancellationToken);
 

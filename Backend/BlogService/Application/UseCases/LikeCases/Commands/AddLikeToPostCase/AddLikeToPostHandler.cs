@@ -15,11 +15,11 @@ public class AddLikeToPostHandler(
 {
     public async Task<PostLikesReadDto> Handle(AddLikeToPostCommand request, CancellationToken cancellationToken)
     {
-        var blog = await blogRepository.GetByIdAndUserIdAsync(request.BlogId, request.UserId, cancellationToken);
+        var blog = await blogRepository.GetByIdAndUserIdAsync(request.UserBlogId, request.UserId, cancellationToken);
 
         if (blog is null)
         {
-            throw new NotFoundException(typeof(Blog).ToString(), request.BlogId);
+            throw new NotFoundException(typeof(Blog).ToString(), request.UserBlogId);
         }
         
         var post = await postRepository.GetByIdAsync(request.PostId, cancellationToken);
@@ -29,7 +29,7 @@ public class AddLikeToPostHandler(
             throw new NotFoundException(typeof(Post).ToString(), request.PostId);
         }
 
-        if (post.Likes.Any(x => x.SenderId == request.BlogId))
+        if (post.Likes.Any(x => x.SenderId == request.UserBlogId))
         {
             throw new AlreadyExistsException(typeof(Like).ToString());
         }

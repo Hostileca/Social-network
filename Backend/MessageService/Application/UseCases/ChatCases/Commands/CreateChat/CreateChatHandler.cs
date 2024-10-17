@@ -64,8 +64,9 @@ public class CreateChatHandler(
         await chatRepository.SaveChangesAsync(cancellationToken);
 
         var chatReadDto = chat.Adapt<ChatReadDto>();
+        var chatMembers = members.Adapt<IEnumerable<ChatMemberReadDto>>();
 
-        await chatNotificationService.CreateChatAsync(chatReadDto, cancellationToken);
+        await chatNotificationService.CreateChatAsync(chatReadDto, chatMembers, cancellationToken);
         
         return chatReadDto;
     }

@@ -6,6 +6,8 @@ public class Post : EntityBase
 {
     public string Content { get; set; }
     
+    public DateTime CreatedAt { get; set; }
+    
     public virtual Blog Owner { get; set; }
     
     public string OwnerId { get; set; }

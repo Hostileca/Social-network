@@ -11,9 +11,9 @@ public class ChatNotificationService(
     IBlogConnectionRepository blogConnectionRepository)
     : IChatNotificationService
 {
-    public async Task CreateChatAsync(ChatReadDto chatReadDto, CancellationToken cancellationToken)
+    public async Task CreateChatAsync(ChatReadDto chatReadDto, IEnumerable<ChatMemberReadDto> chatMembers, CancellationToken cancellationToken)
     {
-        foreach (var chatMember in chatReadDto.Members)
+        foreach (var chatMember in chatMembers)
         {
             var blogConnections = await blogConnectionRepository.GetConnectionsByBlogId(
                 chatMember.Blog.Id, cancellationToken);
@@ -29,12 +29,12 @@ public class ChatNotificationService(
             ClientEvents.ChatCreated, chatReadDto, cancellationToken);            
     }
     
-    public async Task DeleteChatAsync(ChatReadDto chatReadDto, CancellationToken cancellationToken)
+    public async Task DeleteChatAsync(ChatReadDto chatReadDto, IEnumerable<ChatMemberReadDto> chatMembers, CancellationToken cancellationToken)
     {
         await chatHub.Clients.Group($"chat_{chatReadDto.Id}").SendAsync(
             ClientEvents.ChatDeleted, chatReadDto, cancellationToken);
         
-        foreach (var chatMember in chatReadDto.Members)
+        foreach (var chatMember in chatMembers)
         {
             var blogConnections = await blogConnectionRepository.GetConnectionsByBlogId(
                 chatMember.Blog.Id, cancellationToken);

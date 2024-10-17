@@ -6,7 +6,7 @@ public class AddLikeToPostCommandValidator : AbstractValidator<AddLikeToPostComm
 {
     public AddLikeToPostCommandValidator()
     {
-        RuleFor(x => x.BlogId)
+        RuleFor(x => x.UserBlogId)
             .NotEmptyAndNotNull();
     }
 }

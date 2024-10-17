@@ -1,11 +1,14 @@
 ﻿using System.Text.Json.Serialization;
+using Application.UseCases.Base.Queries.Paged;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using SharedResources.Dtos;
 
 namespace Application.UseCases.PostCases.Queries.GetBlogPostsCase;
 
-public class GetBlogPostsQuery : IRequest<IEnumerable<PostReadDto>>
+public class GetBlogPostsQuery : PagedQuery, IRequest<IEnumerable<PostReadDto>>
 {
-    [JsonIgnore]
-    public string BlogId { get; set; }
+    [BindNever]
+    public string? BlogId { get; set; }
 }

@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using Application.Configs;
+using Domain.Entities;
 using Domain.Repositories;
 using Mapster;
 using MediatR;
@@ -9,7 +10,8 @@ namespace Application.UseCases.SubscriptionCases.Commands.UnsubscribeFromBlogCas
 
 public class UnsubscribeFromBlogHandler(
     IBlogRepository blogRepository,
-    ISubscriberRepository subscriberRepository) 
+    ISubscriberRepository subscriberRepository,
+    ICacheRepository cacheRepository) 
     : IRequestHandler<UnsubscribeFromBlogCommand, SubscriptionReadDto>
 {
     public async Task<SubscriptionReadDto> Handle(UnsubscribeFromBlogCommand request, CancellationToken cancellationToken)
@@ -22,19 +24,28 @@ public class UnsubscribeFromBlogHandler(
             throw new NotFoundException(typeof(Blog).ToString(), request.UserBlogId);
         }
         
-        var subscribtion = currentBlog.Subscriptions
-            .FirstOrDefault(x => x.Id == request.Id);
+        var subscription = currentBlog.Subscriptions
+            .FirstOrDefault(x => x.Id == request.SubscriptionId);
 
-        if (subscribtion is null)
+        if (subscription is null)
         {
-            throw new NotFoundException(typeof(Subscription).ToString(), request.Id);
+            throw new NotFoundException(typeof(Subscription).ToString(), request.SubscriptionId);
         }
         
-        subscriberRepository.Delete(subscribtion);
+        subscriberRepository.Delete(subscription);
 
         await subscriberRepository.SaveChangesAsync(cancellationToken);
+
+        var subscriberBlog = subscription.SubscribedBy.Adapt<BlogReadDto>();
+        var subscriptionAtBlog = subscription.SubscribedAt.Adapt<BlogReadDto>();
         
-        return subscribtion.Adapt<SubscriptionReadDto>();
+        await cacheRepository.SetAsync(subscription.SubscribedById, subscriberBlog,
+            CacheConfig.BlogCacheTime);
+        
+        await cacheRepository.SetAsync(subscription.SubscribedAtId, subscriptionAtBlog,
+            CacheConfig.BlogCacheTime);
+        
+        return subscription.Adapt<SubscriptionReadDto>();
     }
     
 }

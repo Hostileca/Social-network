@@ -10,7 +10,7 @@ public static class ClientEvents
     
     public const string ChatMemberRemoved = "ChatMemberRemoved";
     
-    public const string ChatMemberUpdated = "ChatMemberRemoved";
+    public const string ChatMemberUpdated = "ChatMemberUpdated";
     
     public const string ChatMemberLeft = "ChatMemberLeft";
     
@@ -18,5 +18,5 @@ public static class ClientEvents
     
     public const string ReactionSent = "ReactionSent";
     
-    public const string ReactionRemoved = "ReactionSent";
+    public const string ReactionRemoved = "ReactionRemoved";
 }

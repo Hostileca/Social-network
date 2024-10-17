@@ -1,4 +1,5 @@
-﻿using Domain.Repositories;
+﻿using Domain.Filters;
+using Domain.Repositories;
 using Mapster;
 using MediatR;
 using SharedResources.Dtos;
@@ -11,7 +12,10 @@ public class GetAllBlogsHandler(
 {
     public async Task<IEnumerable<BlogReadDto>> Handle(GetAllBlogsQuery request, CancellationToken cancellationToken)
     {
-        var blogs = await blogRepository.GetAllAsync(cancellationToken);
+        var pagedFilter = request.Adapt<PagedFilter>();
+        
+        var blogs = await blogRepository.GetAllAsync(pagedFilter, cancellationToken);
+        
         return blogs.Adapt<IEnumerable<BlogReadDto>>();
     }
 }

@@ -11,6 +11,7 @@ namespace Application.UseCases.BlogConnectionCases.Commands.Connect;
 public class ConnectHandler(
     IBlogRepository blogRepository,
     IBlogConnectionRepository blogConnectionRepository,
+    IChatRepository chatRepository,
     IChatNotificationService chatNotificationService)
     : IRequestHandler<ConnectCommand>
 {
@@ -29,7 +30,9 @@ public class ConnectHandler(
         await blogConnectionRepository.AddAsync(connection, cancellationToken);
         
         await blogConnectionRepository.SaveChangesAsync(cancellationToken);
+
+        var chats = userBlog.ChatsMember.Adapt<IEnumerable<ChatReadDto>>();
         
-        await chatNotificationService.JoinChatsAsync(connection.ConnectionId, userBlog.ChatsMember.Adapt<IEnumerable<ChatReadDto>>(), cancellationToken);
+        await chatNotificationService.JoinChatsAsync(connection.ConnectionId, chats, cancellationToken);
     }
 }

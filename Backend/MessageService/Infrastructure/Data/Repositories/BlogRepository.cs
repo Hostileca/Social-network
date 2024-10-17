@@ -1,5 +1,6 @@
 ﻿using Domain.Entities;
 using Domain.Repositories;
+using Infrastructure.Specifications;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data.Repositories;
@@ -10,6 +11,8 @@ public class BlogRepository(
 {
     public async Task<Blog> GetBlogByIdAndUserIdAsync(Guid blogId, string userId, CancellationToken cancellationToken)
     {
-        return await _dbSet.Where(x => x.Id == blogId && x.UserId == userId).FirstOrDefaultAsync(cancellationToken);  
+        var spec = new BlogByIdAndUserIdSpecification(blogId, userId);
+        
+        return await _dbSet.Where(spec.ToExpression()).FirstOrDefaultAsync(cancellationToken);  
     }
 }

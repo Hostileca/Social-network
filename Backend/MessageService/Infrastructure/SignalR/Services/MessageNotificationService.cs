@@ -10,7 +10,7 @@ public class MessageNotificationService(
     : IMessageNotificationService
 {
     public async Task SendMessageAsync(MessageReadDto messageReadDto, Guid chatId, 
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken = default)
     {
         await chatHub.Clients.Group($"chat_{chatId}").SendAsync(
             ClientEvents.MessageSent, messageReadDto, cancellationToken);

@@ -83,7 +83,7 @@
                 }
             ],
             "UpstreamPathTemplate": "/blogs/{everything}",
-            "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+            "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete", "Patch" ],
             "AuthenticationOptions": {
                 "AuthenticationProviderKey": "Bearer",
                 "AllowedScopes": []

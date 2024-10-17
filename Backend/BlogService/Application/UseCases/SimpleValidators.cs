@@ -15,7 +15,7 @@ public static class SimpleValidators
     {
         return ruleBuilder
             .NotEmptyAndNotNull()
-            .MinimumLength(3).WithMessage("{PropertyName} must be at least 3 characters")
+            .MinimumLength(1).WithMessage("{PropertyName} must be at least 3 characters")
             .MaximumLength(20).WithMessage("{PropertyName} must not exceed 20 characters");
     }
 }

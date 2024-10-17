@@ -4,5 +4,5 @@ namespace Application.SignalR.Services;
 
 public interface IMessageNotificationService
 { 
-    Task SendMessageAsync(MessageReadDto messageReadDto, Guid chatId, CancellationToken cancellationToken);
+    Task SendMessageAsync(MessageReadDto messageReadDto, Guid chatId, CancellationToken cancellationToken = default);
 }

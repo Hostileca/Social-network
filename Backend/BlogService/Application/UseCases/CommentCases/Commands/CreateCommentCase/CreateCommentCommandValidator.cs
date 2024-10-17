@@ -10,7 +10,7 @@ public class CreateCommentCommandValidator : AbstractValidator<CreateCommentComm
             .NotEmptyAndNotNull()            
             .MaximumLength(500);
 
-        RuleFor(x => x.BlogId)
+        RuleFor(x => x.UserBlogId)
             .NotEmptyAndNotNull();
     }
 }

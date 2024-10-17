@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Domain.Filters;
 using Domain.Repositories;
 using Mapster;
 using MediatR;
@@ -8,7 +9,8 @@ using SharedResources.Exceptions;
 namespace Application.UseCases.ChatCases.Queries.GetBlogChats;
 
 public class GetBlogChatsHandler(
-    IBlogRepository blogRepository)
+    IBlogRepository blogRepository,
+    IChatRepository chatRepository)
     : IRequestHandler<GetBlogChatsQuery, IEnumerable<ChatReadDto>>
 {
     public async Task<IEnumerable<ChatReadDto>> Handle(GetBlogChatsQuery request, CancellationToken cancellationToken)
@@ -20,6 +22,10 @@ public class GetBlogChatsHandler(
             throw new NotFoundException(typeof(Blog).ToString(), request.UserBlogId.ToString());
         }
 
-        return blog.ChatsMember.Adapt<IEnumerable<ChatReadDto>>();
+        var pagedFilter = request.Adapt<PagedFilter>();
+        
+        var chats = await chatRepository.GetChatsByBlogId(pagedFilter, request.UserBlogId, cancellationToken);
+        
+        return chats.Adapt<IEnumerable<ChatReadDto>>();
     }
 }

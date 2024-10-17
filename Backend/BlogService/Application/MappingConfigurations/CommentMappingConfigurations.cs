@@ -10,6 +10,6 @@ public class CommentMappingConfigurations : IRegister
     {
         config.NewConfig<CreateCommentCommand, Comment>()
             .Map(dest => dest.Id, src => Guid.NewGuid().ToString())
-            .Map(dest => dest.SenderId, src => src.BlogId);
+            .Map(dest => dest.SenderId, src => src.UserBlogId);
     }
 }

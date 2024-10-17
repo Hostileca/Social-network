@@ -12,9 +12,12 @@ public class LikeMappingConfiguration : IRegister
         config.NewConfig<AddLikeToPostCommand, Like>()
             .Map(dest => dest.Id, src => Guid.NewGuid().ToString())
             .Map(dest => dest.PostId, src => src.PostId)
-            .Map(dest => dest.SenderId, src => src.BlogId);
+            .Map(dest => dest.SenderId, src => src.UserBlogId);
         
         config.NewConfig<Post, PostLikesReadDto>()
             .Map(dest => dest.LikesCount, src => src.Likes.Count());
+
+        config.NewConfig<Like, LikeSenderReadDto>()
+            .Map(dest => dest.Blog, src => src.Sender);
     }
 }

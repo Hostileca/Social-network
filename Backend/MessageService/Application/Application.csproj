@@ -28,6 +28,7 @@
 
     <ItemGroup>
       <Folder Include="UseCases\ChatRolesCases\Commands\" />
+      <Folder Include="UseCases\ReactionCases\Commands\" />
     </ItemGroup>
 
 </Project>

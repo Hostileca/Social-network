@@ -16,11 +16,11 @@ public class RemoveMemberFromChatHandler(
 {
     public async Task<ChatMemberReadDto> Handle(RemoveMemberFromChatCommand request, CancellationToken cancellationToken)
     {
-        var chatMemberToDelete = await chatMemberRepository.GetByIdAsync(request.ChatMemberId, cancellationToken);
+        var chatMemberToDelete = await chatMemberRepository.GetByIdAsync(request.MemberId, cancellationToken);
         
         if (chatMemberToDelete is null || chatMemberToDelete.ChatId != request.ChatId)
         {
-            throw new NotFoundException(typeof(ChatMember).ToString(), request.ChatMemberId.ToString());
+            throw new NotFoundException(typeof(ChatMember).ToString(), request.MemberId.ToString());
         }
 
         if (chatMemberToDelete.Role == ChatRoles.Admin)

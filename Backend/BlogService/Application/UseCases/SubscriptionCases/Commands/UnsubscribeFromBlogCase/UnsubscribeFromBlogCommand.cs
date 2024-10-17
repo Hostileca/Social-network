@@ -1,14 +1,19 @@
 ﻿using System.Text.Json.Serialization;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using SharedResources.Dtos;
 
 namespace Application.UseCases.SubscriptionCases.Commands.UnsubscribeFromBlogCase;
 
 public class UnsubscribeFromBlogCommand : IRequest<SubscriptionReadDto>
 {
-    [JsonIgnore]
+    [BindNever]
     public string? UserBlogId { get; set; }
-    [JsonIgnore]
+    
+    [BindNever]
     public string? UserId { get; set; }
-    public string Id { get; set; }
+    
+    [BindNever]
+    public string? SubscriptionId { get; set; }
 }

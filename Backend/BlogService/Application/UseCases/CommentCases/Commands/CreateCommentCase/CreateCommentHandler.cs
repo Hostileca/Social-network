@@ -15,18 +15,18 @@ public class CreateCommentHandler(
 {
     public async Task<CommentReadDto> Handle(CreateCommentCommand request, CancellationToken cancellationToken)
     {
-        var blog = await blogRepository.GetByIdAndUserIdAsync(request.BlogId, request.UserId, cancellationToken);
+        var blog = await blogRepository.GetByIdAndUserIdAsync(request.UserBlogId, request.UserId, cancellationToken);
 
         if (blog is null)
         {
-            throw new NotFoundException(typeof(Blog).ToString(), request.BlogId);
+            throw new NotFoundException(typeof(Blog).ToString(), request.UserBlogId);
         }
         
         var post = await postRepository.GetByIdAsync(request.PostId, cancellationToken);
 
         if (post is null)
         {
-            throw new NotFoundException(typeof(Post).ToString(), request.BlogId);
+            throw new NotFoundException(typeof(Post).ToString(), request.UserBlogId);
         }
 
         var comment = request.Adapt<Comment>();

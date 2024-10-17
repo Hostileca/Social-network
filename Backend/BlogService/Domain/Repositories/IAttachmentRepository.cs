@@ -5,5 +5,5 @@ namespace Domain.Repositories;
 
 public interface IAttachmentRepository : IRepository<Attachment>
 {
-    //public Task<byte[]> LoadAsync(string filePath, CancellationToken cancellationToken);
+    Task<Attachment> GetAttachmentByIdAndType(string id, string type, CancellationToken cancellationToken);
 }

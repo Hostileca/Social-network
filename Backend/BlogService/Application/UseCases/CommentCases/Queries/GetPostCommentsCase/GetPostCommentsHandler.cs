@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Domain.Filters;
 using Domain.Repositories;
 using Mapster;
 using MediatR;
@@ -8,7 +9,8 @@ using SharedResources.Exceptions;
 namespace Application.UseCases.CommentCases.Queries.GetPostCommentsCase;
 
 public class GetPostCommentsHandler(
-    IPostRepository postRepository)
+    IPostRepository postRepository,
+    ICommentRepository commentRepository)
     : IRequestHandler<GetPostCommentsQuery, IEnumerable<CommentReadDto>>
 {
     public async Task<IEnumerable<CommentReadDto>> Handle(GetPostCommentsQuery request, CancellationToken cancellationToken)
@@ -20,6 +22,11 @@ public class GetPostCommentsHandler(
             throw new NotFoundException(typeof(Post).ToString(), request.PostId.ToString());
         }
 
-        return post.Comments.Adapt<IEnumerable<CommentReadDto>>();
+        var pagedFilter = request.Adapt<PagedFilter>();
+        
+        var comments = await commentRepository.GetCommentsByPostId(pagedFilter, 
+            request.PostId, cancellationToken);
+        
+        return comments.Adapt<IEnumerable<CommentReadDto>>();
     }
 }
