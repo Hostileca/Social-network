@@ -36,13 +36,14 @@ public class RemoveReactionHandler(
             throw new NoPermissionException("It is not your reaction");
         }
 
+        var message = reaction.Message;
         reactionRepository.Delete(reaction);
 
         await reactionRepository.SaveChangesAsync(cancellationToken);
 
         var reactionReadDto = reaction.Adapt<ReactionReadDto>();
         
-        await reactionNotificationService.RemoveReaction(reactionReadDto, reaction.Message.ChatId, 
+        await reactionNotificationService.RemoveReaction(reactionReadDto, message.ChatId, 
             cancellationToken);
 
         return reactionReadDto;
