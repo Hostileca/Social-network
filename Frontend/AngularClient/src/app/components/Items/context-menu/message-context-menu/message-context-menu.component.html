@@ -1,4 +1,4 @@
-<div class="container" *ngIf="Visible && MessageComponent" [style.top.px]="YPos" [style.left.px]="XPos">
+<div class="container context-menu" *ngIf="Visible && MessageComponent" [style.top.px]="YPos" [style.left.px]="XPos">
   <ul>
     <li (mouseenter)="ShowReactions()">Reactions</li>
     <li (click)="CopyMessage()">Copy</li>

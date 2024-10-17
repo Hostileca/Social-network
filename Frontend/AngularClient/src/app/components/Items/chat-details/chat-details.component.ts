@@ -11,7 +11,7 @@ import {CurrentBlogService} from "../../../Data/Services/current-blog.service";
 import {EventBusService} from "../../../Data/Services/event-bus.service";
 import {Events} from "../../../Data/Hubs/Events";
 import {HttpErrorResponse} from "@angular/common/http";
-import {MessagesListComponent} from "../lists/messages-list/messages-list.component";
+import {MessagesListComponent} from "../pagination/messages-list/messages-list.component";
 import {PageSettings} from "../../../Data/Queries/PageSettings";
 import {Observable} from "rxjs";
 import {PaginationConfig} from "../../../Data/Consts/PaginationConfig";

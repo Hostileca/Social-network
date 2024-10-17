@@ -6,7 +6,7 @@ import {PostItemComponent} from "../../Items/post-item/post-item.component";
 import {PageSettings} from "../../../Data/Queries/PageSettings";
 import {PaginationConfig} from "../../../Data/Consts/PaginationConfig";
 import {CurrentBlogService} from "../../../Data/Services/current-blog.service";
-import {PostsListComponent} from "../../Items/lists/posts-list/posts-list.component";
+import {PostsListComponent} from "../../Items/pagination/posts-list/posts-list.component";
 import {Observable} from "rxjs";
 
 @Component({

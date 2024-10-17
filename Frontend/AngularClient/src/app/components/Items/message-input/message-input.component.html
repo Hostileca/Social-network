@@ -7,10 +7,17 @@
       aria-label="Message input"
     />
 
-    <button type="submit" aria-label="Send message">
+    <input  *ngIf="MessageType == MessageTypes.delayed"
+            formControlName="schedule" type="datetime-local" min="{{ Today }}">
+
+    <button (click)="MessageType == MessageTypes.simple ? SendMessage()
+    : MessageType == MessageTypes.delayed ? SendDelayedMessage() : SendMessage()"
+      aria-label="Send message" (contextmenu)="OpenContextMenu($event)">
       <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M2 21L23 12L2 3V10L17 12L2 14V21Z" fill="white"/>
       </svg>
     </button>
   </form>
 </div>
+
+<app-send-message-context-menu></app-send-message-context-menu>

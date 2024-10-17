@@ -1,0 +1,6 @@
+﻿<div class="container context-menu" *ngIf="Visible" [style.top.px]="YPos" [style.left.px]="XPos">
+  <ul>
+      <li (click)="MessageType = MessageTypes.simple">Simple message</li>
+      <li (click)="MessageType = MessageTypes.delayed">Schedule message</li>
+  </ul>
+</div>

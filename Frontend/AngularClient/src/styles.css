@@ -1,6 +1,6 @@
 :root {
   --primary-color: #212121;
-  --primary-light: #212121;
+  --primary-light: #303030;
   --primary-dark: #000000;
   --secondary-color: #ffffff;
   --danger-color: #dc3545;
@@ -137,4 +137,13 @@ label {
 .status{
   text-align: center;
   color: var(--secondary-color);
+}
+
+.context-menu{
+  position: absolute;
+  background-color: var(--primary-dark);
+  color: var(--secondary-color);
+  padding: 10px;
+  z-index: 1000;
+  font-size: 16px;
 }

@@ -56,7 +56,8 @@ export class ReactionsFooterComponent {
   }
 
   private OnReactionRemoved(reaction: Reaction){
-    this.Reactions = this.Reactions.filter(r => r.senderId != reaction.senderId && r.senderId == reaction.senderId)
+    console.log("check")
+    this.Reactions = this.Reactions.filter(r => r.id != reaction.id)
   }
 
   public RemoveReaction(reaction: Reaction){

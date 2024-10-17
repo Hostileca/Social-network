@@ -21,4 +21,18 @@ export class SimpleValidators{
       return  { notEqual: true };
     };
   }
+
+  static IsFutureDate(control: AbstractControl): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if(!control.value){
+        return null
+      }
+
+      if(control.value < Date.now()){
+        return {notFutureDate: true}
+      }
+
+      return null
+    }
+  }
 }
