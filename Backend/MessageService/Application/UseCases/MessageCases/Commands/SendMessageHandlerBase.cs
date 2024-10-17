@@ -38,13 +38,6 @@ public abstract class SendMessageHandlerBase(
 
         var message = request.Adapt<Message>();
         
-        if(request.Attachments is not null)
-        {
-            var attachments = new List<Attachment>();
-            
-            message.Attachments = attachments;
-        }
-        
         return message;
     }
 

@@ -8,5 +8,5 @@ namespace Application.UseCases.MessageCases.Commands.SendDelayedMessage;
 
 public class SendDelayedMessageCommand : SendMessageCommandBase, IRequest<DelayedMessageReadDto>
 {
-    public DateTimeOffset Delay { get; set; }
+    public DateTimeOffset DateTime { get; set; }
 }

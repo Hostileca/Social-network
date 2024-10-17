@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace Application.Helpers;
+namespace SharedResources.Helpers;
 
 public static class Base64Converter
 {
