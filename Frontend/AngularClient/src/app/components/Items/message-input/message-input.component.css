@@ -52,3 +52,7 @@ form{
   height: 20px;
   margin-left: 3px;
 }
+
+.file-input{
+  max-width: 300px;
+}

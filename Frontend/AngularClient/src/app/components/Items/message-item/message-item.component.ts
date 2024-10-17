@@ -12,6 +12,7 @@ import {ReactionService} from "../../../Data/Services/reaction.service";
 import {EventBusService} from "../../../Data/Services/event-bus.service";
 import {Events} from "../../../Data/Hubs/Events";
 import {ReactionsFooterComponent} from "../reactions-footer/reactions-footer.component";
+import {AttachmentService} from "../../../Data/Services/attachment.service";
 
 @Component({
   selector: 'app-message-item',
@@ -33,13 +34,16 @@ export class MessageItemComponent{
   @Input() set MessageInput(message: Message){
     this.Message = message
     this.LoadSender()
+    this.LoadAttachments()
   }
 
   public Message!: Message
   public Sender!: Blog
+  public Attachments: Blob[] = []
 
   constructor(private readonly _blogService: BlogService,
-              private readonly _currentBlogService: CurrentBlogService) {
+              private readonly _currentBlogService: CurrentBlogService,
+              private readonly _attachmentsService: AttachmentService) {
   }
 
   public IsMe() : boolean{
@@ -56,6 +60,16 @@ export class MessageItemComponent{
   private LoadSender(){
     this._blogService.GetBlogById(this.Message.senderId).subscribe(blog => {
       this.Sender = blog
+    })
+  }
+
+  private LoadAttachments(){
+    this.Message.attachmentsId.forEach(id =>{
+      this._attachmentsService.GetMessageAttachment(this.Message.chatId, this.Message.id, id).subscribe({
+        next: blob => {
+          this.Attachments.push(blob)
+        }
+      })
     })
   }
 

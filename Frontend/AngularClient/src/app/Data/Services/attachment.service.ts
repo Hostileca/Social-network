@@ -11,6 +11,12 @@ export class AttachmentService {
   constructor(private readonly _httpClient: HttpClient) { }
 
   public GetPostAttachment(attachmentId: string): Observable<Blob> {
-    return this._httpClient.get(`${ApiConfig.BaseUrl}/attachments/${attachmentId}`, {responseType: 'blob'})
+    return this._httpClient.get(`${ApiConfig.BaseUrl}/attachments/${attachmentId}`,
+      {responseType: 'blob'})
+  }
+
+  public GetMessageAttachment(chatId: string, messageId: string, attachmentId: string): Observable<Blob>{
+    return this._httpClient.get(`${ApiConfig.BaseUrl}/chats/${chatId}/messages/${messageId}/attachments/${attachmentId}`,
+      {responseType: 'blob'})
   }
 }

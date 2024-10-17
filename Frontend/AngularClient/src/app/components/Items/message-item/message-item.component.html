@@ -5,6 +5,9 @@
         <div class="message-content">
             <p *ngIf="!IsMe()" class="sender-name">{{ this.Sender ? this.Sender.username : 'unknown kitty' }}</p>
             <p>{{ this.Message.text }}</p>
+            <div *ngFor="let attachment of Attachments">
+                <a [href]="attachment"></a>
+            </div>
         </div>
 
         <p class="date">{{ this.Message.date | date: 'HH:mm' }}</p>

@@ -31,7 +31,8 @@ export class MessageInputComponent {
               protected readonly _currentBlogService: CurrentBlogService) {
     this.Form = new FormGroup({
       text: new FormControl<string>('', [Validators.required, Validators.minLength(1)]),
-      date: new FormControl<Date | null>(null, [SimpleValidators.IsFutureDate])
+      date: new FormControl<Date | null>(null, [SimpleValidators.IsFutureDate]),
+      attachments: new FormControl<File[]>([])
     });
   }
 
@@ -79,7 +80,7 @@ export class MessageInputComponent {
   public OpenContextMenu(event: MouseEvent) {
     if(this.SendMessageContextMenu){
       event.preventDefault();
-      this.SendMessageContextMenu.ShowMenu(event.clientX - 120, event.clientY - 80);
+      this.SendMessageContextMenu.ShowMenu(event.clientX - 140, event.clientY - 80);
     }
   }
 
