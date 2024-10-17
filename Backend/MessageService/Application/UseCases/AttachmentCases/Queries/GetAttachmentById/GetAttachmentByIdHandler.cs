@@ -28,7 +28,7 @@ public class GetAttachmentByIdHandler(
             throw new NotFoundException(typeof(Chat).ToString(), request.ChatId.ToString());
         }
 
-        var message = chatMember.Chat.Messages.FirstOrDefault(m => m.Id == chatMember.Id);
+        var message = chatMember.Chat.Messages.FirstOrDefault(m => m.Id == request.MessageId);
 
         if (message is null)
         {
