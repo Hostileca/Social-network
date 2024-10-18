@@ -28,6 +28,7 @@ export class MessageService {
 
     let params = new HttpParams()
     params = HttpHelper.AddUserBlogIdToQuery(params, userBlogId)
+
     return this._httpClient.post<Message>(`${ApiConfig.BaseUrl}/chats/${chatId}/messages`, formData, {params})
   }
 

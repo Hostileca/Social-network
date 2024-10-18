@@ -5,7 +5,7 @@
       <input *ngIf="MessageType == MessageTypes.delayed"
            formControlName="date" type="datetime-local" min="{{ Today }}">
 
-      <input class="file-input" formControlName="attachments" type="file" multiple>
+      <input class="file-input" (change)="OnFileChange($event)" type="file" multiple>
 
       <button (click)="MessageType == MessageTypes.simple ? SendMessage()
       : MessageType == MessageTypes.delayed ? SendDelayedMessage() : null"

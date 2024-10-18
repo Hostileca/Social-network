@@ -6,7 +6,7 @@
             <p *ngIf="!IsMe()" class="sender-name">{{ this.Sender ? this.Sender.username : 'unknown kitty' }}</p>
             <p>{{ this.Message.text }}</p>
             <div *ngFor="let attachment of Attachments">
-                <a [href]="attachment"></a>
+                <a class="attachment" [href]="attachment.blobUrl">{{attachment.filename}}</a>
             </div>
         </div>
 

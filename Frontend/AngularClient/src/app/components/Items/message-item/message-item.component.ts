@@ -13,6 +13,7 @@ import {EventBusService} from "../../../Data/Services/event-bus.service";
 import {Events} from "../../../Data/Hubs/Events";
 import {ReactionsFooterComponent} from "../reactions-footer/reactions-footer.component";
 import {AttachmentService} from "../../../Data/Services/attachment.service";
+import {Attachment} from "../../../Data/Models/Attachment/Attachment";
 
 @Component({
   selector: 'app-message-item',
@@ -39,7 +40,7 @@ export class MessageItemComponent{
 
   public Message!: Message
   public Sender!: Blog
-  public Attachments: Blob[] = []
+  public Attachments: Attachment[] = []
 
   constructor(private readonly _blogService: BlogService,
               private readonly _currentBlogService: CurrentBlogService,
@@ -65,9 +66,10 @@ export class MessageItemComponent{
 
   private LoadAttachments(){
     this.Message.attachmentsId.forEach(id =>{
-      this._attachmentsService.GetMessageAttachment(this.Message.chatId, this.Message.id, id).subscribe({
-        next: blob => {
-          this.Attachments.push(blob)
+      this._attachmentsService.GetMessageAttachment(this.Message.chatId, this.Message.id, id,
+          this._currentBlogService.GetCurrentBlog().id).subscribe({
+        next: attachment => {
+          this.Attachments.push(attachment)
         }
       })
     })

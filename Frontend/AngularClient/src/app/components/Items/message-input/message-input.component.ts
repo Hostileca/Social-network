@@ -84,6 +84,14 @@ export class MessageInputComponent {
     }
   }
 
+  protected OnFileChange(event: Event){
+    const input = event.target as HTMLInputElement;
+    if (input.files) {
+      const files: File[] = Array.from(input.files);
+      this.Form.patchValue({ attachments: files });
+    }
+  }
+
   protected readonly MessageTypes = MessageTypes;
   protected readonly Today = new Date().toISOString().slice(0, 16);
 }
