@@ -17,11 +17,11 @@ public class DeleteBlogHandler(
 {
     public async Task<BlogReadDto> Handle(DeleteBlogCommand request, CancellationToken cancellationToken)
     {
-        var existingBlog = await blogRepository.GetByIdAndUserIdAsync(request.BlogId, request.UserId, cancellationToken);
+        var existingBlog = await blogRepository.GetByIdAndUserIdAsync(request.UserBlogId, request.UserId, cancellationToken);
         
         if (existingBlog is null)
         {
-            throw new NotFoundException(typeof(Blog).ToString(), request.BlogId);
+            throw new NotFoundException(typeof(Blog).ToString(), request.UserBlogId);
         }
         
         blogRepository.Delete(existingBlog);
@@ -34,8 +34,6 @@ public class DeleteBlogHandler(
         await publishEndpoint.Publish(blogDeletedEvent, cancellationToken);
         
         await cacheRepository.DeleteAsync<BlogReadDto>(blogReadDto.Id.ToString());
-        
-        await cacheRepository.DeleteAsync<IEnumerable<PostReadDto>>(blogReadDto.Id.ToString());
         
         return blogReadDto;
     }

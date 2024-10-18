@@ -8,8 +8,6 @@ public class CreateChatCommandValidator : AbstractValidator<CreateChatCommand>
     
     public CreateChatCommandValidator()
     {
-        RuleFor(x => x.UserBlogId).IsGuid();
-
         RuleFor(x => x.Name)
             .NotEmptyAndNotNull()
             .MaximumLength(MaxNameLength);

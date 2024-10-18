@@ -13,11 +13,11 @@ public class LoadAttachmentByIdHandler(
 {
     public async Task<AttachmentReadDto> Handle(LoadAttachmentByIdQuery request, CancellationToken cancellationToken)
     {
-        var attachment = await attachmentRepository.GetByIdAsync(request.Id, cancellationToken);
+        var attachment = await attachmentRepository.GetByIdAsync(request.AttachmentId, cancellationToken);
 
         if (attachment is null)
         {
-            throw new NotFoundException(typeof(Attachment).ToString(), request.Id);
+            throw new NotFoundException(typeof(Attachment).ToString(), request.AttachmentId);
         }
 
         return attachment.Adapt<AttachmentReadDto>();

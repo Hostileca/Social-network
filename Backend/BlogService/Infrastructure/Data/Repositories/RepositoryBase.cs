@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Domain.Filters;
 using Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,9 +19,10 @@ public class RepositoryBase<TEntity>
         _dbSet = context.Set<TEntity>();
     }
 
-    public async Task<IEnumerable<TEntity>> GetAllAsync(CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<TEntity>> GetAllAsync(PagedFilter pagedFilter, CancellationToken cancellationToken = default)
     {
-        return await _dbSet.ToListAsync(cancellationToken);
+        return await _dbSet.Paged(pagedFilter)
+            .ToListAsync(cancellationToken);
     }
 
     public async Task<TEntity> GetByIdAsync(string id, CancellationToken cancellationToken = default)

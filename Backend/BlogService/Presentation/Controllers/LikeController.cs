@@ -13,11 +13,12 @@ public class LikeController(
     : ControllerBase
 {
     [HttpPost]
-    public async Task<IActionResult> AddLike(string postId, AddLikeToPostCommand addLikeToPostCommand,
-        CancellationToken cancellationToken)
+    public async Task<IActionResult> AddLike(string postId, [FromQuery]string userBlogId, [FromBody]AddLikeToPostCommand addLikeToPostCommand,
+        CancellationToken cancellationToken = default)
     {
-        addLikeToPostCommand.PostId = postId;
         addLikeToPostCommand.UserId = UserId;
+        addLikeToPostCommand.PostId = postId;
+        addLikeToPostCommand.UserBlogId = userBlogId;
         
         var comment = await mediator.Send(addLikeToPostCommand, cancellationToken);
         
@@ -25,11 +26,11 @@ public class LikeController(
     }
     
     [HttpDelete]
-    public async Task<IActionResult> RemoveLike(string postId, RemoveLikeFromPostCommand removeLikeFromPostCommand,
-        CancellationToken cancellationToken)
+    public async Task<IActionResult> RemoveLike(string postId, [FromQuery]RemoveLikeFromPostCommand removeLikeFromPostCommand,
+        CancellationToken cancellationToken = default)
     {
-        removeLikeFromPostCommand.PostId = postId;
         removeLikeFromPostCommand.UserId = UserId;
+        removeLikeFromPostCommand.PostId = postId;
         
         var comment = await mediator.Send(removeLikeFromPostCommand, cancellationToken);
         
@@ -37,13 +38,12 @@ public class LikeController(
     }
     
     [HttpGet]
-    public async Task<IActionResult> GetLikes(string postId,
-        CancellationToken cancellationToken)
+    public async Task<IActionResult> GetLikes(string postId, [FromQuery]GetLikeSendersByPostIdQuery getLikeSendersByPostIdQuery,
+        CancellationToken cancellationToken = default)
     {
-        var comment = await mediator.Send(new GetPostLikesByIdQuery
-        {
-            Id = postId
-        }, cancellationToken);
+        getLikeSendersByPostIdQuery.PostId = postId;
+        
+        var comment = await mediator.Send(getLikeSendersByPostIdQuery, cancellationToken);
         
         return Ok(comment);
     }

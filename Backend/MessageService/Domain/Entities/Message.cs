@@ -16,5 +16,5 @@ public class Message : EntityBase
     
     public virtual IEnumerable<Reaction> Reactions { get; set; }
     
-    public virtual IEnumerable<Attachment> Attachments { get; set; }
+    public virtual List<Attachment> Attachments { get; set; }
 }

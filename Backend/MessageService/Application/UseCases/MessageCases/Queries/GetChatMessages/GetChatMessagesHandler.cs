@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Domain.Filters;
 using Domain.Repositories;
 using Mapster;
 using MediatR;
@@ -8,6 +9,7 @@ using SharedResources.Exceptions;
 namespace Application.UseCases.MessageCases.Queries.GetChatMessages;
 
 public class GetChatMessagesHandler(
+    IMessageRepository messageRepository, 
     IBlogRepository blogRepository)
     : IRequestHandler<GetChatMessagesQuery, IEnumerable<MessageReadDto>>
 {
@@ -28,6 +30,10 @@ public class GetChatMessagesHandler(
             throw new NotFoundException(typeof(Chat).ToString(), request.ChatId.ToString());
         }
 
-        return chatMember.Chat.Messages.Adapt<IEnumerable<MessageReadDto>>();
+        var pagedFilter = request.Adapt<PagedFilter>();
+        
+        var messages =
+            await messageRepository.GetChatMessages(pagedFilter, request.ChatId, cancellationToken);
+        return messages.Adapt<IEnumerable<MessageReadDto>>();
     }
 }

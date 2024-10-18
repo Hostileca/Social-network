@@ -6,9 +6,6 @@ public class AddMemberToChatCommandValidator : AbstractValidator<AddMemberToChat
 {
     public AddMemberToChatCommandValidator()
     {
-        RuleFor(x => x.UserBlogId)
-            .IsGuid();
-        
         RuleFor(x => x.BlogToAddId)
             .IsGuid();
     }

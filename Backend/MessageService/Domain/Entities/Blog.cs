@@ -6,9 +6,9 @@ public class Blog : EntityBase
      
     public string Username { get; set; }
      
-    public string? BIO { get; set; }
+    public string? Bio { get; set; }
         
-    public string? MainImagePath { get; set; }
+    public string? ImageAttachmentId { get; set; }
     
     public virtual IEnumerable<ChatMember> ChatsMember { get; set; }
     

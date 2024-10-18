@@ -41,8 +41,9 @@ public class DeleteChatHandler(
         await chatRepository.SaveChangesAsync(cancellationToken);
 
         var chatReadDto = chat.Adapt<ChatReadDto>();
-
-        await chatNotificationService.DeleteChatAsync(chatReadDto, cancellationToken);
+        var chatMembers = chat.Members.Adapt<IEnumerable<ChatMemberReadDto>>();
+        
+        await chatNotificationService.DeleteChatAsync(chatReadDto, chatMembers, cancellationToken);
         
         return chatReadDto;
     }

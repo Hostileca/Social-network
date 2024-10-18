@@ -3,10 +3,10 @@ using Application.UseCases.BlogCases.Commands.DeleteBlogCase;
 using Application.UseCases.BlogCases.Commands.UpdateBlogCase;
 using Application.UseCases.BlogCases.Queries.GetAllBlogsCase;
 using Application.UseCases.BlogCases.Queries.GetBlogByIdCase;
+using Application.UseCases.BlogCases.Queries.GetBlogMainImageById;
+using Application.UseCases.BlogCases.Queries.GetBlogsByFilterCase;
 using Application.UseCases.BlogCases.Queries.GetUserBlogsCase;
 using Application.UseCases.LikeCases.Queries.GetBlogLikesCase;
-using Application.UseCases.PostCases.Commands.CreatePostCase;
-using Application.UseCases.PostCases.Queries.GetBlogPostsCase;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,33 +19,59 @@ public class BlogController(
     : ControllerBase
 {
     [HttpGet]
-    public async Task<IActionResult> GetAllBlogs(CancellationToken cancellationToken)
+    public async Task<IActionResult> GetAllBlogs([FromQuery]GetAllBlogsQuery getAllBlogsQuery,
+        CancellationToken cancellationToken = default)
     {
-        var blogs = await mediator.Send(new GetAllBlogsQuery(), cancellationToken);
+        var blogs = await mediator.Send(getAllBlogsQuery, cancellationToken);
+        
+        return Ok(blogs);
+    }
+    
+    [HttpGet("filter")]
+    public async Task<IActionResult> GetBlogsByFilter([FromQuery]GetBlogsByFilterQuery getBlogsByFilterQuery,
+        CancellationToken cancellationToken = default)
+    {
+        var blogs = await mediator.Send(getBlogsByFilterQuery, cancellationToken);
         
         return Ok(blogs);
     }
     
     [HttpGet("me")]
-    public async Task<IActionResult> GetUserBlogs(CancellationToken cancellationToken)
+    public async Task<IActionResult> GetUserBlogs([FromQuery]GetUserBlogsQuery getUserBlogsQuery,
+        CancellationToken cancellationToken = default)
     {
-        var blogs = await mediator.Send(new GetUserBlogsQuery{UserId = UserId}, cancellationToken);
+        getUserBlogsQuery.UserId = UserId;
+        
+        var blogs = await mediator.Send(getUserBlogsQuery, cancellationToken);
         
         return Ok(blogs);
     }
     
     [HttpGet("{blogId}")]
-    public async Task<IActionResult> GetBlogById(string blogId, 
-        CancellationToken cancellationToken)
+    public async Task<IActionResult> GetBlogById(string blogId, [FromQuery]GetBlogByIdQuery getBlogByIdQuery, 
+        CancellationToken cancellationToken = default)
     {
-        var blog = await mediator.Send(new GetBlogByIdQuery{BlogId = blogId}, cancellationToken);
+        getBlogByIdQuery.BlogId = blogId;
+        
+        var blog = await mediator.Send(getBlogByIdQuery, cancellationToken);
         
         return Ok(blog);
     }
+    
+    [HttpGet("{blogId}/main-image")]
+    public async Task<IActionResult> GetBlogMainImageById(string blogId, [FromQuery]GetBlogMainImageByIdQuery getBlogMainImageByIdQuery, 
+        CancellationToken cancellationToken = default)
+    {
+        getBlogMainImageByIdQuery.BlogId = blogId;
+        
+        var image = await mediator.Send(getBlogMainImageByIdQuery, cancellationToken);
+        
+        return File(image, "image/png");
+    }
 
     [HttpPost]
-    public async Task<IActionResult> CreateBlog(CreateBlogCommand createBlogCommand, 
-        CancellationToken cancellationToken)
+    public async Task<IActionResult> CreateBlog([FromBody]CreateBlogCommand createBlogCommand, 
+        CancellationToken cancellationToken = default)
     {
         createBlogCommand.UserId = UserId;
         
@@ -55,10 +81,11 @@ public class BlogController(
     }
 
     [HttpPut("{blogId}")]
-    public async Task<IActionResult> UpdateBlog(string blogId, UpdateBlogCommand updateBlogCommand,
-        CancellationToken cancellationToken)
+    public async Task<IActionResult> UpdateBlog(string blogId, [FromForm]UpdateBlogCommand updateBlogCommand,
+        CancellationToken cancellationToken = default)
     {
         updateBlogCommand.UserId = UserId;
+        updateBlogCommand.BlogId = blogId;
         
         var blog = await mediator.Send(updateBlogCommand, cancellationToken);
         
@@ -66,23 +93,24 @@ public class BlogController(
     }
     
     [HttpDelete("{blogId}")]
-    public async Task<IActionResult> DeleteBlog(string blogId, 
-        CancellationToken cancellationToken)
+    public async Task<IActionResult> DeleteBlog(string blogId, [FromQuery]DeleteBlogCommand deleteBlogCommand, 
+        CancellationToken cancellationToken = default)
     {
-        var blog = await mediator.Send(new DeleteBlogCommand
-        {
-            BlogId = blogId,
-            UserId = UserId
-        }, cancellationToken);
+        deleteBlogCommand.UserId = UserId;
+        deleteBlogCommand.UserBlogId = blogId;
+        
+        var blog = await mediator.Send(deleteBlogCommand, cancellationToken);
         
         return Ok(blog);
     }
     
     [HttpGet("{blogId}/liked")]
-    public async Task<IActionResult> GetLikedPosts(string blogId, 
+    public async Task<IActionResult> GetLikedPosts(string blogId, [FromQuery]GetBlogLikesQuery getBlogLikesQuery, 
         CancellationToken cancellationToken)
     {
-        var posts = await mediator.Send(new GetBlogLikesQuery{BlogId = blogId}, cancellationToken);
+        getBlogLikesQuery.BlogId = blogId;
+        
+        var posts = await mediator.Send(getBlogLikesQuery, cancellationToken);
         
         return Ok(posts);
     }

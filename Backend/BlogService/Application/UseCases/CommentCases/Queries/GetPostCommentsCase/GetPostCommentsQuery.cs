@@ -1,9 +1,13 @@
-﻿using MediatR;
+﻿using Application.UseCases.Base.Queries.Paged;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using SharedResources.Dtos;
 
 namespace Application.UseCases.CommentCases.Queries.GetPostCommentsCase;
 
-public class GetPostCommentsQuery : IRequest<IEnumerable<CommentReadDto>>
+public class GetPostCommentsQuery : PagedQuery, IRequest<IEnumerable<CommentReadDto>>
 {
-    public string PostId { get; set; }
+    [BindNever]
+    public string? PostId { get; set; }
 }

@@ -1,5 +1,5 @@
-﻿using Domain.Repositories;
-using Domain.Specifications;
+﻿using Domain.Filters;
+using Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data.Repositories;
@@ -17,22 +17,17 @@ public abstract class RepositoryBase<TEntity>
         _dbSet = context.Set<TEntity>();
     }
     
-    public async Task<IEnumerable<TEntity>> GetAllAsync(CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<TEntity>> GetAllAsync(PagedFilter pagedFilter, CancellationToken cancellationToken = default)
     {
-        return await _dbSet.ToListAsync(cancellationToken);
+        return await _dbSet.Paged(pagedFilter)
+            .ToListAsync(cancellationToken);
     }
 
     public async Task<TEntity> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         return await _dbSet.FindAsync(id, cancellationToken);
     }
-
-    public async Task<IEnumerable<TEntity>> FindAsync(ISpecification<TEntity> specification,
-        CancellationToken cancellationToken)
-    {
-        return await _dbSet.Where(specification.ToExpression()).ToListAsync(cancellationToken);
-    }
-
+    
     public async Task AddAsync(TEntity item, CancellationToken cancellationToken = default)
     {
         await _dbSet.AddAsync(item, cancellationToken);

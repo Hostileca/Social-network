@@ -9,9 +9,11 @@ public class Blog : EntityBase
     
     public string Username { get; set; }
     
-    public string? BIO { get; set; }
+    public string? Bio { get; set; }
     
-    public string? MainImagePath { get; set; }
+    public DateTime DateOfBirth { get; set; }
+    
+    public string? MainImage { get; set; }
     
     public virtual IEnumerable<Subscription> Subscribers { get; set; }
     

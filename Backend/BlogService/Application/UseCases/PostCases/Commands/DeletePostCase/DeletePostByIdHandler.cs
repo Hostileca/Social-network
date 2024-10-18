@@ -10,8 +10,7 @@ namespace Application.UseCases.PostCases.Commands.DeletePostCase;
 
 public class DeletePostByIdHandler(
     IBlogRepository blogRepository,
-    IPostRepository postRepository,
-    ICacheRepository cacheRepository)
+    IPostRepository postRepository)
     : IRequestHandler<DeletePostByIdCommand, PostReadDto>
 {
     public async Task<PostReadDto> Handle(DeletePostByIdCommand request, CancellationToken cancellationToken)
@@ -38,8 +37,6 @@ public class DeletePostByIdHandler(
         postRepository.Delete(post);
         
         await postRepository.SaveChangesAsync(cancellationToken);
-        
-        await cacheRepository.SetAsync(blog.Id, blog.Posts.Adapt<IEnumerable<PostReadDto>>(), CacheConfig.PostCacheTime);
         
         return post.Adapt<PostReadDto>();
     }

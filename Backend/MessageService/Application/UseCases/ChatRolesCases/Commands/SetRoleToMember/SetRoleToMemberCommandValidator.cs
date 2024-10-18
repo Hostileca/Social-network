@@ -7,9 +7,6 @@ public class SetRoleToMemberCommandValidator : AbstractValidator<SetRoleToMember
 {
     public SetRoleToMemberCommandValidator()
     {
-        RuleFor(x => x.UserBlogId)
-            .IsGuid();
-
         RuleFor(x => x.Role)
             .NotEmptyAndNotNull()
             .IsInEnum();

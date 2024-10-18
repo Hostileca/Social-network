@@ -20,7 +20,9 @@ public class SendDelayedMessageHandler(
     {
         var message = await CreateMessageAsync(request, cancellationToken);
         
-        var jobId = BackgroundJob.Schedule(() => SendMessageAsync(message, cancellationToken), request.Delay);
+        var delay = request.DateTime - DateTimeOffset.UtcNow;
+        
+        var jobId = BackgroundJob.Schedule(() => SendMessageAsync(message, cancellationToken), delay);
         var delayedMessage = message.Adapt<DelayedMessageReadDto>();
         delayedMessage.JobId = jobId;
                 

@@ -20,10 +20,13 @@ public class BlogConfiguration : IEntityTypeConfiguration<Blog>
             .IsRequired();
 
         builder
-            .Property(x => x.BIO);
+            .Property(x => x.Bio);
 
         builder
-            .Property(x => x.MainImagePath);
+            .Property(x => x.DateOfBirth);
+        
+        builder
+            .Property(x => x.MainImage);
         
         builder
             .HasMany(x => x.Subscribers)

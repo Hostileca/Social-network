@@ -13,25 +13,24 @@ public class MessageController(
     : ControllerBase
 {
     [HttpGet("messages")]
-    public async Task<IActionResult> GetMessages(Guid chatId, [FromQuery]Guid userBlogId,
+    public async Task<IActionResult> GetMessages(Guid chatId, [FromQuery]GetChatMessagesQuery getChatMessagesQuery,
         CancellationToken cancellationToken = default)
     {
-        var messages = await mediator.Send(new GetChatMessagesQuery
-        {
-            UserId = UserId,
-            ChatId = chatId,
-            UserBlogId = userBlogId
-        }, cancellationToken);
+        getChatMessagesQuery.UserId = UserId;
+        getChatMessagesQuery.ChatId = chatId;
+        
+        var messages = await mediator.Send(getChatMessagesQuery, cancellationToken);
         
         return Ok(messages);
     }
     
     [HttpPost("messages")]
-    public async Task<IActionResult> SendMessage(Guid chatId,
-        [FromForm]SendMessageCommand sendMessageCommand, CancellationToken cancellationToken = default)
+    public async Task<IActionResult> SendMessage(Guid chatId, [FromQuery]Guid userBlogId, [FromForm]SendMessageCommand sendMessageCommand, 
+    CancellationToken cancellationToken = default)
     {
         sendMessageCommand.UserId = UserId;
         sendMessageCommand.ChatId = chatId;
+        sendMessageCommand.UserBlogId = userBlogId;
         
         var message = await mediator.Send(sendMessageCommand, cancellationToken);
 
@@ -39,11 +38,12 @@ public class MessageController(
     }
 
     [HttpPost("delayed-messages")]
-    public async Task<IActionResult> SendDelayedMessage(Guid chatId,
-        [FromForm]SendDelayedMessageCommand sendDelayedMessageCommand, CancellationToken cancellationToken = default)
+    public async Task<IActionResult> SendDelayedMessage(Guid chatId, [FromQuery]Guid userBlogId, [FromForm]SendDelayedMessageCommand sendDelayedMessageCommand, 
+        CancellationToken cancellationToken = default)
     {
         sendDelayedMessageCommand.UserId = UserId;
         sendDelayedMessageCommand.ChatId = chatId;
+        sendDelayedMessageCommand.UserBlogId = userBlogId;
         
         var message = await mediator.Send(sendDelayedMessageCommand, cancellationToken);
 

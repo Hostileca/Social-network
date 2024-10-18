@@ -1,5 +1,8 @@
 ﻿using System.Text.Json.Serialization;
 using MediatR;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using SharedResources.Dtos;
 
 namespace Application.UseCases.BlogCases.Commands.UpdateBlogCase;
@@ -7,14 +10,18 @@ namespace Application.UseCases.BlogCases.Commands.UpdateBlogCase;
 public class UpdateBlogCommand : IRequest<BlogReadDto>
 {
     [JsonIgnore]
-    public string? Id { get; set; }
+    [BindNever]
+    public string? BlogId { get; set; }
     
     [JsonIgnore]
+    [BindNever]
     public string? UserId { get; set; }
-    
+
     public string Username { get; set; }
     
-    public string? BIO { get; set; }
+    public string? Bio { get; set; }
     
-    public string? MainImagePath { get; set; }
+    public DateTime DateOfBirth { get; set; }
+    
+    public IFormFile? MainImage { get; set; }
 }

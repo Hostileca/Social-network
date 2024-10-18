@@ -1,5 +1,6 @@
-﻿using Application.UseCases.ReactionCases.RemoveReaction;
-using Application.UseCases.ReactionCases.SendReaction;
+﻿using Application.UseCases.ReactionCases.Commands.RemoveReaction;
+using Application.UseCases.ReactionCases.Commands.SendReaction;
+using Application.UseCases.ReactionCases.Queries.GetReactionsByMessageId;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,13 +11,25 @@ namespace Presentation.Controllers;
 public class ReactionController(
     IMediator mediator) : ControllerBase
 {
+    [HttpGet]
+    public async Task<IActionResult> GetReactions(Guid messageId, [FromQuery]GetReactionsByMessageIdQuery getReactionsByMessageIdQuery, 
+        CancellationToken cancellationToken = default)
+    {
+        getReactionsByMessageIdQuery.UserId = UserId;
+        getReactionsByMessageIdQuery.MessageId = messageId;
+        
+        var reactions = await mediator.Send(getReactionsByMessageIdQuery, cancellationToken);
+
+        return Ok(reactions);
+    }
+
     [HttpPost]
-    public async Task<IActionResult> SendReaction(Guid messageId,
-        SendReactionCommand sendReactionCommand,
+    public async Task<IActionResult> SendReaction(Guid messageId, [FromQuery]Guid userBlogId, [FromBody]SendReactionCommand sendReactionCommand,
         CancellationToken cancellationToken = default)
     {
         sendReactionCommand.UserId = UserId;
         sendReactionCommand.MessageId = messageId;
+        sendReactionCommand.UserBlogId = userBlogId;
 
         var chatMember = await mediator.Send(sendReactionCommand, cancellationToken);
 
@@ -24,8 +37,7 @@ public class ReactionController(
     }
     
     [HttpDelete("{reactionId}")]
-    public async Task<IActionResult> RemoveReaction(Guid messageId, Guid reactionId,
-        RemoveReactionCommand removeReactionCommand,
+    public async Task<IActionResult> RemoveReaction(Guid messageId, Guid reactionId, [FromQuery]RemoveReactionCommand removeReactionCommand,
         CancellationToken cancellationToken = default)
     {
         removeReactionCommand.UserId = UserId;
