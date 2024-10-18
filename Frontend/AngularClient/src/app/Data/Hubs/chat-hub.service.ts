@@ -47,15 +47,12 @@ export class ChatHubService{
     this._hubConnection
       .start()
       .then(() => {
-        console.log("Connected to chat-details hub")
         this.StartEmit()
       })
       .catch(err => console.error('Error while starting connection: ' + err));
   }
 
   private StartEmit(){
-    console.log('Setting up event listeners...')
-
     this._hubConnection.on(Events.ChatCreated, (chat: Chat) => {
       this._eventBusService.Emit(Events.ChatCreated, chat)
     })
@@ -83,6 +80,5 @@ export class ChatHubService{
     this._hubConnection.on(Events.ReactionRemoved, (reaction: Reaction) => {
       this._eventBusService.Emit(Events.ReactionRemoved, reaction)
     })
-    console.log('Setting up event listeners... done')
   }
 }

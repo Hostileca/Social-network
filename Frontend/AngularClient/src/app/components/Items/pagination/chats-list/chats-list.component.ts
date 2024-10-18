@@ -6,6 +6,7 @@ import {
   PaginationBaseComponent
 } from "../pagination-component-base/pagination-base.component";
 import {ChatDetailsComponent} from "../../chat-details/chat-details.component";
+import {CheckLoadingNecessaryFromBottom} from "../../../../Helpers/check-loading-necessary";
 
 @Component({
   selector: 'app-chats-list',
@@ -24,6 +25,8 @@ export class ChatsListComponent extends PaginationBaseComponent<Chat>{
 
   constructor() {
     super();
+    this._loadingContainerId = 'chats-container'
+    this.CheckLoadingNecessary = CheckLoadingNecessaryFromBottom
   }
 
   public SelectChat(chat: Chat) {

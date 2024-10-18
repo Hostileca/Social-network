@@ -3,7 +3,7 @@
     <h2>{{this.Chat.name}}</h2>
   </div>
 
-  <div class="messages-list-container">
+  <div class="messages-list" id="messages-container">
     <app-messages-list [EntitySource]="MessagesSource"
                        [PageSize]="PaginationConfig.MessagesLoadingSize"
                        [ChatId]="this.Chat.id"></app-messages-list>

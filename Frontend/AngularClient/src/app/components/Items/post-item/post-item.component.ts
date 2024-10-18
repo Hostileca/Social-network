@@ -58,6 +58,9 @@ export class PostItemComponent implements OnInit{
     this._blogService.GetBlogImageById(this.Owner.id).subscribe({
       next: blob => {
         this.OwnerAvatarUrl = URL.createObjectURL(blob);
+      },
+      error: err => {
+
       }
     })
   }

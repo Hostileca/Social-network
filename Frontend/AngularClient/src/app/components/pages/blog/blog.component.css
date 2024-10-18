@@ -2,11 +2,15 @@
   display: flex;
   justify-content: space-between;
   padding: 20px;
+  max-height: 100%;
 }
 
 .posts-list {
   flex: 1;
   margin-left: -600px;
+  flex-grow: 1;
+  overflow-y: auto;
+  margin-bottom: 150px;
 }
 
 .container {

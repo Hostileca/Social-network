@@ -14,9 +14,9 @@
   padding: 0;
 }
 
-.messages-list-container {
-  overflow-y: auto;
+.messages-list{
   flex-grow: 1;
+  overflow-y: auto;
   padding: 5px 200px;
 }
 

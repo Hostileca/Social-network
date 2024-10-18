@@ -1,7 +1,6 @@
 .container {
   max-width: 600px;
   width: fit-content;
-  word-break: break-word;
   margin-left: 10px;
   display: flex;
   flex-direction: column;
@@ -33,6 +32,8 @@
 }
 
 .message-content {
+  word-break: break-word;
+  min-width: 80px;
   display: flex;
   flex-direction: column;
   flex: 1;

@@ -1,5 +1,5 @@
 <div *ngIf="Blog" class="blog">
-  <div class="posts-list">
+  <div class="posts-list" id="posts-container">
     <app-posts-list [EntitySource]="PostsSource" [PageSize]="PaginationConfig.PostsLoadingSize"></app-posts-list>
   </div>
 
