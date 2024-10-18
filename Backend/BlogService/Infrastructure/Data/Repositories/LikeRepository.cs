@@ -16,8 +16,9 @@ public class LikeRepository(
     {
         var spec = new LikeSendersByPostIdSpecification(postId);
 
-        return await GetPaged(pagedFilter)
+        return await _dbSet
             .Where(spec.ToExpression())
+            .Paged(pagedFilter)
             .ToListAsync(cancellationToken);
     }
 
@@ -25,8 +26,9 @@ public class LikeRepository(
     {
         var spec = new LikesBySenderIdSpecification(blogId);
 
-        return await GetPaged(pagedFilter)
+        return await _dbSet
             .Where(spec.ToExpression())
+            .Paged(pagedFilter)
             .ToListAsync(cancellationToken);
     }
 }

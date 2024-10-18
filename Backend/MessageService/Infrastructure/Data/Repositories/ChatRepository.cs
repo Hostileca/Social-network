@@ -14,8 +14,9 @@ public class ChatRepository(
     {
         var spec = new ChatsByBlogIdSpecification(blogId);
 
-        return await GetPaged(filter)
+        return await _dbSet
             .Where(spec.ToExpression())
+            .Paged(filter)
             .ToListAsync(cancellationToken);
     }
 }

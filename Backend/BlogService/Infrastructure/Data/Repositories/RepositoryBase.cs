@@ -21,7 +21,7 @@ public class RepositoryBase<TEntity>
 
     public async Task<IEnumerable<TEntity>> GetAllAsync(PagedFilter pagedFilter, CancellationToken cancellationToken = default)
     {
-        return await GetPaged(pagedFilter)
+        return await _dbSet.Paged(pagedFilter)
             .ToListAsync(cancellationToken);
     }
 
@@ -43,12 +43,5 @@ public class RepositoryBase<TEntity>
     public async Task SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         await _context.SaveChangesAsync(cancellationToken);
-    }
-    
-    protected IQueryable<TEntity> GetPaged(PagedFilter pagedFilter)
-    {
-        return _dbSet
-            .Skip((pagedFilter.PageNumber - 1) * pagedFilter.PageSize)
-            .Take(pagedFilter.PageSize);
     }
 }

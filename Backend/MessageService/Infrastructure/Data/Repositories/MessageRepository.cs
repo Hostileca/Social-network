@@ -14,9 +14,10 @@ public class MessageRepository(
     {
         var spec = new MessagesByChatIdSpecification(chatId);
         
-        return await GetPaged(pagedFilter)
+        return await _dbSet
             .Where(spec.ToExpression())
             .OrderByDescending(x => x.Date)
+            .Paged(pagedFilter)
             .ToListAsync(cancellationToken);
     }
 }

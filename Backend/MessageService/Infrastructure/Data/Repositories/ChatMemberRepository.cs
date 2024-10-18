@@ -14,8 +14,9 @@ public class ChatMemberRepository(
     {
         var spec = new ChatMembersByChatIdSpecification(chatId);
 
-        return await GetPaged(pagedFilter)
+        return await _dbSet
             .Where(spec.ToExpression())
+            .Paged(pagedFilter)
             .ToListAsync(cancellationToken);
     }
 }

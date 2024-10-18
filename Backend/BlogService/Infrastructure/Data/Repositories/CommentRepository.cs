@@ -15,8 +15,9 @@ public class CommentRepository(
     {
         var spec = new CommentsByPostIdSpecification(postId);
         
-        return await GetPaged(pagedFilter)
+        return await _dbSet
             .Where(spec.ToExpression())
+            .Paged(pagedFilter)
             .ToListAsync(cancellationToken);
     }
 }

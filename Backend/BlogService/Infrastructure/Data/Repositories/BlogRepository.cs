@@ -28,8 +28,9 @@ public class BlogRepository(
     {
         var spec = new BlogsByFilterSpecification(filter);
         
-        return await GetPaged(pagedFilter)
+        return await _dbSet
             .Where(spec.ToExpression())
+            .Paged(pagedFilter)
             .ToListAsync(cancellationToken);
     }
 }

@@ -14,9 +14,10 @@ public class PostRepository(
     {
         var spec = new PostsByBlogIdSpecification(blogId);
         
-        return await GetPaged(pagedFilter)
+        return await _dbSet
             .Where(spec.ToExpression())
             .OrderByDescending(x => x.CreatedAt)
+            .Paged(pagedFilter)
             .ToListAsync(cancellationToken);
     }
 
@@ -25,9 +26,10 @@ public class PostRepository(
     {
         var spec = new PostsByBlogSubscriptionsSpecification(subscriptionsIds);
 
-        return await GetPaged(pagedFilter)
+        return await _dbSet
             .Where(spec.ToExpression())
             .OrderByDescending(x => x.CreatedAt)
+            .Paged(pagedFilter)
             .ToListAsync(cancellationToken);
     }
 }

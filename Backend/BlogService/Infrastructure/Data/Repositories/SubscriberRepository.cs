@@ -14,8 +14,9 @@ public class SubscriberRepository(
     {
         var spec = new SubscribersByBlogIdSpecification(blogId);
 
-        return await GetPaged(pagedFilter)
+        return await _dbSet
             .Where(spec.ToExpression())
+            .Paged(pagedFilter)
             .ToListAsync(cancellationToken);
     }
 
@@ -23,8 +24,9 @@ public class SubscriberRepository(
     {
         var spec = new SubscriptionsByBlogIdSpecification(blogId);
 
-        return await GetPaged(pagedFilter)
+        return await _dbSet
             .Where(spec.ToExpression())
+            .Paged(pagedFilter)
             .ToListAsync(cancellationToken);
     }
 }
