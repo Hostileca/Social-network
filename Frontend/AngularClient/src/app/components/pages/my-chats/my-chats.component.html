@@ -1,0 +1,15 @@
+<div class="chats-layout">
+    <div class="chats-list">
+        <a class="btn" href="/my-chats/create">Create new chat</a>
+
+        <app-chats-list
+                [EntitySource]="ChatsSource"
+                [PageSize]="PaginationConfig.ChatsLoadingSize"
+                (OnSelectChat)="SelectChat($event)">
+        </app-chats-list>
+    </div>
+
+    <div class="chat-details" *ngIf="SelectedChat">
+        <app-chat-details [SelectedChat]="SelectedChat"></app-chat-details>
+    </div>
+</div>

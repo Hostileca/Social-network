@@ -1,0 +1,15 @@
+<div class="chat-container" *ngIf="this.Chat">
+  <div class="chat-header">
+    <h2>{{this.Chat.name}}</h2>
+  </div>
+
+  <div class="messages-list" id="messages-container">
+    <app-messages-list [EntitySource]="MessagesSource"
+                       [PageSize]="PaginationConfig.MessagesLoadingSize"
+                       [ChatId]="this.Chat.id"></app-messages-list>
+  </div>
+
+  <div class="message-input-container">
+    <app-message-input [ChatId]="this.Chat.id"></app-message-input>
+  </div>
+</div>

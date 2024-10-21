@@ -1,0 +1,13 @@
+.blog-info {
+  display: flex;
+  justify-content: center;
+  margin-left: 10%;
+  flex-direction: column;
+}
+
+.container{
+  max-width: 400px;
+  justify-content: start;
+  display: flex;
+  cursor: pointer;
+}

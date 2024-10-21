@@ -1,0 +1,12 @@
+<div *ngIf="Post" class="container">
+  <div *ngIf="Owner" class="owner-info">
+    <img ngSrc="{{this.OwnerAvatarUrl ? this.OwnerAvatarUrl : BlogConfig.BlogMainImageByDefaultUrl}}"
+         class="avatar" alt="avatar" width="40" height="40">
+    <h3>{{Owner.username}}</h3>
+  </div>
+  <p> {{ Post.content }} </p>
+  <div *ngFor="let attachmentUrl of AttachmentsUrls">
+    <a [href]="attachmentUrl">file</a>
+  </div>
+  <p class="post-date"><small>{{ this.Post.createdAt | date: 'dd.MM.yyyy HH:mm(ss)' }}</small></p>
+</div>

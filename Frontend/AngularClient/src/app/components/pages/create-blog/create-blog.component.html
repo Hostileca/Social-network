@@ -1,0 +1,13 @@
+<div>
+  <h2>Create blog</h2>
+  <form
+    [formGroup]="Form"
+    (ngSubmit)="OnCreateBlog()">
+    <label for="username">Username:</label>
+    <input
+      formControlName = "username"
+      type="text" id="username" name="username">
+
+    <button type="submit">Create blog</button>
+  </form>
+</div>

@@ -1,0 +1,5 @@
+<div class="container context-menu" *ngIf="Visible" [style.top.px]="YPos" [style.left.px]="XPos">
+  <ul *ngFor="let emoji of ReactionList">
+    <li (click)="OnReactionClick(emoji)">{{emoji}}</li>
+  </ul>
+</div>

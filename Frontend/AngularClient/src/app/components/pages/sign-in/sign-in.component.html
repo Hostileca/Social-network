@@ -1,0 +1,30 @@
+<div class="container">
+  <h2>Sign in</h2>
+
+  <form [formGroup]="Form" (ngSubmit)="OnSubmit()" class="form">
+
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input formControlName="email" type="text" id="email" name="email" class="form-control" />
+
+      <div *ngIf="(Email().dirty || !Email().untouched) && Email().invalid" class="error-message">
+        <p *ngIf="Email().hasError('required')">Email is required.</p>
+        <p *ngIf="Email().hasError('email')">Please enter a valid email address.</p>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password:</label>
+      <input formControlName="password" type="password" id="password" name="password" class="form-control" />
+
+      <div *ngIf="(Password().dirty || !Password().untouched) && Password().invalid" class="error-message">
+        <p *ngIf="Password().hasError('required')">Password is required.</p>
+        <p *ngIf="Password().hasError('minlength')">
+          Password must be at least {{Password().errors?.['minlength'].requiredLength}} characters long.</p>
+      </div>
+    </div>
+
+    <button type="submit" class="btn">Sign in</button>
+    <p class="redirect-text">Don't have an account? <a href="/sign-up">Sign up</a></p>
+  </form>
+</div>

@@ -1,0 +1,30 @@
+
+.chats-layout {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.chats-list {
+  width: 300px;
+  height: 100%;
+  overflow-y: auto;
+  background-color: var(--primary-dark);
+  border-top: 2px solid var(--primary-light);
+}
+
+.chat-details {
+  flex: 1;
+  padding: 20px;
+}
+
+.btn{
+  background-color: var(--primary-dark);
+  color: var(--secondary-color);
+  border: none;
+  margin-bottom: 10px;
+  cursor: pointer;
+  font-size: 18px;
+  text-align: center;
+  display: block;
+}

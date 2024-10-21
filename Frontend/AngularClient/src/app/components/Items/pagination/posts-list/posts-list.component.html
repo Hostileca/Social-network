@@ -1,0 +1,11 @@
+<div class="posts-container">
+  <app-post-item *ngFor="let post of Entities" [Post]="post"></app-post-item>
+
+  <div>
+    <p *ngIf="IsLoading()">Loading more posts...</p>
+    <p *ngIf="IsEnded()">No more posts</p>
+  </div>
+</div>
+
+
+

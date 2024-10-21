@@ -1,0 +1,11 @@
+<div *ngIf="Blog" class="container" (click)="SelectBlog()">
+  <div class="blog-avatar">
+    <img ngSrc="{{this.MainImageUrl ? this.MainImageUrl : this.BlogConfig.BlogMainImageByDefaultUrl}}"
+         class="avatar" width="120" height="120" priority>
+  </div>
+  <div class="blog-info">
+    <h1>{{ this.Blog.username }}</h1>
+    <p>{{ this.Blog.bio}}</p>
+  </div>
+</div>
+

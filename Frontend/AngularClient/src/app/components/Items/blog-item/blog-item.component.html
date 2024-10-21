@@ -1,0 +1,17 @@
+<div *ngIf="Blog">
+  <a href="blogs/{{ Blog.id }}">
+    <div class="container">
+      <div class="blog-avatar">
+        <img ngSrc="{{ MainImageUrl ? MainImageUrl : this.BlogConfig.BlogMainImageByDefaultUrl}}"
+             class="avatar" width="120" height="120" priority>
+      </div>
+      <div class="blog-info">
+        <h1>{{ Blog.username }}</h1>
+        <p>Posts count: {{ Blog.postsCount }}</p>
+        <p>Subscribers count: {{Blog.subscribersCount}}</p>
+        <p>Subscriptions count: {{Blog.subscriptionsCount}}</p>
+      </div>
+    </div>
+  </a>
+
+</div>

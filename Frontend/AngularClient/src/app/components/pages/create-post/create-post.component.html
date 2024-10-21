@@ -1,0 +1,19 @@
+<form [formGroup]="Form" (ngSubmit)="OnCreatePost()">
+  <div>
+    <label for="content">Content:</label>
+    <textarea id="content" formControlName="content" placeholder="Enter your post content"></textarea>
+    <div *ngIf="Form.controls['content'].invalid">
+      <small class="error">Content is required.</small>
+    </div>
+  </div>
+
+  <div>
+    <label for="attachments">Attachments:</label>
+    <input
+      #attachments
+      id="attachments"
+      type="file" (change)="Form.controls['attachments'].setValue(attachments.files)" multiple>
+  </div>
+
+  <button type="submit" [disabled]="Form.invalid">Create Post</button>
+</form>

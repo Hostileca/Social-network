@@ -1,0 +1,11 @@
+<h1 *ngIf="Blogs.length > 0">Your blogs</h1>
+<h1 *ngIf="Blogs.length == 0">You don't have any blogs. Create it!</h1>
+<div class="blog-container">
+  <div *ngFor="let blog of Blogs" class="blog-item">
+    <app-my-blog-item [blog]="blog"></app-my-blog-item>
+  </div>
+</div>
+
+<div class="create-blog-container">
+  <a href="my-blogs/create" class="btn">Create blog</a>
+</div>

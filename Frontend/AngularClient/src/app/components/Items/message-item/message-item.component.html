@@ -1,0 +1,19 @@
+<div [class]="IsMe() ? 'container my-message' : 'container'" (contextmenu)="OnRightClick($event)">
+    <div class="message">
+        <img *ngIf="!IsMe()" ngSrc="{{this.BlogConfig.BlogMainImageByDefaultUrl}}"
+             alt="avatar" class="avatar" width="40" height="40" priority/>
+        <div class="message-content">
+            <p *ngIf="!IsMe()" class="sender-name">{{ this.Sender ? this.Sender.username : 'unknown kitty' }}</p>
+            <p>{{ this.Message.text }}</p>
+            <div *ngFor="let attachment of Attachments">
+                <a class="attachment" [href]="attachment.blobUrl">{{attachment.filename}}</a>
+            </div>
+        </div>
+
+        <p class="date">{{ this.Message.date | date: 'HH:mm' }}</p>
+    </div>
+
+    <app-reactions-footer [MessageInput]="this.Message"></app-reactions-footer>
+</div>
+
+<app-message-context-menu [MessageComponent]="this"></app-message-context-menu>

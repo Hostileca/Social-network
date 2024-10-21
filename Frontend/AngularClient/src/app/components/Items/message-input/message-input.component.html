@@ -1,0 +1,20 @@
+<div class="message-input-container">
+  <form [formGroup]="Form">
+      <input formControlName="text" type="text" placeholder="Type a message" aria-label="Message input"/>
+
+      <input *ngIf="MessageType == MessageTypes.delayed"
+           formControlName="date" type="datetime-local" min="{{ Today }}">
+
+      <input class="file-input" (change)="OnFileChange($event)" type="file" multiple>
+
+      <button (click)="MessageType == MessageTypes.simple ? SendMessage()
+      : MessageType == MessageTypes.delayed ? SendDelayedMessage() : null"
+              aria-label="Send message" (contextmenu)="OpenContextMenu($event)">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M2 21L23 12L2 3V10L17 12L2 14V21Z" fill="white"/>
+          </svg>
+      </button>
+  </form>
+</div>
+
+<app-send-message-context-menu></app-send-message-context-menu>

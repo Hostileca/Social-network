@@ -1,0 +1,51 @@
+<div class="container">
+  <h2>Sign up</h2>
+  <form [formGroup]="Form" (ngSubmit)="OnSubmit()">
+
+    <div class="form-group">
+      <label for="username">Username:</label>
+      <input formControlName="username" type="text" id="username" name="username" class="form-control">
+
+      <div *ngIf="Username().invalid && (!Username().untouched || Username().dirty)" class="error-message">
+        <p *ngIf="Username().hasError('required')">Username is required.</p>
+        <p *ngIf="Username().hasError('minlength')">
+          Username must be at least {{Username().errors?.['minlength'].requiredLength}} characters long.</p>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input formControlName="email" type="text" id="email" name="email" class="form-control">
+
+      <div *ngIf="Email().invalid && (!Email().untouched || Email().dirty)" class="error-message">
+        <p *ngIf="Email().hasError('required')">Email is required.</p>
+        <p *ngIf="Email().hasError('email')">Please enter a valid email.</p>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password:</label>
+      <input formControlName="password" type="password" id="password" name="password" class="form-control">
+
+      <div *ngIf="Password().invalid && (!Password().untouched || Password().dirty)" class="error-message">
+        <p *ngIf="Password().hasError('required')">Password is required.</p>
+        <p *ngIf="Password().hasError('minlength')">
+          Password must be at least {{Password().errors?.['minlength'].requiredLength}} characters long.</p>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="confirmPassword">Confirm Password:</label>
+      <input formControlName="confirmPassword" type="password" id="confirmPassword" name="confirmPassword" class="form-control">
+
+      <div *ngIf="ConfirmPassword().invalid && (!ConfirmPassword().untouched || ConfirmPassword().dirty)" class="error-message">
+        <p *ngIf="ConfirmPassword().hasError('required')">Confirm password is required.</p>
+        <p *ngIf="ConfirmPassword().hasError('notEqual')">Confirm password must be equal to your password.</p>
+      </div>
+    </div>
+
+    <button type="submit" class="btn">Sign up</button>
+
+    <p class="redirect-text">Already have an account? <a href="/sign-in">Sign in</a></p>
+  </form>
+</div>

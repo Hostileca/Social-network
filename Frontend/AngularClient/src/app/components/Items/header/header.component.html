@@ -1,0 +1,16 @@
+<header *ngIf="IsLoggedIn()" class="header">
+  <a class="header-element" href="/">Logo</a>
+  <a class="header-element" href="/blogs">Blogs</a>
+  <a class="header-element" href="/my-chats">Chats</a>
+
+  <div class="blog">
+    <div class="header-element" (click)="OnBlogClick()">{{ CurrentBlogUsername() }}</div>
+
+    <div *ngIf="IsBlogMenuOpen" class="blog-menu">
+      <ul>
+        <li (click)="ChangeCurrentBlog()">Change blog</li>
+        <li (click)="Logout()">Logout</li>
+      </ul>
+    </div>
+  </div>
+</header>
