@@ -7,8 +7,7 @@ export abstract class PaginationBaseComponent<TEntity> implements OnInit, OnChan
   public Entities: TEntity[] = []
   public LoadingThreshold = 40;
   protected _loadingContainerId?: string
-  private _loadingContainer!: HTMLElement;
-  public CheckLoadingNecessary?: (htmlElement: HTMLElement, loadingThreshold: number) => boolean
+  protected _loadingContainer!: HTMLElement;
 
   private _pageSettings: PageSettings = {
     pageSize: 1,
@@ -34,6 +33,7 @@ export abstract class PaginationBaseComponent<TEntity> implements OnInit, OnChan
     this.LoadEntities()
   }
 
+  //if user change chat source
   ngOnChanges(): void {
     this.Entities = []
     this._pageSettings.pageNumber = 1
@@ -55,16 +55,12 @@ export abstract class PaginationBaseComponent<TEntity> implements OnInit, OnChan
       return
     }
 
-    if(!this.CheckLoadingNecessary){
-      console.warn(`No CheckLoadingNecessary function provided`)
-      return
-    }
-
     this._loadingContainer = container
+
     fromEvent(container, 'scroll')
       .pipe(
         tap(() => {
-          if(this.CheckLoadingNecessary!(this._loadingContainer, this.LoadingThreshold)){
+          if(this.CheckLoadingNecessary()){
             this.LoadEntities()
           }
         })
@@ -81,7 +77,7 @@ export abstract class PaginationBaseComponent<TEntity> implements OnInit, OnChan
     this._entitySource(this._pageSettings).subscribe({
       next: entities => {
         this.OnLoadEntities(entities)
-        this.UpdateIsPostsEnded(entities)
+        this.UpdateIsEntitiesEnded(entities)
         this._pageSettings.pageNumber += 1
       },
       error: err => {
@@ -97,7 +93,7 @@ export abstract class PaginationBaseComponent<TEntity> implements OnInit, OnChan
     this.Entities = [...this.Entities, ...entities]
   }
 
-  private UpdateIsPostsEnded(entities: TEntity[]) {
+  private UpdateIsEntitiesEnded(entities: TEntity[]) {
     this._isEnded = entities.length < this._pageSettings.pageSize
   }
 
@@ -107,5 +103,14 @@ export abstract class PaginationBaseComponent<TEntity> implements OnInit, OnChan
 
   public IsEnded(): boolean {
     return this._isEnded
+  }
+
+  private CheckLoadingNecessary(): boolean {
+    const containerHeight = this._loadingContainer.scrollHeight;
+    const scrollPosition = Math.abs(this._loadingContainer.scrollTop);
+    const visibleHeight = this._loadingContainer.clientHeight;
+    const haveIReachedBottom = (scrollPosition + visibleHeight + this.LoadingThreshold) >= containerHeight;
+
+    return haveIReachedBottom
   }
 }

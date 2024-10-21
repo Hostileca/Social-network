@@ -5,7 +5,6 @@ import {NgForOf, NgIf} from "@angular/common";
 import {
   PaginationBaseComponent
 } from "../pagination-component-base/pagination-base.component";
-import {CheckLoadingNecessaryFromBottom} from "../../../../Helpers/check-loading-necessary";
 
 @Component({
   selector: 'app-posts-list',
@@ -22,6 +21,5 @@ export class PostsListComponent extends PaginationBaseComponent<Post>{
   constructor() {
     super();
     this._loadingContainerId = 'posts-container'
-    this.CheckLoadingNecessary = CheckLoadingNecessaryFromBottom
   }
 }

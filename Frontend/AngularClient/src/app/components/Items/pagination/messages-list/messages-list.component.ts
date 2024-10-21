@@ -7,10 +7,6 @@ import {NgForOf} from "@angular/common";
 import {MessageItemComponent} from "../../message-item/message-item.component";
 import {Events} from "../../../../Data/Hubs/Events";
 import {EventBusService} from "../../../../Data/Services/event-bus.service";
-import {
-  CheckLoadingNecessaryFromBottom,
-  CheckLoadingNecessaryFromTop
-} from "../../../../Helpers/check-loading-necessary";
 
 @Component({
   selector: 'app-messages-list',
@@ -26,7 +22,7 @@ export class MessagesListComponent extends PaginationBaseComponent<Message>{
   constructor(private readonly _eventBusService: EventBusService) {
     super();
     this._loadingContainerId = 'messages-container'
-    this.CheckLoadingNecessary = CheckLoadingNecessaryFromTop
+    this.LoadingThreshold = 80
     this.StartListening()
   }
 
@@ -52,8 +48,12 @@ export class MessagesListComponent extends PaginationBaseComponent<Message>{
     super.ngOnChanges();
   }
 
-  // override OnLoadEntities(entities: Message[]) {
-  //   entities = entities.reverse()
-  //   this.Entities = [...entities, ...this.Entities]
-  // }
+  override ngOnInit() {
+    super.ngOnInit();
+  }
+
+  override OnLoadEntities(entities: Message[]) {
+    entities = entities.reverse()
+    this.Entities = [...entities, ...this.Entities]
+  }
 }

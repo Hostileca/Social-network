@@ -15,7 +15,9 @@
 }
 
 .messages-list{
+  display: flex;
   flex-grow: 1;
+  flex-direction: column-reverse;
   overflow-y: auto;
   padding: 5px 200px;
 }
